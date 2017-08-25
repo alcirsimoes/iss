@@ -14,7 +14,7 @@ class SampleController extends Controller
      */
     public function index()
     {
-        //
+        return Sample::all();
     }
 
     /**
@@ -35,7 +35,15 @@ class SampleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255'
+        ]);
+
+        $sample = new Sample;
+        $sample = $sample->fill($request->input());
+        $sample->saveOrFail();
+
+        return $sample;
     }
 
     /**
@@ -46,7 +54,7 @@ class SampleController extends Controller
      */
     public function show(Sample $sample)
     {
-        //
+        return $sample;
     }
 
     /**
@@ -69,7 +77,14 @@ class SampleController extends Controller
      */
     public function update(Request $request, Sample $sample)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255'
+        ]);
+
+        $sample = $sample->fill($request->input());
+        $sample->saveOrFail();
+
+        return $sample;
     }
 
     /**
@@ -80,6 +95,6 @@ class SampleController extends Controller
      */
     public function destroy(Sample $sample)
     {
-        //
+        return $sample->delete();
     }
 }

@@ -14,7 +14,7 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        //
+        return Answer::all();
     }
 
     /**
@@ -35,7 +35,15 @@ class AnswerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+        ]);
+
+        $answer = new Answer;
+        $answer = $answer->fill($request->input());
+        $answer->saveOrFail();
+
+        return $answer;
     }
 
     /**
@@ -46,7 +54,7 @@ class AnswerController extends Controller
      */
     public function show(Answer $answer)
     {
-        //
+        return $answer;
     }
 
     /**
@@ -69,7 +77,14 @@ class AnswerController extends Controller
      */
     public function update(Request $request, Answer $answer)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+        ]);
+
+        $answer = $answer->fill($request->input());
+        $answer->saveOrFail();
+
+        return $answer;
     }
 
     /**
@@ -80,6 +95,6 @@ class AnswerController extends Controller
      */
     public function destroy(Answer $answer)
     {
-        //
+        return $answer->delete();
     }
 }

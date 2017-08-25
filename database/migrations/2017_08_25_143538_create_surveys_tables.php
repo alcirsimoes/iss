@@ -16,8 +16,8 @@ class CreateSurveysTable extends Migration
         Schema::create('surveys', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->dateTime('init_at');
-            $table->dateTime('end_at');
+            $table->dateTime('init_at')->nullable();
+            $table->dateTime('end_at')->nullable();
             $table->boolean('active')->default(false);
             $table->timestamps();
             $table->softDeletes();
@@ -37,7 +37,7 @@ class CreateSurveysTable extends Migration
             $table->integer('question_id')->unsigned();
             $table->foreign('question_id')->references('id')->on('questions');
             $table->text('statement')->nullable();
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
