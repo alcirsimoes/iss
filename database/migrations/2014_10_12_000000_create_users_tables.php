@@ -20,6 +20,19 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('user_admins', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
+
+        Schema::create('blacklists', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
 
         Schema::create('password_resets', function (Blueprint $table) {
@@ -37,6 +50,8 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('blacklists');
+        Schema::dropIfExists('user_admins');
         Schema::dropIfExists('users');
     }
 }
