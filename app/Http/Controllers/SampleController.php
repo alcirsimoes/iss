@@ -14,13 +14,9 @@ class SampleController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         $samples = Sample::all();
 
         return view('sample.index')->with(compact('samples'));
-=======
-        return Sample::all();
->>>>>>> b6bc7def9bc2a5ebed49a975896c81d457772d24
     }
 
     /**
@@ -60,11 +56,7 @@ class SampleController extends Controller
      */
     public function show(Sample $sample)
     {
-<<<<<<< HEAD
         return view('sample.show')->with(compact('sample'));
-=======
-        return $sample;
->>>>>>> b6bc7def9bc2a5ebed49a975896c81d457772d24
     }
 
     /**
