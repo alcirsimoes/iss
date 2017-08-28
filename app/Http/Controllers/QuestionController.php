@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Survey;
 use App\Question;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions = Question::all();
+
+        return view('question.index');
     }
 
     /**
@@ -24,7 +27,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $survey = Survey::findOrFail(request('id'));
+        return view('question.create')->with(compact('survey'));
     }
 
     /**
@@ -35,7 +39,16 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'statement' => 'required'
+        ]);
+
+        $question = new Question;
+        $question = $question->fill($request->input());
+        $question->saveOrFail();
+
+        return $question;
     }
 
     /**
@@ -46,7 +59,7 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        return $question;
     }
 
     /**
@@ -69,7 +82,15 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'statement' => 'required'
+        ]);
+
+        $question = $question->fill($request->input());
+        $question->saveOrFail();
+
+        return $question;
     }
 
     /**
@@ -80,6 +101,6 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        return $question->delete();
     }
 }

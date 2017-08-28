@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Sample;
 use App\Entrie;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class EntrieController extends Controller
      */
     public function index()
     {
-        //
+        return Entrie::all();
     }
 
     /**
@@ -24,7 +25,9 @@ class EntrieController extends Controller
      */
     public function create()
     {
-        //
+        $sample = Sample::findOrFail(request('id'));
+
+        return view('entrie.create')->with(compact('sample'));
     }
 
     /**
@@ -35,7 +38,15 @@ class EntrieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+        ]);
+
+        $entrie = new Entrie;
+        $entrie = $entrie->fill($request->input());
+        $entrie->saveOrFail();
+
+        return $entrie;
     }
 
     /**
@@ -46,7 +57,7 @@ class EntrieController extends Controller
      */
     public function show(Entrie $entrie)
     {
-        //
+        return $entrie;
     }
 
     /**
@@ -69,7 +80,14 @@ class EntrieController extends Controller
      */
     public function update(Request $request, Entrie $entrie)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+        ]);
+
+        $entrie = $entrie->fill($request->input());
+        $entrie->saveOrFail();
+
+        return $entrie;
     }
 
     /**
@@ -80,6 +98,6 @@ class EntrieController extends Controller
      */
     public function destroy(Entrie $entrie)
     {
-        //
+        return $entrie->delete();
     }
 }

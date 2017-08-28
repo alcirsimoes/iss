@@ -14,7 +14,8 @@ class SurveyController extends Controller
      */
     public function index()
     {
-        //
+        $surveys = Survey::all();
+        return view('survey.index')->with(compact('surveys'));
     }
 
     /**
@@ -24,7 +25,7 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        //
+        return view('survey.create');
     }
 
     /**
@@ -35,7 +36,15 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255'
+        ]);
+
+        $survey = new Survey;
+        $survey = $survey->fill($request->input());
+        $survey->saveOrFail();
+
+        return $survey;
     }
 
     /**
@@ -46,7 +55,7 @@ class SurveyController extends Controller
      */
     public function show(Survey $survey)
     {
-        //
+        return view('survey.show')->with(compact('survey'));
     }
 
     /**
@@ -69,7 +78,14 @@ class SurveyController extends Controller
      */
     public function update(Request $request, Survey $survey)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255'
+        ]);
+
+        $survey = $survey->fill($request->input());
+        $survey->saveOrFail();
+
+        return $survey;
     }
 
     /**
@@ -80,6 +96,6 @@ class SurveyController extends Controller
      */
     public function destroy(Survey $survey)
     {
-        //
+        return $survey->delete();
     }
 }

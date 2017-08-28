@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSamplesTable extends Migration
+class CreateSamplesTables extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class CreateSamplesTable extends Migration
     {
         Schema::create('samples', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -23,6 +24,7 @@ class CreateSamplesTable extends Migration
             $table->increments('id');
             $table->integer('sample_id')->unsigned();
             $table->foreign('sample_id')->references('id')->on('samples');
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });

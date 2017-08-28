@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSurveysTable extends Migration
+class CreateSurveysTables extends Migration
 {
     /**
      * Run the migrations.
@@ -16,8 +16,8 @@ class CreateSurveysTable extends Migration
         Schema::create('surveys', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->dateTime('init_at');
-            $table->dateTime('end_at');
+            $table->dateTime('init_at')->nullable();
+            $table->dateTime('end_at')->nullable();
             $table->boolean('active')->default(false);
             $table->timestamps();
             $table->softDeletes();
@@ -27,7 +27,10 @@ class CreateSurveysTable extends Migration
             $table->increments('id');
             $table->integer('survey_id')->unsigned();
             $table->foreign('survey_id')->references('id')->on('surveys');
+            $table->string('name')->nullable();
             $table->text('statement');
+            $table->integer('type');
+            $table->integer('order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -37,7 +40,7 @@ class CreateSurveysTable extends Migration
             $table->integer('question_id')->unsigned();
             $table->foreign('question_id')->references('id')->on('questions');
             $table->text('statement')->nullable();
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

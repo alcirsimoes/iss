@@ -14,7 +14,7 @@ class OptionController extends Controller
      */
     public function index()
     {
-        //
+        return Option:all();
     }
 
     /**
@@ -35,7 +35,15 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+        ]);
+
+        $option = new Option;
+        $option = $option->fill($request->input());
+        $option->saveOrFail();
+
+        return $option;
     }
 
     /**
@@ -46,7 +54,7 @@ class OptionController extends Controller
      */
     public function show(Option $option)
     {
-        //
+        return $option;
     }
 
     /**
@@ -69,7 +77,14 @@ class OptionController extends Controller
      */
     public function update(Request $request, Option $option)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255'
+        ]);
+
+        $option = $option->fill($request->input());
+        $option->saveOrFail();
+
+        return $option;
     }
 
     /**
@@ -80,6 +95,6 @@ class OptionController extends Controller
      */
     public function destroy(Option $option)
     {
-        //
+        return $option->delete();
     }
 }
