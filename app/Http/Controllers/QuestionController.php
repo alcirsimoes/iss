@@ -15,9 +15,13 @@ class QuestionController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $questions = Question::all();
 
         return view('question.index');
+=======
+        return Question::all();
+>>>>>>> b6bc7def9bc2a5ebed49a975896c81d457772d24
     }
 
     /**

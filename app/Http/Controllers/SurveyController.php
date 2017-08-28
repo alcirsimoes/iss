@@ -14,8 +14,12 @@ class SurveyController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $surveys = Survey::all();
         return view('survey.index')->with(compact('surveys'));
+=======
+        return Survey::all();
+>>>>>>> b6bc7def9bc2a5ebed49a975896c81d457772d24
     }
 
     /**
@@ -55,7 +59,11 @@ class SurveyController extends Controller
      */
     public function show(Survey $survey)
     {
+<<<<<<< HEAD
         return view('survey.show')->with(compact('survey'));
+=======
+        return $survey;
+>>>>>>> b6bc7def9bc2a5ebed49a975896c81d457772d24
     }
 
     /**
