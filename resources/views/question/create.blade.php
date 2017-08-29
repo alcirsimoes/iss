@@ -39,6 +39,57 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="InputStatement">Format: </label>
+
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" name="type" value="1" class="form-check-input">
+                            Unique field
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" name="type" value="2" class="form-check-input">
+                            Multiple fields
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" name="type" value="3" class="form-check-input">
+                            Composite table
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="InputOption1">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption1" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption2">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption2" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption3">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
+                </div>
+
+                <div class="form-group">
+                    <label for="InputCollumn1">Collumn value: </label>
+                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
+                    <input type="text" name="collumnType[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn type">
+                </div>
+                <div class="form-group">
+                    <label for="InputCollumn2">Collumn value: </label>
+                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn2" placeholder="Enter collumn value">
+                </div>
+                <div class="form-group">
+                    <label for="InputCollumn3">Collumn value: </label>
+                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn3" placeholder="Enter collumn value">
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
 
             </form>

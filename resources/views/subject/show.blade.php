@@ -7,12 +7,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">{{ $sample->name }}</div>
 
-                <a class="btn btn-primary" href="{{ route('entrie.create', $sample->id) }}" role="button">New entrie</a>
+                <a class="btn btn-primary" href="{{ route('subject.create', $sample->id) }}" role="button">New subject</a>
 
                 <div class="panel-body">
                   <ul>
-                      @foreach($sample->entries as $entrie)
-                      <li>{{ $entrie->id }} -> {{ $entrie->name }}</li>
+                      @foreach($sample->subjects as $subject)
+                      <li>{{ $subject->id }} -> {{ $subject->name }}</li>
                       @endforeach
                   </ul>
                 </div>

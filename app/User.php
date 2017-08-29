@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isAdmin()
+    {
+        return $this->hasOne('App\UserAdmin');
+    }
+
+    public function isBlack()
+    {
+        return $this->hasOne('App\Blacklist');
+    }
 }

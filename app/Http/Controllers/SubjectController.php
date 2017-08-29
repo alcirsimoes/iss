@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Sample;
-use App\Entrie;
+use App\Subject;
 use Illuminate\Http\Request;
 
-class EntrieController extends Controller
+class SubjectController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +25,7 @@ class EntrieController extends Controller
      */
     public function index()
     {
-        return Entrie::all();
+        return Subject::all();
     }
 
     /**
@@ -27,7 +37,7 @@ class EntrieController extends Controller
     {
         $sample = Sample::findOrFail(request('id'));
 
-        return view('entrie.create')->with(compact('sample'));
+        return view('subject.create')->with(compact('sample'));
     }
 
     /**
@@ -42,31 +52,31 @@ class EntrieController extends Controller
             'name' => 'required|max:255',
         ]);
 
-        $entrie = new Entrie;
-        $entrie = $entrie->fill($request->input());
-        $entrie->saveOrFail();
+        $subject = new Subject;
+        $subject = $subject->fill($request->input());
+        $subject->saveOrFail();
 
-        return $entrie;
+        return $subject;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Entrie  $entrie
+     * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function show(Entrie $entrie)
+    public function show(Subject $subject)
     {
-        return $entrie;
+        return $subject;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Entrie  $entrie
+     * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entrie $entrie)
+    public function edit(Subject $subject)
     {
         //
     }
@@ -75,29 +85,29 @@ class EntrieController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Entrie  $entrie
+     * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Entrie $entrie)
+    public function update(Request $request, Subject $subject)
     {
         $this->validate($request, [
             'name' => 'required|max:255',
         ]);
 
-        $entrie = $entrie->fill($request->input());
-        $entrie->saveOrFail();
+        $subject = $subject->fill($request->input());
+        $subject->saveOrFail();
 
-        return $entrie;
+        return $subject;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Entrie  $entrie
+     * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entrie $entrie)
+    public function destroy(Subject $subject)
     {
-        return $entrie->delete();
+        return $subject->delete();
     }
 }

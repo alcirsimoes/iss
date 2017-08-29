@@ -20,7 +20,7 @@ class CreateSamplesTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sample_id')->unsigned();
             $table->foreign('sample_id')->references('id')->on('samples');
@@ -37,7 +37,7 @@ class CreateSamplesTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entries');
+        Schema::dropIfExists('subjects');
         Schema::dropIfExists('samples');
     }
 }

@@ -8,6 +8,11 @@ class Sample extends Model
 {
     protected $fillable = ['name'];
 
+    public function subjects()
+    {
+        return $this->hasMany('App\Subject');
+    }
+
     public function entries()
     {
         return $this->hasMany('App\Entrie');
