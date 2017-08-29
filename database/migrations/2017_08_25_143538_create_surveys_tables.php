@@ -44,6 +44,20 @@ class CreateSurveysTables extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('option_question', function (Blueprint $table) {
+            $table->integer('option_id')->unsigned();
+            $table->foreign('option_id')->references('id')->on('options');
+
+            $table->integer('question_id')->unsigned();
+            $table->foreign('question_id')->references('id')->on('questions');
+
+            $table->unique(['option_id','question_id']);
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
     }
 
     /**
@@ -53,6 +67,7 @@ class CreateSurveysTables extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('option_question');
         Schema::dropIfExists('options');
         Schema::dropIfExists('questions');
         Schema::dropIfExists('surveys');

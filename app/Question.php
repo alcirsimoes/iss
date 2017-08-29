@@ -10,6 +10,6 @@ class Question extends Model
 
     public function options()
     {
-        return $this->hasMany('App\Option');
+        return $this->belongsToMany('App\Option');
     }
 }

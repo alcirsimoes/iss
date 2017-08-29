@@ -28,6 +28,19 @@ class CreateSamplesTables extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('answers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('subject_id')->unsigned();
+            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->integer('question_id')->unsigned();
+            $table->foreign('question_id')->references('id')->on('questions');
+            $table->integer('option_id')->unsigned();
+            $table->foreign('option_id')->references('id')->on('options');
+            $table->text('value')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -37,6 +50,7 @@ class CreateSamplesTables extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('answers');
         Schema::dropIfExists('subjects');
         Schema::dropIfExists('samples');
     }
