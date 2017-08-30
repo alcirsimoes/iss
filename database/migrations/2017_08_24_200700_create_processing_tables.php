@@ -22,6 +22,18 @@ class CreateProcessingTables extends Migration
             $table->timestamps();
         });
 
+        Schema::create('jobs', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('queue');
+            $table->longText('payload');
+            $table->unsignedTinyInteger('attempts');
+            $table->unsignedInteger('reserved_at')->nullable();
+            $table->unsignedInteger('available_at');
+            $table->unsignedInteger('created_at');
+
+            $table->index(['queue', 'reserved_at']);
+        });
+
         Schema::create('failed_jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('connection');
@@ -40,6 +52,7 @@ class CreateProcessingTables extends Migration
     public function down()
     {
         Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('jobs');
         Schema::dropIfExists('notifications');
     }
 }

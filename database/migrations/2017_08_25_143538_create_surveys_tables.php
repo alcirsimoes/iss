@@ -16,6 +16,7 @@ class CreateSurveysTables extends Migration
         Schema::create('surveys', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->text('intro')->nullable();
             $table->dateTime('init_at')->nullable();
             $table->dateTime('end_at')->nullable();
             $table->boolean('active')->default(false);
@@ -28,19 +29,32 @@ class CreateSurveysTables extends Migration
             $table->integer('survey_id')->unsigned();
             $table->foreign('survey_id')->references('id')->on('surveys');
             $table->string('name')->nullable();
-            $table->text('statement');
+            $table->text('statement')->nullable();
             $table->integer('type');
             $table->integer('order')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('options', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('question_question', function (Blueprint $table) {
+            $table->integer('father_id')->unsigned();
+            $table->foreign('father_id')->references('id')->on('questions');
+
             $table->integer('question_id')->unsigned();
             $table->foreign('question_id')->references('id')->on('questions');
+
+            $table->unique(['father_id','question_id']);
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('options', function (Blueprint $table) {
+            $table->increments('id');
             $table->text('statement')->nullable();
             $table->string('value')->nullable();
+            $table->string('group_name')->unique()->nullable();
+            $table->integer('group')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -69,6 +83,7 @@ class CreateSurveysTables extends Migration
     {
         Schema::dropIfExists('option_question');
         Schema::dropIfExists('options');
+        Schema::dropIfExists('question_question');
         Schema::dropIfExists('questions');
         Schema::dropIfExists('surveys');
     }

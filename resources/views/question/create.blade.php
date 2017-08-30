@@ -79,15 +79,26 @@
                 <div class="form-group">
                     <label for="InputCollumn1">Collumn value: </label>
                     <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
-                    <input type="text" name="collumnType[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn type">
+                    <label for="InputType1">Collumn type: </label>
+                    <input type="text" name="collumnType[]" class="form-control" id="InputType1" placeholder="Enter collumn type">
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="statement" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="InputCollumn2">Collumn value: </label>
-                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn2" placeholder="Enter collumn value">
+                    <label for="InputCollumn1">Collumn value: </label>
+                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
+                    <label for="InputType1">Collumn type: </label>
+                    <input type="text" name="collumnType[]" class="form-control" id="InputType1" placeholder="Enter collumn type">
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="statement" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="InputCollumn3">Collumn value: </label>
-                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn3" placeholder="Enter collumn value">
+                    <label for="InputCollumn1">Collumn value: </label>
+                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
+                    <label for="InputType1">Collumn type: </label>
+                    <input type="text" name="collumnType[]" class="form-control" id="InputType1" placeholder="Enter collumn type">
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="statement" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

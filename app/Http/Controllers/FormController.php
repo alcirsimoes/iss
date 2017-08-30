@@ -21,9 +21,12 @@ class FormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Survey $survey, Sample $sample, Subject $subject)
     {
-        //
+        $state = compact('survey','sample','subject');
+        session($state);
+
+        return view('form.index')->with($state);
     }
 
     /**
