@@ -45,19 +45,19 @@
 
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" name="type" value="1" class="form-check-input">
+                            <input type="radio" name="format" value="1" class="form-check-input">
                             Unique field
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" name="type" value="2" class="form-check-input">
+                            <input type="radio" name="format" value="2" class="form-check-input">
                             Multiple fields
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" name="type" value="3" class="form-check-input">
+                            <input type="radio" name="format" value="3" class="form-check-input">
                             Composite table
                         </label>
                     </div>
@@ -75,19 +75,107 @@
                     <label for="InputOption3">Option value: </label>
                     <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
                 </div>
+                <div class="form-group">
+                    <label for="InputOption4">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption5">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption6">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption7">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption8">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption9">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption10">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption11">Option value: </label>
+                    <input type="text" name="option[]" class="form-control" id="InputOption3" placeholder="Enter option value">
+                </div>
+                <div class="form-group">
+                    <label for="InputOption3">Other: </label>
+                    <input type="checkbox" name="other" class="form-control" id="InputOption3" value='1'>
+                </div>
 
                 <div class="form-group">
                     <label for="InputCollumn1">Collumn value: </label>
                     <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
-                    <input type="text" name="collumnType[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn type">
+                    <label for="InputType1">Collumn type: </label>
+                    <select name="collumnType[]">
+                        <option value="1">Unique</option>
+                        <option value="2">Multiple</option>
+                        <option value="3">Open</option>
+                        <option value="4">Grade</option>
+                    </select>
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="collumnStatement[]" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="InputCollumn2">Collumn value: </label>
-                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn2" placeholder="Enter collumn value">
+                    <label for="InputCollumn1">Collumn value: </label>
+                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
+                    <label for="InputType1">Collumn type: </label>
+                    <select name="collumnType[]">
+                        <option value="1">Unique</option>
+                        <option value="2">Multiple</option>
+                        <option value="3">Open</option>
+                        <option value="4">Grade</option>
+                    </select>
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="collumnStatement[]" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="InputCollumn3">Collumn value: </label>
-                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn3" placeholder="Enter collumn value">
+                    <label for="InputCollumn1">Collumn value: </label>
+                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
+                    <label for="InputType1">Collumn type: </label>
+                    <select name="collumnType[]">
+                        <option value="1">Unique</option>
+                        <option value="2">Multiple</option>
+                        <option value="3">Open</option>
+                        <option value="4">Grade</option>
+                    </select>
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="collumnStatement[]" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="InputCollumn1">Collumn value: </label>
+                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
+                    <label for="InputType1">Collumn type: </label>
+                    <select name="collumnType[]">
+                        <option value="1">Unique</option>
+                        <option value="2">Multiple</option>
+                        <option value="3">Open</option>
+                        <option value="4">Grade</option>
+                    </select>
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="collumnStatement[]" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="InputCollumn1">Collumn value: </label>
+                    <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
+                    <label for="InputType1">Collumn type: </label>
+                    <select name="collumnType[]">
+                        <option value="1">Unique</option>
+                        <option value="2">Multiple</option>
+                        <option value="3">Open</option>
+                        <option value="4">Grade</option>
+                    </select>
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="collumnStatement[]" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

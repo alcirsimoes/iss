@@ -17,4 +17,9 @@ class Survey extends Model
     {
         return $this->hasMany('App\Question');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
 }

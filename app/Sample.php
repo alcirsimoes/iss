@@ -17,4 +17,10 @@ class Sample extends Model
     {
         return $this->hasMany('App\Entrie');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+    
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Survey;
 use App\Question;
+use App\Option;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -17,7 +18,7 @@ class QuestionController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -49,14 +50,18 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $valid = $request->validate([
             'name' => 'required|max:255',
             'statement' => 'required'
         ]);
 
-        $question = new Question;
-        $question = $question->fill($request->input());
-        $question->saveOrFail();
+        $question = Question::create($request->all());
+
+        $options = [];
+        foreach (request('option') as $key => $value)
+            if ($value) $options [] = new \App\Option(['statement' => $value, 'value' => $key]);
+
+        if (isset($options[0])) $question->options()->saveMany($options);
 
         return $question;
     }
@@ -111,6 +116,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        return $question->delete();
+        $question->delete();
+        return back();
     }
 }

@@ -14,7 +14,11 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <a href="{{ route('user.index') }}" class="btn btn-default">Usuários</a>
+                    <a href="{{ route('survey.index') }}" class="btn btn-default">Pesquisas</a>
+                    <a href="{{ route('sample.index') }}" class="btn btn-default">Amostras</a>
+                    <a href="{{ route('subject.index') }}" class="btn btn-default">Respondentes</a>
+                    <a href="{{ route('form.index') }}" class="btn btn-default">Questionário</a>
                 </div>
             </div>
         </div>

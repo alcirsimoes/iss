@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Blacklist');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
 }

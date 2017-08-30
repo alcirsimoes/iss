@@ -12,6 +12,9 @@
 */
 
 Route::get('/', function () {
+    if (Auth::check())
+        return redirect('home');
+
     return view('auth.login');
 });
 
@@ -19,7 +22,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('user', 'UserController');
 Route::resource('survey', 'SurveyController');
 Route::resource('sample', 'SampleController');
 Route::resource('subject', 'SubjectController');
 Route::resource('question', 'QuestionController');
+Route::resource('form', 'FormController');
