@@ -16,7 +16,7 @@ class SurveyController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +54,7 @@ class SurveyController extends Controller
         $survey = $survey->fill($request->input());
         $survey->saveOrFail();
 
-        return $survey;
+        return redirect()->route('survey.show', ['id' => $survey->id]);
     }
 
     /**
@@ -95,7 +95,7 @@ class SurveyController extends Controller
         $survey = $survey->fill($request->input());
         $survey->saveOrFail();
 
-        return $survey;
+        return redirect()->route('survey.show', ['id' => $survey->id]);
     }
 
     /**
@@ -106,6 +106,7 @@ class SurveyController extends Controller
      */
     public function destroy(Survey $survey)
     {
-        return $survey->delete();
+        $survey->delete();
+        return back();
     }
 }

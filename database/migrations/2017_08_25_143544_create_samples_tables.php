@@ -20,7 +20,7 @@ class CreateSamplesTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('sample_survey', function (Blueprint $table) {
+        Schema::create('sample_surveys', function (Blueprint $table) {
             $table->integer('sample_id')->unsigned();
             $table->foreign('sample_id')->references('id')->on('answers');
 
@@ -42,7 +42,7 @@ class CreateSamplesTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('sample_subject', function (Blueprint $table) {
+        Schema::create('sample_subjects', function (Blueprint $table) {
             $table->integer('sample_id')->unsigned();
             $table->foreign('sample_id')->references('id')->on('answers');
 
@@ -68,7 +68,7 @@ class CreateSamplesTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('answer_option', function (Blueprint $table) {
+        Schema::create('answer_options', function (Blueprint $table) {
             $table->integer('answer_id')->unsigned();
             $table->foreign('answer_id')->references('id')->on('answers');
 

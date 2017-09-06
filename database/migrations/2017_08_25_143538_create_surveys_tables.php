@@ -37,7 +37,7 @@ class CreateSurveysTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('question_question', function (Blueprint $table) {
+        Schema::create('question_questions', function (Blueprint $table) {
             $table->integer('father_id')->unsigned();
             $table->foreign('father_id')->references('id')->on('questions');
 
@@ -60,7 +60,7 @@ class CreateSurveysTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('option_question', function (Blueprint $table) {
+        Schema::create('option_questions', function (Blueprint $table) {
             $table->integer('option_id')->unsigned();
             $table->foreign('option_id')->references('id')->on('options');
 
