@@ -116,6 +116,7 @@
                     <label for="InputCollumn1">Collumn value: </label>
                     <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
                     <label for="InputType1">Collumn type: </label>
+<<<<<<< HEAD
                     <select name="collumnType[]">
                         <option value="1">Unique</option>
                         <option value="2">Multiple</option>
@@ -150,11 +151,17 @@
                     </select>
                     <label for="InputStatement1">Collumn statement: </label>
                     <textarea name="collumnStatement[]" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
+=======
+                    <input type="text" name="collumnType[]" class="form-control" id="InputType1" placeholder="Enter collumn type">
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="statement" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
+>>>>>>> f5cfe68f8872c1f2b97045f6ef482b9aa0e5dad8
                 </div>
                 <div class="form-group">
                     <label for="InputCollumn1">Collumn value: </label>
                     <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
                     <label for="InputType1">Collumn type: </label>
+<<<<<<< HEAD
                     <select name="collumnType[]">
                         <option value="1">Unique</option>
                         <option value="2">Multiple</option>
@@ -163,11 +170,17 @@
                     </select>
                     <label for="InputStatement1">Collumn statement: </label>
                     <textarea name="collumnStatement[]" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
+=======
+                    <input type="text" name="collumnType[]" class="form-control" id="InputType1" placeholder="Enter collumn type">
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="statement" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
+>>>>>>> f5cfe68f8872c1f2b97045f6ef482b9aa0e5dad8
                 </div>
                 <div class="form-group">
                     <label for="InputCollumn1">Collumn value: </label>
                     <input type="text" name="collumn[]" class="form-control" id="InputCollumn1" placeholder="Enter collumn value">
                     <label for="InputType1">Collumn type: </label>
+<<<<<<< HEAD
                     <select name="collumnType[]">
                         <option value="1">Unique</option>
                         <option value="2">Multiple</option>
@@ -176,6 +189,11 @@
                     </select>
                     <label for="InputStatement1">Collumn statement: </label>
                     <textarea name="collumnStatement[]" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
+=======
+                    <input type="text" name="collumnType[]" class="form-control" id="InputType1" placeholder="Enter collumn type">
+                    <label for="InputStatement1">Collumn statement: </label>
+                    <textarea name="statement" class="form-control" id="InputStatement1" placeholder="Enter question statement" rows="8" cols="80"></textarea>
+>>>>>>> f5cfe68f8872c1f2b97045f6ef482b9aa0e5dad8
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
