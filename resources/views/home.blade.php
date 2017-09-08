@@ -18,7 +18,11 @@
                     <a href="{{ route('survey.index') }}" class="btn btn-default">Pesquisas</a>
                     <a href="{{ route('sample.index') }}" class="btn btn-default">Amostras</a>
                     <a href="{{ route('subject.index') }}" class="btn btn-default">Respondentes</a>
-                    <a href="{{ route('form.index') }}" class="btn btn-default">Questionário</a>
+
+                    <hr>
+                    @foreach($surveys as $survey)
+                        <a href="{{ route('form.index', $survey->id) }}" class="btn btn-default">Questionário - {{ $survey->name }}</a>
+                    @endforeach
                 </div>
             </div>
         </div>

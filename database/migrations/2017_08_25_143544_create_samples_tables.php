@@ -20,14 +20,14 @@ class CreateSamplesTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('sample_surveys', function (Blueprint $table) {
+        Schema::create('sample_survey', function (Blueprint $table) {
             $table->integer('sample_id')->unsigned();
             $table->foreign('sample_id')->references('id')->on('answers');
 
             $table->integer('survey_id')->unsigned();
             $table->foreign('survey_id')->references('id')->on('surveys');
 
-            $table->boolean('active')->default(false);
+            $table->boolean('active')->default(true);
 
             $table->unique(['sample_id','survey_id']);
 
@@ -42,7 +42,7 @@ class CreateSamplesTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('sample_subjects', function (Blueprint $table) {
+        Schema::create('sample_subject', function (Blueprint $table) {
             $table->integer('sample_id')->unsigned();
             $table->foreign('sample_id')->references('id')->on('answers');
 
@@ -59,16 +59,16 @@ class CreateSamplesTables extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('subject_id')->unsigned();
-            $table->foreign('subject_id')->references('id')->on('subjects');
             $table->integer('question_id')->unsigned();
             $table->foreign('question_id')->references('id')->on('questions');
+            $table->integer('subject_id')->unsigned();
+            $table->foreign('subject_id')->references('id')->on('subjects');
             $table->text('value')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('answer_options', function (Blueprint $table) {
+        Schema::create('answer_option', function (Blueprint $table) {
             $table->integer('answer_id')->unsigned();
             $table->foreign('answer_id')->references('id')->on('answers');
 

@@ -12,4 +12,9 @@ class Option extends Model
     {
         return $this->belongsToMany('App\Question');
     }
+
+    public function jumps()
+    {
+        return $this->belongsToMany('App\Jump');
+    }
 }

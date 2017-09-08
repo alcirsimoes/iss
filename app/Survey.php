@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Survey extends Model
 {
-    protected $fillable = ['name', 'init_at', 'end_at', 'active'];
+    protected $fillable = ['name', 'init_at', 'end_at', 'intro', 'active'];
 
     public function samples()
     {
-        return $this->hasMany('App\Sample');
+        return $this->belongsToMany('App\Sample');
     }
 
     public function questions()

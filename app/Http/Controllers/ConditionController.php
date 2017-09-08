@@ -2,33 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Survey;
-use App\Subject;
+use App\Condition;
 use Illuminate\Http\Request;
 
-class FormController extends Controller
+class ConditionController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Survey $survey, Subject $subject)
+    public function index()
     {
-        if($subject->id)
-            return view('form.create', compact('survey','subject'));
+        //
+    }
 
-        return view('form.index', compact('survey'));
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -45,10 +41,10 @@ class FormController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Condition  $condition
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Condition $condition)
     {
         //
     }
@@ -56,10 +52,10 @@ class FormController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Condition  $condition
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Condition $condition)
     {
         //
     }
@@ -68,10 +64,10 @@ class FormController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Condition  $condition
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Condition $condition)
     {
         //
     }
@@ -79,10 +75,10 @@ class FormController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Condition  $condition
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Condition $condition)
     {
         //
     }

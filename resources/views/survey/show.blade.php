@@ -7,6 +7,7 @@
             <h3>{{ $survey->name }}</h3>
 
             <a class="btn btn-primary" href="{{ route('question.create', ['id'=>$survey->id]) }}" role="button">New question</a>
+            <a class="btn btn-default" href="{{ route('sample.create', ['id'=>$survey->id]) }}" role="button">New sample</a>
 
             <div class="panel-body">
                   <table>

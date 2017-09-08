@@ -27,4 +27,6 @@ Route::resource('survey', 'SurveyController');
 Route::resource('sample', 'SampleController');
 Route::resource('subject', 'SubjectController');
 Route::resource('question', 'QuestionController');
-Route::resource('form', 'FormController');
+
+Route::get('form/{survey}/{subject?}', 'FormController@index')->name('form.index');
+Route::get('form/{survey}/{subject}', 'FormController@index')->name('form.create');

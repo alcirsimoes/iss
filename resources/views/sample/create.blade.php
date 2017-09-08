@@ -6,6 +6,8 @@
         <div class="col-md-10 col-md-offset-1">
             <form class="form" action="{{ route('sample.store') }}" method="post">
                 {{ csrf_field() }}
+                <input type="hidden" name="survey_id" value="{{ $survey->id }}">
+
                 <div class="form-group">
                     <label for="InputName">Sample name: </label>
                     <input type="text" name="name" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Enter sample name">

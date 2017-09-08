@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Survey;
 use App\Sample;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class SampleController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -34,9 +35,12 @@ class SampleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('sample.create');
+        $survey = New Survey;
+        if($request->has('id')) $survey = Survey::find(request('id'));
+
+        return view('sample.create', compact('survey'));
     }
 
     /**
@@ -47,15 +51,18 @@ class SampleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $valid = $request->validate([
             'name' => 'required|max:255'
         ]);
 
-        $sample = new Sample;
-        $sample = $sample->fill($request->input());
-        $sample->saveOrFail();
+        $sample = Sample::create($request->all());
 
-        return $sample;
+        if ($survey_id = request('survey_id')) {
+            $survey = Survey::findOrFail($survey_id);
+            $survey->samples()->save($sample);
+        }
+
+        return redirect()->route('sample.show', $sample->id);
     }
 
     /**

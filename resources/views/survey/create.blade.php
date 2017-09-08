@@ -19,6 +19,10 @@
                     <label for="InputEndData">End date: </label>
                     <input type="date" name="end_at" class="form-control" id="InputEndData" placeholder="End date">
                 </div>
+                <div class="form-group">
+                    <label for="intro">End date: </label>
+                    <textarea name="intro" rows="8" cols="80"></textarea>
+                </div>
                 <div class="form-check">
                     <label class="form-check-label">
                         <input type="checkbox" name="active" value="1" class="form-check-input">

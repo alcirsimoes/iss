@@ -7,6 +7,7 @@
             <form class="form" action="{{ route('subject.store') }}" method="post">
                 {{ csrf_field() }}
                 <input type="hidden" name="sample_id" value="{{ $sample->id }}">
+                <input type="hidden" name="redirect" value="{{ request('r') }}">
                 <div class="form-group">
                     <label for="InputName">Name: </label>
                     <input type="text" name="name" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Enter subject name">

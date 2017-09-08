@@ -37,7 +37,7 @@ class CreateSurveysTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('question_questions', function (Blueprint $table) {
+        Schema::create('question_question', function (Blueprint $table) {
             $table->integer('father_id')->unsigned();
             $table->foreign('father_id')->references('id')->on('questions');
 
@@ -60,7 +60,7 @@ class CreateSurveysTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('option_questions', function (Blueprint $table) {
+        Schema::create('option_question', function (Blueprint $table) {
             $table->integer('option_id')->unsigned();
             $table->foreign('option_id')->references('id')->on('options');
 
@@ -73,6 +73,33 @@ class CreateSurveysTables extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('jumps', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->integer('condition_id')->unsigned();
+            $table->foreign('condition_id')->references('id')->on('options');
+
+            $table->integer('to_question_id')->unsigned();
+            $table->foreign('to_question_id')->references('id')->on('questions');
+
+            $table->timestamps();
+        });
+
+        Schema::create('conditions', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->integer('condition_id')->unsigned();
+            $table->foreign('condition_id')->references('id')->on('options');
+
+            $table->integer('to_question_id')->unsigned()->nullable();
+            $table->foreign('to_question_id')->references('id')->on('questions');
+
+            $table->integer('to_option_id')->unsigned()->nullable();
+            $table->foreign('to_option_id')->references('id')->on('options');
+
+            $table->timestamps();
+        });
+
     }
 
     /**
@@ -82,6 +109,8 @@ class CreateSurveysTables extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('conditions');
+        Schema::dropIfExists('jumps');
         Schema::dropIfExists('option_question');
         Schema::dropIfExists('options');
         Schema::dropIfExists('question_question');

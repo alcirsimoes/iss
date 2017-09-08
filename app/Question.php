@@ -17,4 +17,9 @@ class Question extends Model
     {
         return $this->belongsToMany('App\Option');
     }
+
+    public function jumps()
+    {
+        return $this->belongsToMany('App\Jump');
+    }
 }

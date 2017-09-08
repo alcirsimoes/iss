@@ -3,31 +3,63 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <form class="form" action="{{ route('survey.store') }}" method="post">
-                {{ csrf_field() }}
-                <div class="form-group">
-                    <label for="InputName">Survey name: </label>
-                    <input type="text" name="name" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Enter survey name">
-                    <small id="nameHelp" class="form-text text-muted">Insert a unique name to the survey.</small>
-                </div>
-                <div class="form-group">
-                    <label for="InputInitData">Initial date: </label>
-                    <input type="date" name="init_at" class="form-control" id="InputInitData" placeholder="Initial date">
-                </div>
-                <div class="form-group">
-                    <label for="InputEndData">End date: </label>
-                    <input type="date" name="end_at" class="form-control" id="InputEndData" placeholder="End date">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" name="active" value="1" class="form-check-input">
-                        Active
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ $survey->name }} - {{ $survey->samples->first()->name }} - {{ $subject->name }}</div>
+            </div>
 
-            </form>
+            <div class="jumbotron">
+                <p class="lead">{{ $survey->intro }}</p>
+            </div>
+
+            <div class="panel-body">
+                @foreach($survey->questions as $question)
+                    <p><strong>{{ $question->name }}</strong> {!! $question->statement !!}</p>
+
+                    @switch($question->type)
+                        @case(1)
+                            Unique choice...
+                            @foreach($question->options as $option)
+                                <p>{{ $option->statement }}</p>
+                                <input type="radio"
+                                    name="question[{{ $question->id }}]"
+                                    value="{{ $option->value }}"
+                                />
+                            @endforeach
+                            @break
+
+                        @case(2)
+                            Multiple choice...
+                            @foreach($question->options as $option)
+                                <p>{{ $option->statement }}</p>
+                                <input type="checkbox"
+                                    name="question[{{ $question->id }}][]"
+                                    value="{{ $option->value }}"
+                                />
+                            @endforeach
+                            @break
+
+                        @case(3)
+                            Open answer...
+                            <textarea name="question[{{ $question->id }}]" rows="8" cols="80"></textarea>
+                            @break
+
+                        @case(4)
+                            Ordering answer...
+                            <textarea name="question[{{ $question->id }}]" rows="8" cols="80"></textarea>
+                            @break
+
+                        @case(5)
+                            Grade answer...
+                            <textarea name="question[{{ $question->id }}]" rows="8" cols="80"></textarea>
+                            @break
+
+                        @default
+                            Invalid question type...
+                    @endswitch
+
+                @endforeach
+            </div>
         </div>
     </div>
 </div>

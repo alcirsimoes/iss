@@ -35,7 +35,8 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        $sample = Sample::findOrFail(request('id'));
+        $sample = new Sample;
+        if (request('id')) $sample = Sample::find(request('id'));
 
         return view('subject.create')->with(compact('sample'));
     }
@@ -48,15 +49,21 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $valid = $request->validate([
             'name' => 'required|max:255',
         ]);
 
-        $subject = new Subject;
-        $subject = $subject->fill($request->input());
-        $subject->saveOrFail();
+        $subject = Subject::create($request->all());
 
-        return $subject;
+        if ($sample_id = request('sample_id')) {
+            $sample = Sample::findOrFail($sample_id);
+            $sample->subjects()->save($subject);
+
+            if (request('redirect'))
+                return redirect()->route('form.create', [$sample->surveys->first()->id, $subject->id]);
+        }
+
+        return redirect()->route('subject.show', $subject->id);
     }
 
     /**
@@ -90,7 +97,7 @@ class SubjectController extends Controller
      */
     public function update(Request $request, Subject $subject)
     {
-        $this->validate($request, [
+        $valid = $request->validate([
             'name' => 'required|max:255',
         ]);
 
