@@ -5,11 +5,11 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ $survey->name }} - {{ $survey->samples->first()->name }} - {{ $subject->name }}</div>
+                <div class="panel-heading">{{ $survey->name }} - {{ $sample->name }} - {{ $subject->name }}</div>
             </div>
 
             <div class="jumbotron">
-                <p class="lead">{{ $survey->intro }}</p>
+                <p class="lead">{!! $survey->intro !!}</p>
             </div>
 
             <form action="{{ route('form.store', [$survey->id, $subject->id]) }}" method="post">
@@ -44,5 +44,12 @@
             </div>
         </div>
     </div>
-</div>
+
+    @section('scripts')
+        @parent
+        <script type="text/javascript">
+            var answers = {{ json_encode($answers) }};
+        </script>
+    @endsection
+
 @endsection

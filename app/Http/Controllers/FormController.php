@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Survey;
+use App\Question;
+use App\Option;
 use App\Subject;
 use App\Answer;
 use Illuminate\Http\Request;
@@ -26,14 +28,19 @@ class FormController extends Controller
      */
     public function index(Survey $survey, Subject $subject)
     {
+        $sample = $survey->has('samples')->first();
+
+        if(!$sample)
+            return redirect()->route('sample.create', ['id'=>$survey->id]);
+
         if($subject->id){
-            $answers = Answer::where([['survey_id', $survey->id], ['subject_id', $subject->id]]);
+            $answers = Answer::where([['survey_id', $survey->id], ['subject_id', $subject->id]])->get();
             $questions = $survey->questions;
-            dd($questions);
-            return view('form.create', compact('survey','subject','questions','answers'));
+
+            return view('form.create', compact('survey','sample','subject','questions','answers'));
         }
 
-        return view('form.index', compact('survey'));
+        return view('form.index', compact('survey','sample'));
     }
 
     /**
@@ -44,7 +51,47 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        $answers = [];
+        if ($inputs = request('question'))
+            foreach($inputs as $id => $input){
+                $question = Question::findOrFail($id);
+
+                switch($question->type){
+                    case 1:
+                        $answers [] = Option::findOrFail($input);
+                    break;
+
+                    case 2:
+                        foreach ($input as $key => $option){
+                            if ($key == 'other' && $other = ucfirst(trim($option))){
+                                $question->options()->save($other = Option::create(['statement'=>$other]));
+                                $answers [] = $other;
+                            }
+
+                            elseif($option)
+                                $answers [] = Option::findOrFail($key);
+                        }
+                    break;
+
+                    case 3:
+                        $answers [] = $input;
+                    break;
+
+                    case 4:
+                        $answers [] = $input;
+                    break;
+
+                    case 5:
+                        $answers [] = $input;
+                    break;
+
+                    default:
+                        dd($question->id . ': invalid question type.');
+                    break;
+                }
+            }
+
+        return $answers;
     }
 
     /**

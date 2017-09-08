@@ -56,32 +56,113 @@
             @break
 
         @case(3)
-            @if($question->options)
-                @foreach($question->options as $option)
-                <div class="form-group">
-                    <label for="question{{ $question->id }}">{{ $option->statement }}</label>
-                    <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control" id="question{{ $question->id }}" rows="3"></textarea>
-                </div>
-                @endforeach
-            @else
+            @forelse ($question->options as $option)
+            <div class="form-group">
+                <label for="question{{ $question->id }}">{{ $option->statement }}</label>
+                <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control" id="question{{ $question->id }}" rows="3"></textarea>
+            </div>
+            @empty
                 <div class="form-group">
                     <textarea name="question[{{ $question->id }}]" class="form-control" rows="3"></textarea>
                 </div>
-            @endif
+            @endforelse
             @break
 
         @case(4)
             @foreach($question->options as $option)
-            <div class="form-group">
-                <label for="">{{ $option->statement }}</label>
-                <select class="form-control" name="question[{{ $question->id }}][{{ $option->id }}]">
-                    <option value="">Ordem...</option>
-                    @for($i = 1; $i <= count($question->options); $i ++))
-                    <option value="{{ $i }}">{{ $i }}°</option>
-                    @endfor
-                </select>
+            <div class="form-group row">
+                <label for="" class="col-sm-6 col-form-label">{{ $option->statement }}</label>
+                <div class="col-sm-3">
+                    <select class="form-control question_{{ $question->id }}" name="question[{{ $question->id }}][{{ $option->id }}]">
+                        <option value="">Ordem...</option>
+                        @for($i = 1; $i <= count($question->options); $i ++)
+                        <option value="{{ $i }}">{{ $i }}°</option>
+                        @endfor
+                    </select>
+                </div>
             </div>
             @endforeach
+
+            @section('scripts')
+                @parent
+                <script type="text/javascript">
+                    var original_{{ $question->id }} = _.range({{ count($question->options)+1 }});;
+                    var question_{{ $question->id }} = _.range({{ count($question->options)+1 }});;
+                    var previous_{{ $question->id }};
+
+                    $('.question_{{ $question->id }}').on('focus', function () {
+                        previous_{{ $question->id }} = this.value;
+                    }).change(function() {
+                        var option = $(this).children();
+                        var val = $(this).val();
+                        var selected, temp;
+
+                        getCurrentOptions({{ $question->id }});
+                        temp = question_{{ $question->id }}.slice();
+
+                        makeOptions({{ $question->id }});
+                        $(this).children().remove();
+
+                        if (val && !_.some(temp, val)) {
+                            temp.push(Number(val));
+                            temp.sort();
+                        }
+
+                        for(n in temp){
+                            selected = null;
+                            if (val == temp[n]) var selected = " selected='selected'";
+                            if (temp[n] == 0)
+                                $(this).append("<option value=''"+selected+">Ordem...</option>")
+                            else
+                                $(this).append("<option value='"+temp[n]+"'"+selected+">"+temp[n]+"°</option>")
+                        }
+
+                    });
+
+                    function makeOptions(id){
+                        $(".question_"+id).each(function() {
+                            var option = $(this).children();
+                            var val = $(this).val();
+                            var selected;
+                            var temp = window['question_'+id].slice();
+
+                            $(option).remove();
+
+                            if (val && !_.some(temp, val)) {
+                                temp.push(Number(val));
+                                temp.sort();
+                            }
+
+                            for(n in temp){
+                                selected = null;
+                                if (val == temp[n]) var selected = " selected='selected'";
+                                if (temp[n] == 0)
+                                    $(this).append("<option value=''"+selected+">Ordem...</option>")
+                                else
+                                    $(this).append("<option value='"+temp[n]+"'"+selected+">"+temp[n]+"°</option>")
+                            }
+                        });
+                    }
+
+                    function getCurrentOptions(id){
+                        var array = [];
+                        var variable = window['original_'+id].slice();
+                        var original = window['original_'+id];
+
+                        $(".question_"+id).each(function() {
+                            array.push(Number($(this).val()));
+                        });
+
+                        for(n in array){
+                            if (array[n]) variable = variable.filter(function(item) {
+                                return item != array[n];
+                            })
+                        }
+                        window['question_'+id] = variable;
+                    }
+                </script>
+            @endsection
+
             @break
 
         @case(5)
