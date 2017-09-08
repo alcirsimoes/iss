@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['survey_id', 'name', 'statement', 'type', 'order', 'other'];
+    protected $fillable = ['survey_id', 'name', 'statement', 'type', 'format', 'order', 'other'];
 
     public function questions()
     {
-        return $this->belongsToMany('App\Question', 'question_questions', 'father_id', 'question_id');
+        return $this->belongsToMany('App\Question', 'question_question', 'father_id', 'question_id');
+    }
+
+    public function father()
+    {
+        return $this->belongsToMany('App\Question', 'question_question', 'question_id', 'father_id');
     }
 
     public function options()

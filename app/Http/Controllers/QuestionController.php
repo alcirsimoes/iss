@@ -64,7 +64,7 @@ class QuestionController extends Controller
             if ($cv) {
                 $collumns [] = new \App\Question(['survey_id'=>request('survey_id'), 'name'=>$cv, 'statement'=>$collumnStatement[$ck],  'type'=>$collumnType[$ck]]);
                 $collumnsOptions = [];
-                foreach(request('collumnOption'.$ck) as $cok => $cov)
+                if (request('collumnOption'.$ck)) foreach(request('collumnOption'.$ck) as $cok => $cov)
                     if ($cov) $collumnsOptions[] = new \App\Option(['statement' => $cov, 'value' => $cok]);
 
                 if (isset($collumnsOptions[0])) $collumns[$cok]->options()->saveMany($collumnsOptions);

@@ -30,3 +30,4 @@ Route::resource('question', 'QuestionController');
 
 Route::get('form/{survey}/{subject?}', 'FormController@index')->name('form.index');
 Route::get('form/{survey}/{subject}', 'FormController@index')->name('form.create');
+Route::post('form/{survey}/{subject}', 'FormController@store')->name('form.store');

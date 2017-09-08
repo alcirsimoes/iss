@@ -31,6 +31,7 @@ class CreateSurveysTables extends Migration
             $table->string('name')->nullable();
             $table->text('statement')->nullable();
             $table->integer('type');
+            $table->integer('format')->nullable();
             $table->integer('order')->nullable();
             $table->boolean('other')->nullable();
             $table->timestamps();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Survey;
 use App\Subject;
+use App\Answer;
 use Illuminate\Http\Request;
 
 class FormController extends Controller
@@ -25,8 +26,12 @@ class FormController extends Controller
      */
     public function index(Survey $survey, Subject $subject)
     {
-        if($subject->id)
-            return view('form.create', compact('survey','subject'));
+        if($subject->id){
+            $answers = Answer::where([['survey_id', $survey->id], ['subject_id', $subject->id]]);
+            $questions = $survey->questions;
+            dd($questions);
+            return view('form.create', compact('survey','subject','questions','answers'));
+        }
 
         return view('form.index', compact('survey'));
     }
@@ -39,7 +44,7 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request->all();
     }
 
     /**

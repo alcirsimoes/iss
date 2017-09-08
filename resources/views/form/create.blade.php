@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">{{ $survey->name }} - {{ $survey->samples->first()->name }} - {{ $subject->name }}</div>
             </div>
@@ -12,53 +12,35 @@
                 <p class="lead">{{ $survey->intro }}</p>
             </div>
 
-            <div class="panel-body">
-                @foreach($survey->questions as $question)
-                    <p><strong>{{ $question->name }}</strong> {!! $question->statement !!}</p>
+            <form action="{{ route('form.store', [$survey->id, $subject->id]) }}" method="post">
+                {{ csrf_field() }}
+                    @foreach($questions as $question)
+                        @if($question->format != 3 && $question->father->isEmpty())
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><strong>{{ $question->name }}</strong> {!! $question->statement !!}</div>
+                        @endif
 
-                    @switch($question->type)
-                        @case(1)
-                            Unique choice...
-                            @foreach($question->options as $option)
-                                <p>{{ $option->statement }}</p>
-                                <input type="radio"
-                                    name="question[{{ $question->id }}]"
-                                    value="{{ $option->value }}"
-                                />
+                        @if($question->format == 3)
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><strong>{{ $question->name }}</strong> {!! $question->statement !!}</div>
+                            @foreach($question->questions as $collumn)
+                                @if($collumn->statement)
+                                <div class="panel-heading"><strong>{{ $collumn->name }}</strong> {!! $collumn->statement !!}</div>
+                                @endif
                             @endforeach
-                            @break
+                        @endif
 
-                        @case(2)
-                            Multiple choice...
-                            @foreach($question->options as $option)
-                                <p>{{ $option->statement }}</p>
-                                <input type="checkbox"
-                                    name="question[{{ $question->id }}][]"
-                                    value="{{ $option->value }}"
-                                />
-                            @endforeach
-                            @break
+                        @if($question->format != 3 && ($question->father->isEmpty() && $question->questions->isEmpty()))
+                            @include('form.partials.simple')
+                            </div>
+                        @elseif($question->format == 3)
+                            @include('form.partials.table')
+                            </div>
+                        @endif
+                    @endforeach
 
-                        @case(3)
-                            Open answer...
-                            <textarea name="question[{{ $question->id }}]" rows="8" cols="80"></textarea>
-                            @break
-
-                        @case(4)
-                            Ordering answer...
-                            <textarea name="question[{{ $question->id }}]" rows="8" cols="80"></textarea>
-                            @break
-
-                        @case(5)
-                            Grade answer...
-                            <textarea name="question[{{ $question->id }}]" rows="8" cols="80"></textarea>
-                            @break
-
-                        @default
-                            Invalid question type...
-                    @endswitch
-
-                @endforeach
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
             </div>
         </div>
     </div>
