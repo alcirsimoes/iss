@@ -65,7 +65,18 @@ class SurveyController extends Controller
      */
     public function show(Survey $survey)
     {
-        return view('survey.show')->with(compact('survey'));
+        $questions = $survey->questions;
+
+        foreach ($questions as $key => $question) {
+            if ($question->order)
+                continue;
+            else {
+                $question->order = $key;
+                $question->save();
+            }
+        }
+
+        return view('survey.show')->with(compact('survey','questions'));
     }
 
     /**

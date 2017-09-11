@@ -10,8 +10,8 @@
             <a class="btn btn-default" href="{{ route('sample.create', ['id'=>$survey->id]) }}" role="button">New sample</a>
 
             <div class="panel-body">
-                  <table>
-                  @foreach($survey->questions as $question)
+                  <table class="table">
+                  @foreach($questions as $question)
                   <tr>
                       <td>
                           <a href="{{ route('question.show', $question->id) }}">{{ $question->name }}</a>

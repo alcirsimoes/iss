@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\UserAdmin;
+use App\UserSupervisor;
+use App\UserInterviewer;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,7 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        $users = User::all();
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -93,5 +97,15 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         return $user->delete();
+    }
+
+    public function admin(User $user)
+    {
+        return UserAdmin::create(['user_id' => $user->id]);
+    }
+
+    public function supervisor(User $user)
+    {
+        return UserSupervisor::create(['user_id' => $user->id]);
     }
 }

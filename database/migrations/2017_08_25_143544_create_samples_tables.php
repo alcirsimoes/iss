@@ -38,6 +38,12 @@ class CreateSamplesTables extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('company')->nullable();
+            $table->string('address')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('ocupation')->nullable();
+            $table->string('telephone')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -49,10 +55,9 @@ class CreateSamplesTables extends Migration
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects');
 
-            $table->unique(['sample_id','subject_id']);
+            $table->dateTime('finished_at')->nullable();
 
-            $table->timestamps();
-            $table->softDeletes();
+            $table->unique(['sample_id','subject_id']);
         });
 
         Schema::create('answers', function (Blueprint $table) {

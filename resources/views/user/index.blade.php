@@ -5,18 +5,18 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><a href="{{ route('survey.create') }}" class="btn btn-default">New survey</a></div>
+                <div class="panel-heading"><a href="{{ route('user.create') }}" class="btn btn-default">New user</a></div>
 
                 <div class="panel-body">
                     <table class="table">
-                        @foreach($surveys as $survey)
+                        @foreach($users as $user)
                         <tr>
                             <td>
-                                <a href="{{ route('survey.show', $survey->id) }}">{{ $survey->name }}</a>
+                                <a href="{{ route('user.show', $user->id) }}">{{ $user->name }}</a>
                             </td>
                             @if(Auth::user()->isAdmin)
                             <td>
-                                <form action="{{ route('survey.destroy', $survey->id) }}" method="post">
+                                <form action="{{ route('user.destroy', $user->id) }}" method="post">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <button type="submit" class="btn btn-danger">delete</button>

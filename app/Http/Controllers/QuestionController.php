@@ -81,8 +81,10 @@ class QuestionController extends Controller
         if (isset($collumns[0])) {
             $question->questions()->saveMany($collumns);
 
-            if (isset($collumnsOptions[0])) foreach($collumns as $ck => $cv)
-                if (isset($options[0])) $cv->options()->saveMany($options);
+            // if (!isset($collumnsOptions[0])){
+            //     foreach($collumns as $ck => $cv)
+            //         if (isset($options[0])) $cv->options()->saveMany($options);
+            // }
         }
 
         return redirect()->route('survey.show', request('survey_id'));

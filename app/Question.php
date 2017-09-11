@@ -8,6 +8,11 @@ class Question extends Model
 {
     protected $fillable = ['survey_id', 'name', 'statement', 'type', 'format', 'order', 'other'];
 
+    public function answer()
+    {
+        return $this->hasOne('App\Answer');
+    }
+
     public function questions()
     {
         return $this->belongsToMany('App\Question', 'question_question', 'father_id', 'question_id');

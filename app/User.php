@@ -32,6 +32,16 @@ class User extends Authenticatable
         return $this->hasOne('App\UserAdmin');
     }
 
+    public function isSupervisor()
+    {
+        return $this->hasOne('App\UserSupervisor');
+    }
+
+    public function isInterviewer()
+    {
+        return $this->hasOne('App\UserInterviewer');
+    }
+
     public function isBlack()
     {
         return $this->hasOne('App\Blacklist');

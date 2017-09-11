@@ -4,17 +4,18 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <h3>{{ $survey->name }}</h3>
-
-            <a class="btn btn-primary" href="{{ route('question.create', ['id'=>$survey->id]) }}" role="button">New question</a>
-
-            <div class="panel-body">
-              <ul>
-              @foreach($survey->questions as $question)
-                  <a href="{{ route('question.show', $question->id) }}">{{ $question->name }}</a>
-              @endforeach
-              </ul>
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ $survey->name }} - {{ $sample->name }} - {{ $subject->name }}</div>
             </div>
+
+            <div class="jumbotron">
+                <p class="lead">{!! $survey->intro !!}</p>
+            </div>
+
+            <form action="{{ route('form.current') }}" method="post">
+                {{ csrf_field() }}
+                <button type="submit" class="btn btn-primary">Começar</button>
+            </form>
         </div>
     </div>
 </div>

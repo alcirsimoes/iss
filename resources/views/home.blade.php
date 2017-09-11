@@ -14,10 +14,14 @@
                         </div>
                     @endif
 
+                    @if(Auth::user()->isAdmin || Auth::user()->isSupervisor)
                     <a href="{{ route('user.index') }}" class="btn btn-default">Usuários</a>
+                    @endif
+                    @if(Auth::user()->isAdmin)
                     <a href="{{ route('survey.index') }}" class="btn btn-default">Pesquisas</a>
                     <a href="{{ route('sample.index') }}" class="btn btn-default">Amostras</a>
-                    <a href="{{ route('subject.index') }}" class="btn btn-default">Respondentes</a>
+                    @endif
+                    <!--a href="{{ route('subject.index') }}" class="btn btn-default">Respondentes</a-->
 
                     <hr>
                     @foreach($surveys as $survey)
