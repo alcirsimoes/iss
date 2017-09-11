@@ -77,12 +77,12 @@
             @forelse ($question->options as $option)
             <div class="form-group">
                 <label for="question{{ $question->id }}">{{ $option->statement }}</label>
-                <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control" id="question{{ $question->id }}" rows="3">{{ $text_values[$option->id] }}</textarea>
+                <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control" id="question{{ $question->id }}" rows="3">@if(isset($answer)){{ $text_values[$option->id] }}@endif</textarea>
             </div>
             @empty
                 <div class="form-group">
                     @if(isset($answer))
-                    <textarea name="question[{{ $question->id }}]" class="form-control" rows="3">{{ $answer->value }}</textarea>
+                    <textarea name="question[{{ $question->id }}]" class="form-control" rows="3">@if(isset($answer)){{ $answer->value }}@endif</textarea>
                     @else
                     <textarea name="question[{{ $question->id }}]" class="form-control" rows="3"></textarea>
                     @endif
@@ -101,7 +101,11 @@
                     <select class="form-control question_{{ $question->id }}" name="question[{{ $question->id }}][{{ $option->id }}]">
                         <option value="">Ordem...</option>
                         @for($i = 1; $i <= count($question->options); $i ++)
-                        <option value="{{ $i }}">{{ $i }}°</option>
+                            @if(isset($answer) && $text_values[$option->id] == $i)
+                            <option value="{{ $i }}" selected="selected">{{ $i }}°</option>
+                            @else
+                            <option value="{{ $i }}">{{ $i }}°</option>
+                            @endif
                         @endfor
                     </select>
                 </div>
@@ -201,7 +205,11 @@
                     <select class="form-control" name="question[{{ $question->id }}][{{ $option->id }}]">
                         <option value="">Nota...</option>
                         @for($i = 1; $i < 11; $i ++))
-                        <option value="{{ $i }}">{{ $i }}</option>
+                            @if(isset($answer) && $text_values[$option->id] == $i)
+                            <option value="{{ $i }}" selected="selected">{{ $i }}</option>
+                            @else
+                            <option value="{{ $i }}">{{ $i }}</option>
+                            @endif
                         @endfor
                     </select>
                 </div>

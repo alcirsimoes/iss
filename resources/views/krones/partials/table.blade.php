@@ -3,7 +3,7 @@
     <input type="hidden" name="next" value="{{ $question->order +1 }}">
 
     <?php $other = false ?>
-    
+
     <table class="table">
         <thead>
             <tr>
@@ -49,7 +49,7 @@
                 <td>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="text" name="question[{{ $question->id }}][other_option]" value="" placeholder="Outra...">
+                            <input class="form-check-input" type="text" name="other[{{ $question->id }}]" value="" placeholder="Outra...">
                         </label>
                     </div>
                 </td>
