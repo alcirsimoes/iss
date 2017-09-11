@@ -62,30 +62,30 @@ class QuestionController extends Controller
         $collumnStatement = request('collumnStatement');
         foreach(request('collumn') as $ck => $cv) {
             if ($cv) {
-                $collumns [] = new \App\Question(['survey_id'=>request('survey_id'), 'name'=>$cv, 'statement'=>$collumnStatement[$ck],  'type'=>$collumnType[$ck]]);
+                $collumns [] = Question::create(['survey_id'=>request('survey_id'), 'name'=>$cv, 'statement'=>$collumnStatement[$ck], 'type'=>$collumnType[$ck]]);
                 $collumnsOptions = [];
                 if (request('collumnOption'.$ck)) foreach(request('collumnOption'.$ck) as $cok => $cov)
-                    if ($cov) $collumnsOptions[] = new \App\Option(['statement' => $cov, 'value' => $cok]);
+                    if ($cov) $collumnsOptions[] = Option::create(['statement' => $cov, 'value' => $cok]);
 
-                if (isset($collumnsOptions[0])) $collumns[$cok]->options()->saveMany($collumnsOptions);
+                if (isset($collumnsOptions[0])) $collumns[$ck]->options()->saveMany($collumnsOptions);
             }
 
         }
 
         $options = [];
         foreach(request('option') as $ok => $ov)
-            if ($ov) $options[] = new \App\Option(['statement' => $ov, 'value' => $ok]);
+            if ($ov) $options[] = Option::create(['statement' => $ov, 'value' => $ok]);
 
         if (isset($options[0])) $question->options()->saveMany($options);
 
         if (isset($collumns[0])) {
             $question->questions()->saveMany($collumns);
 
-            foreach($collumns as $ck => $cv)
+            if (isset($collumnsOptions[0])) foreach($collumns as $ck => $cv)
                 if (isset($options[0])) $cv->options()->saveMany($options);
         }
 
-        return redirect()->route('question.show', $question->id);
+        return redirect()->route('survey.show', request('survey_id'));
     }
 
     /**

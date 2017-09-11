@@ -57,12 +57,12 @@ class CreateSamplesTables extends Migration
 
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('question_id')->unsigned();
-            $table->foreign('question_id')->references('id')->on('questions');
+            $table->integer('sample_id')->unsigned();
+            $table->foreign('sample_id')->references('id')->on('samples');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->integer('question_id')->unsigned();
+            $table->foreign('question_id')->references('id')->on('questions');
             $table->text('value')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -78,6 +78,24 @@ class CreateSamplesTables extends Migration
             $table->text('value')->nullable();
 
             $table->unique(['answer_id','option_id']);
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('answer_option_option', function (Blueprint $table) {
+            $table->integer('answer_id')->unsigned();
+            $table->foreign('answer_id')->references('id')->on('answers');
+
+            $table->integer('option_id')->unsigned();
+            $table->foreign('option_id')->references('id')->on('options');
+
+            $table->integer('sub_option_id')->unsigned();
+            $table->foreign('sub_option_id')->references('id')->on('options');
+
+            $table->text('value')->nullable();
+
+            $table->unique(['answer_id','option_id','sub_option_id']);
 
             $table->timestamps();
             $table->softDeletes();

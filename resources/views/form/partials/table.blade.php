@@ -1,13 +1,17 @@
 <div class="panel-body">
     <?php $other = false ?>
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Opções</th>
                 <th>{{ $question->name }}</th>
 
                 @foreach($question->questions as $collumn)
-                <th>{{ $collumn->name }}</th>
+                    @forelse($collumn->options as $subCollumn)
+                    <th>{{ $subCollumn->statement }}</th>
+                    @empty
+                    <th>{{ $collumn->name }}</th>
+                    @endforelse
                 @endforeach
             </tr>
         </thead>
@@ -22,9 +26,15 @@
                 </td>
 
                 @foreach($question->questions as $collumn)
-                <td>
-                    @include('form.partials.collumnField')
-                </td>
+                    @forelse($collumn->options as $subCollumn)
+                    <td>
+                        @include('form.partials.collumnField')
+                    </td>
+                    @empty
+                    <td>
+                        @include('form.partials.collumnField')
+                    </td>
+                    @endforelse
                 @endforeach
             </tr>
             @endforeach

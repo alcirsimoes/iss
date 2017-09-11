@@ -29,6 +29,18 @@ class CreateUsersTables extends Migration
             $table->timestamps();
         });
 
+        Schema::create('user_supervisor', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
+
+        Schema::create('user_interviewer', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
+
         Schema::create('blacklists', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');

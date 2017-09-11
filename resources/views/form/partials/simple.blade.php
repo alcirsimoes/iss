@@ -1,6 +1,7 @@
 <div class="panel-body">
     @switch($question->type)
         @case(1)
+            <input type="hidden" name="question[{{ $question->id }}]" value="empty">
             @if ($question->format == 1)
             <select class="form-control" name="question[{{ $question->id }}]">
                 @foreach($question->options as $option)
@@ -10,7 +11,7 @@
                 @if ($question->other)
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="text" name="question[{{ $question->id }}]" value="other" placeholder="Outra...">
+                        <input class="form-check-input" type="text" name="other[{{ $question->id }}]" placeholder="Outra...">
                     </label>
                 </div>
                 @endif
@@ -28,7 +29,7 @@
                 @if ($question->other)
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="text" name="question[{{ $question->id }}][other]" value="other" placeholder="Outra...">
+                        <input class="form-check-input" type="text" name="other[{{ $question->id }}]" placeholder="Outra...">
                     </label>
                 </div>
                 @endif
@@ -48,7 +49,7 @@
                 @if ($question->other)
                 <div class="form-group">
                     <label class="form-label">
-                        <input class="form-control" type="text" name="question[{{ $question->id }}][other]" placeholder="Outra...">
+                        <input class="form-control" type="text" name="other[{{ $question->id }}]" placeholder="Outra...">
                     </label>
                 </div>
                 @endif
@@ -86,8 +87,8 @@
             @section('scripts')
                 @parent
                 <script type="text/javascript">
-                    var original_{{ $question->id }} = _.range({{ count($question->options)+1 }});;
-                    var question_{{ $question->id }} = _.range({{ count($question->options)+1 }});;
+                    var original_{{ $question->id }} = _.range({{ count($question->options)+1 }});
+                    var question_{{ $question->id }} = _.range({{ count($question->options)+1 }});
                     var previous_{{ $question->id }};
 
                     $('.question_{{ $question->id }}').on('focus', function () {
@@ -167,14 +168,16 @@
 
         @case(5)
             @foreach($question->options as $option)
-            <div class="form-group">
-                <label for="">{{ $option->statement }}</label>
-                <select class="form-control" name="question[{{ $question->id }}][{{ $option->id }}]">
-                    <option value="">Nota...</option>
-                    @for($i = 1; $i < 11; $i ++))
-                    <option value="{{ $i }}">{{ $i }}</option>
-                    @endfor
-                </select>
+            <div class="form-group row">
+                <label for="" class="col-sm-6 col-form-label">{{ $option->statement }}</label>
+                <div class="col-sm-3">
+                    <select class="form-control" name="question[{{ $question->id }}][{{ $option->id }}]">
+                        <option value="">Nota...</option>
+                        @for($i = 1; $i < 11; $i ++))
+                        <option value="{{ $i }}">{{ $i }}</option>
+                        @endfor
+                    </select>
+                </div>
             </div>
             @endforeach
             @break

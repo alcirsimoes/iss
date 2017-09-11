@@ -48,7 +48,7 @@
     @section('scripts')
         @parent
         <script type="text/javascript">
-            var answers = {{ json_encode($answers) }};
+            var answers = {!!$answers = json_encode($answers->toArray()) !!};
         </script>
     @endsection
 
