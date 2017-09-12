@@ -6,11 +6,19 @@
         <div class="col-md-10 col-md-offset-1">
             <h3>{{ $user->name }}</h3>
 
-            @if(Auth::user()->isAdmin)
-            <a class="btn btn-primary" href="{{ route('user.admin', ['id'=>$user->id]) }}" role="button">Set admin</a>
+            @if(Auth::user()->isDev)
+                @if($user->isAdmin)
+                <a class="btn btn-default" href="{{ route('user.unsetAdmin', ['id'=>$user->id]) }}" role="button">Remover admin</a>
+                @else
+                <a class="btn btn-default" href="{{ route('user.setAdmin', ['id'=>$user->id]) }}" role="button">Tornar admin</a>
+                @endif
             @endif
-            @if(Auth::user()->isAdmin || Auth::user()->isSupervisor)
-            <a class="btn btn-default" href="{{ route('user.supervisor', ['id'=>$user->id]) }}" role="button">Tornar Supervisor</a>
+            @if(Auth::user()->isAdmin )
+                @if($user->isSupervisor)
+                <a class="btn btn-default" href="{{ route('user.unsetSupervisor', ['id'=>$user->id]) }}" role="button">Remover Supervisor</a>
+                @else
+                <a class="btn btn-default" href="{{ route('user.setSupervisor', ['id'=>$user->id]) }}" role="button">Tornar Supervisor</a>
+                @endif
             @endif
 
             <div class="panel-body">

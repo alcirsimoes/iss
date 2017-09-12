@@ -62,7 +62,7 @@ class SampleController extends Controller
             $survey->samples()->save($sample);
         }
 
-        return redirect()->route('sample.show', $sample->id);
+        return redirect()->route('form.index', $survey->id);
     }
 
     /**

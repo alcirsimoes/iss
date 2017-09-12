@@ -27,6 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function isDev()
+    {
+        return $this->hasOne('App\UserDev');
+    }
+
     public function isAdmin()
     {
         return $this->hasOne('App\UserAdmin');

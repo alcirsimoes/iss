@@ -12,15 +12,15 @@
                 {{ csrf_field() }}
                 @if($question->format != 3 && $question->father->isEmpty())
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>{{ $question->name }}</strong> {!! $question->statement !!}</div>
+                    <div class="panel-heading">{!! $question->statement !!}</div>
                 @endif
 
                 @if($question->format == 3)
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>{{ $question->name }}</strong> {!! $question->statement !!}</div>
+                    <div class="panel-heading">{!! $question->statement !!}</div>
                     @foreach($question->questions as $collumn)
                         @if($collumn->statement)
-                        <div class="panel-heading"><strong>{{ $collumn->name }}</strong> {!! $collumn->statement !!}</div>
+                        <div class="panel-heading">{!! $collumn->statement !!}</div>
                         @endif
                     @endforeach
                 @endif

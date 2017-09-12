@@ -7,14 +7,14 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Opções</th>
-                <th>{{ $question->name }}</th>
+                <th>{!! $question->options_header !!}</th>
+                <th>{!! $question->answers_header !!}</th>
 
                 @foreach($question->questions as $collumn)
                     @forelse($collumn->options as $subCollumn)
                     <th>{{ $subCollumn->statement }}</th>
                     @empty
-                    <th>{{ $collumn->name }}</th>
+                    <th>{!! $collumn->answers_header !!}</th>
                     @endforelse
                 @endforeach
             </tr>

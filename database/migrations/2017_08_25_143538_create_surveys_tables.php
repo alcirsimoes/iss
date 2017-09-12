@@ -30,6 +30,9 @@ class CreateSurveysTables extends Migration
             $table->foreign('survey_id')->references('id')->on('surveys');
             $table->string('name')->nullable();
             $table->text('statement')->nullable();
+            $table->string('answers_header')->nullable();
+            $table->string('options_header')->nullable();
+            $table->text('attachment')->nullable();
             $table->integer('type');
             $table->integer('format')->nullable();
             $table->integer('order')->nullable();

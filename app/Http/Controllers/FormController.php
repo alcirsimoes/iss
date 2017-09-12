@@ -338,7 +338,6 @@ class FormController extends Controller
 
                 switch($question->type){
                     case 1:
-                    dd($request);
                         if ($question->other){
                             if ($other = ucfirst(trim($input)))
                                 $question->options()->save($selectedOption = Option::create(['statement'=>$other]));
@@ -368,7 +367,6 @@ class FormController extends Controller
                         if ($other = ucfirst(trim($input))){
                             // $selectedOption = $question->options()->orderBy('created_at', 'desc')->first();
                             $selectedOption = $question;
-                            dd($selectedOption);
                             $question->options()->save($selectedOption = Option::create(['statement'=>$other]));
                         }
 

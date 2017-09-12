@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\UserAdmin;
-use App\UserSupervisor;
 use App\UserInterviewer;
+use App\UserSupervisor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -99,13 +100,35 @@ class UserController extends Controller
         return $user->delete();
     }
 
-    public function admin(User $user)
+    public function setAdmin(User $user)
     {
-        return UserAdmin::create(['user_id' => $user->id]);
+        if (Auth::user()->isDev)
+            UserAdmin::create(['user_id' => $user->id]);
+
+        return back();
     }
 
-    public function supervisor(User $user)
+    public function unsetAdmin(User $user)
     {
-        return UserSupervisor::create(['user_id' => $user->id]);
+        if (Auth::user()->isDev)
+            $user->isAdmin()->delete();
+
+        return back();
+    }
+
+    public function setSupervisor(User $user)
+    {
+        if (Auth::user()->isAdmin)
+            UserSupervisor::create(['user_id' => $user->id]);
+
+        return back();
+    }
+
+    public function unsetSupervisor(User $user)
+    {
+        if (Auth::user()->isAdmin)
+            $user->isSupervisor()->delete();
+
+        return back();
     }
 }

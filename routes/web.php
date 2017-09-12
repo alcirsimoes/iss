@@ -22,8 +22,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('user/admin/{user}', 'UserController@admin')->name('user.admin');
-Route::get('user/supervisor/{user}', 'UserController@supervisor')->name('user.supervisor');
+Route::get('user/set_admin/{user}', 'UserController@setAdmin')->name('user.setAdmin');
+Route::get('user/unset_admin/{user}', 'UserController@unsetAdmin')->name('user.unsetAdmin');
+Route::get('user/set_supervisor/{user}', 'UserController@setSupervisor')->name('user.setSupervisor');
+Route::get('user/unset_supervisor/{user}', 'UserController@unsetSupervisor')->name('user.unsetSupervisor');
 
 Route::resource('user', 'UserController');
 Route::resource('survey', 'SurveyController');
