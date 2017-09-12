@@ -125,7 +125,7 @@
                 </div>
                 <div class="form-group">
                     <label for="InputOption3">None: </label>
-                    <input type="checkbox" name="nome" class="form-control" id="InputOption3" value='1'>
+                    <input type="checkbox" name="none" class="form-control" id="InputOption3" value='1'>
                 </div>
                 <div class="form-group">
                     <label for="InputOption3">Unknow: </label>

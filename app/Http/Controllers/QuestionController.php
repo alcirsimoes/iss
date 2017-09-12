@@ -75,6 +75,10 @@ class QuestionController extends Controller
         $options = [];
         foreach(request('option') as $ok => $ov)
             if ($ov) $options[] = Option::create(['statement' => $ov, 'value' => $ok]);
+        if (request('none'))
+            $options[] = Option::create(['statement' => 'Nenhum', 'value' => 'none']);
+        if (request('unknow'))
+            $options[] = Option::create(['statement' => 'Não sabe', 'value' => 'unknow']);
 
         if (isset($options[0])) $question->options()->saveMany($options);
 

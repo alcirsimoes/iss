@@ -3,7 +3,7 @@
         <div class="form-check">
             <label class="form-check-label">
                 @if($other)
-                <input class="form-check-input other_{{ $collumn->id }}" type="radio" name="other[{{ $collumn->id }}]" value="{{ $option->id }}">
+                <input class="form-check-input other_{{ $collumn->id }}" type="radio" name="other[{{ $collumn->id }}][]" value="1">
                 @else
                     @if(isset($answer) && in_array($option->id, $checked_ids[$collumn->id]))
                     <input class="form-check-input question_{{ $collumn->id }}" type="radio" name="question[{{ $collumn->id }}]" value="{{ $option->id }}" checked="checked">
@@ -159,7 +159,9 @@
         @endif
             <option value="">Nota...</option>
             @for($i = 1; $i < 11; $i ++)
-                @if(isset($text_values[$collumn->id][$option->id]) && $text_values[$collumn->id][$option->id] == $i)
+                @if(isset($subCollumn) && isset($text_values[$collumn->id][$option->id][$subCollumn->id]) && $text_values[$collumn->id][$option->id][$subCollumn->id] == $i)
+                <option value="{{ $i }}" selected="selected">{{ $i }}</option>
+                @elseif(isset($text_values[$collumn->id][$option->id]) && $text_values[$collumn->id][$option->id] == $i)
                 <option value="{{ $i }}" selected="selected">{{ $i }}</option>
                 @else
                 <option value="{{ $i }}">{{ $i }}</option>
