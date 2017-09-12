@@ -1,8 +1,10 @@
 <?php
 
 use App\Survey;
+use App\Jump;
 use App\Option;
 use App\Question;
+use App\Condition;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
@@ -790,7 +792,7 @@ class SurveysTableSeeder extends Seeder
             'options_header' => '',
             'answers_header' => 'Krones',
             'statement' => '<strong>P15)</strong> Falando sobre custo/benefício, como você classificaria os produtos e serviços da Krones, e da ...? <strong>(LEIA TODAS AS ALTERNATIVAS E TODAS AS EMPRESAS) (FAZER RODÍZIO DAS MARCAS)</strong>',
-            'type' => 5,
+            'type' => 1,
             'format' => 3,
             'order' => 32,
         ]);
@@ -977,6 +979,191 @@ class SurveysTableSeeder extends Seeder
             'order' => 42,
         ]);
 
+
+        $condition_1 = [];
+        $condition_2 = [];
+        $condition_3 = [];
+        $condition_4 = [];
+        $condition_5 = [];
+        $condition_6 = [];
+        $condition_7 = [];
+        $condition_8 = [];
+        foreach (array_slice($options_3,0,6,true) as $key => $condition){
+            $condition_1 [] = App\Condition::create([
+                'question_id' => $question_3->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_10->id,
+                'to_option_id' => $options_10[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_2 [] = App\Condition::create([
+                'question_id' => $question_4->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_10->id,
+                'to_option_id' => $options_10[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_3 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_13->id,
+                'to_option_id' => $options_13[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_4 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_15->id,
+                'to_option_id' => $options_15[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_5 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_17->id,
+                'to_option_id' => $options_17[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_6 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_19->id,
+                'to_option_id' => $options_19[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_7 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_21->id,
+                'to_option_id' => $options_21[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_8 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_23->id,
+                'to_option_id' => $options_23[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_9 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_25->id,
+                'to_option_id' => $options_25[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_10 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_27->id,
+                'to_option_id' => $options_27[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_11 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_30->id,
+                'to_option_id' => $options_30[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_12 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_31->id,
+                'to_option_id' => $options_31[$key]->id,
+                'show' => true,
+            ]);
+
+            $condition_13 [] = Condition::create([
+                'question_id' => $question_6->id,
+                'option_id' => $condition->id,
+                'to_question_id' => $question_32->id,
+                'to_option_id' => $options_32[$key]->id,
+                'show' => true,
+            ]);
+
+        }
+
+        $condition_14 = Condition::create([
+            'question_id' => $question_6->id,
+            'option_id' => $options_3[0]->id,
+            'to_question_id' => $question_33->id,
+            'show' => true,
+        ]);
+
+        $condition_15 = Condition::create([
+            'question_id' => $question_6->id,
+            'option_id' => $options_3[1]->id,
+            'to_question_id' => $question_34->id,
+            'show' => true,
+        ]);
+
+        $condition_16 = Condition::create([
+            'question_id' => $question_6->id,
+            'option_id' => $options_3[2]->id,
+            'to_question_id' => $question_35->id,
+            'show' => true,
+        ]);
+
+        $condition_17 = Condition::create([
+            'question_id' => $question_6->id,
+            'option_id' => $options_3[3]->id,
+            'to_question_id' => $question_36->id,
+            'show' => true,
+        ]);
+
+        $condition_18 = Condition::create([
+            'question_id' => $question_6->id,
+            'option_id' => $options_3[4]->id,
+            'to_question_id' => $question_37->id,
+            'show' => true,
+        ]);
+
+        $condition_19 = Condition::create([
+            'question_id' => $question_6->id,
+            'option_id' => $options_3[5]->id,
+            'to_question_id' => $question_38->id,
+            'show' => true,
+        ]);
+
+        $condition_20 = Condition::create([
+            'question_id' => $question_1->id,
+            'option_id' => $options_1[1]->id,
+            'to_question_id' => $question_39->id,
+            'show' => true,
+        ]);
+
+        $condition_21 = Condition::create([
+            'question_id' => $question_1->id,
+            'option_id' => $options_1[0]->id,
+            'to_question_id' => $question_40->id,
+            'show' => true,
+        ]);
+
+        $condition_22 = Condition::create([
+            'question_id' => $question_1->id,
+            'option_id' => $options_1[0]->id,
+            'to_question_id' => $question_41->id,
+            'show' => true,
+        ]);
+
+        $condition_23 = Jump::create([
+            'question_id' => $question_41->id,
+            'option_id' => $options_41[1]->id,
+            'to_question_id' => $question_42->id,
+            'show' => true,
+        ]);
 
     }
 }

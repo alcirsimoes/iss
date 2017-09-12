@@ -32,7 +32,6 @@ class CreateSamplesTables extends Migration
             $table->unique(['sample_id','survey_id']);
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('subjects', function (Blueprint $table) {
@@ -85,7 +84,6 @@ class CreateSamplesTables extends Migration
             $table->unique(['answer_id','option_id']);
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('answer_option_option', function (Blueprint $table) {
@@ -103,7 +101,6 @@ class CreateSamplesTables extends Migration
             $table->unique(['answer_id','option_id','sub_option_id']);
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
