@@ -1,7 +1,6 @@
 <?php
 
 use App\Survey;
-use App\Jump;
 use App\Option;
 use App\Question;
 use App\Condition;
@@ -137,7 +136,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => null,
             'type' => 2,
             'format' => null,
-            'order' => 3,
             'other' => true,
             'none' => true,
             'unknow' => true,
@@ -150,7 +148,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P2)</strong> Além das que você mencionou quais outros fornecedores destes que eu vou mencionar você conhece? <strong><span class="text-danger">(PARA O SEGMENTO PROCESSOS DE FABRICAÇÃO:</span> MENCIONAR SOMENTE GEA, LIESS, MITECO, TETRAPAK, KHS CASO NÃO MENCIONAOU NA P1 E P1A) – (FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 2,
             'format' => null,
-            'order' => 4,
             'other' => true,
             'none' => true,
             'unknow' => true,
@@ -163,7 +160,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P3)</strong> Com quais destes <strong>fornecedores</strong> a sua empresa <strong>trabalha</strong> hoje?',
             'type' => 2,
             'format' => null,
-            'order' => 5,
             'other' => true,
             'none' => true,
             'unknow' => true,
@@ -176,7 +172,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P3a)</strong> Com qual destes <strong>fornecedores</strong> sua empresa <strong>trabalhava e deixou de trabalhar?</strong>',
             'type' => 2,
             'format' => null,
-            'order' => 6,
             'other' => true,
             'none' => true,
             'unknow' => true,
@@ -189,7 +184,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P4)</strong> Qual desses <strong>fornecedores</strong> você considera como o <strong>melhor</strong> do mercado?',
             'type' => 1,
             'format' => null,
-            'order' => 7,
             'other' => true,
             'none' => true,
             'unknow' => true,
@@ -202,7 +196,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P5)</strong> Uma das razões de trabalharmos com um fornecedor é nos identificarmos com ele, nos sentirmos próximos deste fornecedor. Sendo assim, gostaríamos de saber o quanto você sente que estes fornecedores têm a ver com a sua empresa.  Vamos usar uma escala de “1” a “10”, onde quanto mais próximo de 10, mais este fornecedor tem a ver com a sua empresa. <strong>(SOMENTE GEA, LIESS, MITECO, TETRAPAK, KHS) (FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 8,
             'other' => true,
             'none' => true,
             'unknow' => true,
@@ -216,7 +209,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P6)</strong> <strong>(PROCESSOS DE FABRICAÇÃO)</strong> Diga uma palavra que resuma para você quando eu digo... <strong>(ESPONTÂNEO - FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 3,
             'format' => null,
-            'order' => 9,
+            'order' => 3,
         ]);
         $options_10 = array_slice($options_3, 0, 6, true);
         $question_10->options()->saveMany($options_10);
@@ -227,7 +220,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P7)</strong> Onde o(a) Sr(a) se informa quando precisa buscar informações sobre <strong>máquinas, equipamentos e soluções de processos</strong> para a sua empresa?',
             'type' => 2,
             'format' => 2,
-            'order' => 10,
+            'order' => 4,
             'other' => true,
         ]);
 
@@ -264,7 +257,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong>(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 11,
+            'order' => 5,
         ]);
 
         $options_12 = [
@@ -302,7 +295,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong>(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 12,
         ]);
         $options_13 = array_slice($options_3, 0, 6, true);
         $question_13->options()->saveMany($options_13);
@@ -317,7 +309,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong>(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 13,
+            'order' => 6,
         ]);
 
         $options_14 = [
@@ -355,7 +347,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong>(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 14,
         ]);
         $options_15 = array_slice($options_3, 0, 6, true);
         $question_15->options()->saveMany($options_15);
@@ -371,7 +362,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong>(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 15,
+            'order' => 7,
         ]);
 
         $options_16 = [
@@ -409,7 +400,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong>(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 16,
         ]);
         $options_17 = array_slice($options_3, 0, 6, true);
         $question_17->options()->saveMany($options_17);
@@ -425,7 +415,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong>(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 17,
+            'order' => 8,
         ]);
 
         $options_18 = [
@@ -463,7 +453,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong>(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 18,
         ]);
         $options_19 = array_slice($options_3, 0, 6, true);
         $question_19->options()->saveMany($options_19);
@@ -479,7 +468,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong>(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 19,
+            'order' => 9,
         ]);
 
         $options_20 = [
@@ -513,7 +502,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong>(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 20,
         ]);
         $options_21 = array_slice($options_3, 0, 6, true);
         $question_21->options()->saveMany($options_21);
@@ -529,7 +517,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong>(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 21,
+            'order' => 10,
         ]);
 
         $options_22 = [
@@ -563,7 +551,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong>(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 22,
         ]);
         $options_23 = array_slice($options_3, 0, 6, true);
         $question_23->options()->saveMany($options_23);
@@ -579,7 +566,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong>(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 23,
+            'order' => 11,
         ]);
 
         $options_24 = [
@@ -609,7 +596,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong>(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 24,
         ]);
         $options_25 = array_slice($options_3, 0, 6, true);
         $question_25->options()->saveMany($options_25);
@@ -625,7 +611,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong>(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 25,
+            'order' => 12,
         ]);
 
         $options_26 = [
@@ -655,7 +641,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong>(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 26,
         ]);
         $options_27 = array_slice($options_3, 0, 6, true);
         $question_27->options()->saveMany($options_27);
@@ -669,7 +654,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P10)</strong> Agora que já avaliamos os atributos dentro dos fatores, gostaria que você me dissesse o quanto cada fator é importante no momento de decidir trabalhar com um <strong>fornecedor de máquinas, equipamentos e soluções para o seu mercado.</strong> Assim, qual desses fatores é mais importante em 1° lugar? E em 2°? E em 3°? E assim por diante. <strong>(FAÇA PERGUNTA ATÉ O 8º LUGAR)</strong>',
             'type' => 4,
             'format' => 2,
-            'order' => 27,
+            'order' => 13,
         ]);
 
         $options_28 = [
@@ -709,7 +694,6 @@ class SurveysTableSeeder extends Seeder
         $question_28->options()->saveMany($options_28);
 
 
-        //
         $collumns = [];
         $question_29 = Question::create([
             'survey_id' => $survey->id,
@@ -719,7 +703,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P11)</strong> As empresas em geral buscam ter uma boa imagem, serem respeitadas e admiradas. A seguir vou ler uma série de fatores que são considerados relevantes para este objetivo. Gostaríamos que você colocasse estes fatores em ordem de importância, do 1º ao 4º lugar.',
             'type' => 4,
             'format' => 3,
-            'order' => 28,
+            'order' => 14,
         ]);
 
         $options_29 = [
@@ -749,7 +733,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P12)</strong> Agora, vamos avaliar a imagem das mesmas empresas avaliadas na satisfação em relação a cada um destes Fatores, mesmo que não tenha trabalhado com a empresa. Para isso vamos utilizar novamente a escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS o fornecedor está em linha com sua expectativa</strong> em relação ao fator, e quanto mais próximo do 10, <strong>MAIS o fornecedor está em linha com sua expectativa.</strong> Pensando na Krones, qual nota você dá para ela em relação ao fator... E para a...? <strong>(AVALIAR TODAS AS EMPRESAS ) (FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => null,
-            'order' => 29,
         ]);
         $options_30 = array_slice($options_3, 0, 6, true);
         $question_30->options()->saveMany($options_30);
@@ -764,9 +747,8 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P13)</strong> <strong>(AVALIAR AS EMPRESAS QUE TRABALHAM – CITADAS NA P3)</strong> Utilizando a escala de 1 a 10, na qual 1 significa <strong>“Certamente Não recomendaria”</strong> e 10 significa <strong>“Certamente Recomendaria”</strong>, o quanto você <strong>recomendaria a...? (FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => 2,
-            'order' => 30,
+            'order' => 15,
         ]);
-
         $options_31 = array_slice($options_3, 0, 6, true);
         $question_31->options()->saveMany($options_31);
 
@@ -779,7 +761,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P14)</strong> <strong>(AVALIAR AS EMPRESAS QUE TRABALHAM – CITADAS NA P3)</strong> Utilizando esta mesma escala de 1 a 10, o quanto você <strong>pretende ampliar os negócios com a... ? (FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => 2,
-            'order' => 31,
+            'order' => 16,
         ]);
         $options_32 = array_slice($options_3, 0, 6, true);
         $question_32->options()->saveMany($options_32);
@@ -794,7 +776,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P15)</strong> Falando sobre custo/benefício, como você classificaria os produtos e serviços da Krones, e da ...? <strong>(LEIA TODAS AS ALTERNATIVAS E TODAS AS EMPRESAS) (FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 1,
             'format' => 3,
-            'order' => 32,
+            'order' => 17,
         ]);
         $options_33 = [
             Option::create([
@@ -827,7 +809,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => null,
             'type' => 1,
             'format' => null,
-            'order' => 33,
         ]);
 
         $collumns [] = $question_35 = Question::create([
@@ -837,7 +818,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => null,
             'type' => 1,
             'format' => null,
-            'order' => 34,
         ]);
 
         $collumns [] = $question_36 = Question::create([
@@ -847,7 +827,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => null,
             'type' => 1,
             'format' => null,
-            'order' => 35,
         ]);
 
         $collumns [] = $question_37 = Question::create([
@@ -857,7 +836,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => null,
             'type' => 1,
             'format' => null,
-            'order' => 36,
         ]);
 
         $collumns [] = $question_38 = Question::create([
@@ -867,7 +845,6 @@ class SurveysTableSeeder extends Seeder
             'statement' => null,
             'type' => 1,
             'format' => null,
-            'order' => 37,
         ]);
         $question_33->questions()->saveMany($collumns);
 
@@ -879,7 +856,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P16)</strong> <strong>(SOMENTE PARA NÃO CLIENTES)</strong> Esta pesquisa foi encomendada pela Krones. Você aceita receber uma visita ou um contato da Krones?',
             'type' => 1,
             'format' => 2,
-            'order' => 38,
+            'order' => 18,
         ]);
         $options_39 = [
             Option::create([
@@ -902,7 +879,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P17)</strong> <strong>(SOMENTE PARA CLIENTES)</strong> Na reposição de peças, quanto em percentual você utiliza de peças originais da Krones?',
             'type' => 1,
             'format' => 2,
-            'order' => 39,
+            'order' => 19,
         ]);
         $options_40 = [
             Option::create([
@@ -933,7 +910,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P18)</strong> <strong>(SOMENTE PARA CLIENTES)</strong> Você utiliza ou já utilizou as válvulas EVOGUARD DA KRONES?',
             'type' => 1,
             'format' => 2,
-            'order' => 40,
+            'order' => 20,
         ]);
         $options_41 = [
             Option::create([
@@ -955,7 +932,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P19)</strong> <strong>(SE NÃO)</strong> Você aceita receber uma visita ou um contato da Krones para conhecer as VÁLVULAS EVOGUARD?',
             'type' => 1,
             'format' => 2,
-            'order' => 41,
+            'order' => 21,
         ]);
         $options_42 = [
             Option::create([
@@ -976,7 +953,7 @@ class SurveysTableSeeder extends Seeder
             'statement' => '<strong>P21)</strong> Esta pesquisa foi encomendada pela Krones do Brasil, para finalizar que mensagem você mandaria à diretoria da Krones?',
             'type' => 3,
             'format' => null,
-            'order' => 42,
+            'order' => 22,
         ]);
 
 
@@ -1158,7 +1135,7 @@ class SurveysTableSeeder extends Seeder
             'show' => true,
         ]);
 
-        $condition_23 = Jump::create([
+        $condition_23 = Condition::create([
             'question_id' => $question_41->id,
             'option_id' => $options_41[1]->id,
             'to_question_id' => $question_42->id,

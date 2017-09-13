@@ -31,7 +31,7 @@ class FormController extends Controller
      */
     public function index(Request $request, Survey $survey, Subject $subject)
     {
-        $sample = $survey->has('samples')->first();
+        $sample = $survey->samples->first();
 
         if(!$sample)
             return redirect()->route('sample.create', ['id'=>$survey->id]);
@@ -48,6 +48,7 @@ class FormController extends Controller
                 'sample' => $sample,
                 'subject' => $subject,
                 'questions' => $survey->questions,
+                'conditions' => $survey->conditions,
             ]);
 
             return view('form.show', compact('survey','sample','subject','questions','answers'));
@@ -56,28 +57,69 @@ class FormController extends Controller
         return view('form.index', compact('survey','sample'));
     }
 
-    public function current(Request $request)
+    private function current(Request $request, Question $question)
     {
         $survey = session('survey');
         $sample = session('sample');
         $subject = session('subject');
 
-        $questions = session('questions');
-        $answers = Answer::whereIn('question_id', $questions->pluck('id')->toArray())->where('subject_id', $subject->id)->get();
+        if ($request->input('init')){
+            $questions = session('questions');
+            $answers = Answer::whereIn('question_id', $questions->pluck('id')->toArray())->where('subject_id', $subject->id)->get();
 
-        foreach ($questions as $question){
-            $answer = $question->answer()->where('subject_id',$subject->id)->first();
-            if (isset($answer)){
-                $checked_ids = [];
-                if(isset($answer)) foreach($answer->options as $given)
+            foreach ($questions as $question){
+                $answer = $question->answer()->where('subject_id',$subject->id)->first();
+                if (isset($answer)){
+                    $checked_ids = [];
+                    if(isset($answer)) foreach($answer->options as $given)
                     $checked_ids [] = $given->id;
+                    break;
+                }
+                else
                 break;
             }
-            else
-                break;
+            return $question;
         }
 
-        return view('krones.create', compact('survey','sample','subject','question','answer','checked_ids'));
+        function jump(Survey $survey, Question $question, Sample $sample, Subject $subject) {
+            $conditions = session('conditions')->where('to_question_id', $question->id)->where('to_option_id', null);
+            if (!count($conditions))
+                return $question;
+
+            foreach ($conditions as $condition) {
+                $given_answer = Answer::where('question_id', $condition->question_id)
+                    ->where('sample_id', $sample->id)
+                    ->where('subject_id', $subject->id)
+                    ->first();
+
+                if (isset($given_answer)){
+                    if ($condition->show){
+                        $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
+                        if ($condition_met){
+                            $question = Question::find($condition->to_question_id);
+                            return jump($survey, $question, $sample, $subject);
+                        } else {
+                            $question = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
+                            return jump($survey, $question, $sample, $subject);
+                        }
+
+                    } else {
+                        $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
+                        if ($condition_met) {
+                            $question = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
+                            return jump($survey, $question, $sample, $subject);
+                        } else {
+                            $question = Question::find($condition->to_question_id);
+                            return jump($survey, $question, $sample, $subject);
+                        }
+                    }
+                }
+            }
+
+            return $question;
+        }
+
+        return jump($survey, $question, $sample, $subject);
     }
 
     public function next(Request $request)
@@ -87,60 +129,13 @@ class FormController extends Controller
         $subject = session('subject');
 
         if ($last_question = $this->store($request)){
-            $pre = request('previous');
-            if ($pre==8)
-                $previous = Question::where('order',3)->first();
-            elseif ($pre==12)
-                $previous = Question::where('order',12)->first();
-            elseif ($pre==14)
-                $previous = Question::where('order',13)->first();
-            elseif ($pre==16)
-                $previous = Question::where('order',15)->first();
-            elseif ($pre==18)
-                $previous = Question::where('order',17)->first();
-            elseif ($pre==20)
-                $previous = Question::where('order',19)->first();
-            elseif ($pre==22)
-                $previous = Question::where('order',21)->first();
-            elseif ($pre==24)
-                $previous = Question::where('order',23)->first();
-            elseif ($pre==26)
-                $previous = Question::where('order',25)->first();
-            elseif ($pre==29)
-                $previous = Question::where('order',28)->first();
-            elseif ($pre==37)
-                $previous = Question::where('order',33)->first();
-            else
-                $previous = Question::where('order',$pre)->first();
-
-            $next = request('next');
-            if ($next==3)
-                $question = Question::where('order',9)->first();
-            elseif ($next==12)
-                $question = Question::where('order',13)->first();
-            elseif ($next==14)
-                $question = Question::where('order',15)->first();
-            elseif ($next==16)
-                $question = Question::where('order',17)->first();
-            elseif ($next==18)
-                $question = Question::where('order',19)->first();
-            elseif ($next==20)
-                $question = Question::where('order',21)->first();
-            elseif ($next==22)
-                $question = Question::where('order',23)->first();
-            elseif ($next==24)
-                $question = Question::where('order',25)->first();
-            elseif ($next==26)
-                $question = Question::where('order',27)->first();
-            elseif ($next==29)
-                $question = Question::where('order',30)->first();
-            elseif ($next==33)
-                $question = Question::where('order',38)->first();
-            else
-                $question = Question::where('order',$next)->first();
+            $previous = Question::where('order',request('previous'))->first();
+            $question = Question::where('order',request('next'))->first();
         }
 
         if(isset($question)){
+            $question = $this->current($request, $question);
+
             $answer = $question->answer()->where('subject_id',$subject->id)->first();
 
             $checked_ids = [];
@@ -210,10 +205,43 @@ class FormController extends Controller
                 ->where(['sample_id' => $sample->id], ['subject_id' => $subject->id])
                 ->update(['finished_at' => $finish]);
 
-            return view('krones.finish', compact('finish','survey'));
+            return view('form.finish', compact('finish','survey'));
         }
 
-        return view('krones.create', compact('survey','sample','subject','previous','question','answer','checked_ids','text_values'));
+        $conditions = session('conditions')->where('to_question_id', $question->id);
+        if (!count($conditions)) {
+            $options = $question->options;
+            dd($options);
+        } else {
+            $options = $question->options;
+            $given_answers = Answer::whereIn('question_id', $conditions->pluck('question_id'))
+                ->where('sample_id', $sample->id)
+                ->where('subject_id', $subject->id)
+                ->get();
+
+            $only = [];
+            foreach ($conditions as $condition) {
+                $given_answer = $given_answers->where('question_id', $condition->question_id)->first();
+
+                if (isset($given_answer)){
+                    $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
+
+                    if ($condition->show){
+                        if ($condition_met)
+                            $only [] = $condition->to_option_id;
+                    } else {
+                        if ($condition_met)
+                            $options->except($condition->to_option_id);
+                    }
+                }
+            }
+            $options = $options->keyBy('id');
+            foreach ($options as $key => $value)
+                if (!in_array($value->id,$only))
+                    $options->forget($value->id);
+        }
+
+        return view('form.create', compact('survey','sample','subject','previous','question','options','answer','checked_ids','text_values'));
     }
 
     public function previous(Question $question)
@@ -289,7 +317,7 @@ class FormController extends Controller
 
         }
 
-        return view('krones.create', compact('survey','sample','subject','previous','question','answer','checked_ids','text_values'));
+        return view('form.create', compact('survey','sample','subject','previous','question','answer','checked_ids','text_values'));
     }
 
     /**

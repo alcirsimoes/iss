@@ -12,8 +12,9 @@
                 <p class="lead">{!! $survey->intro !!}</p>
             </div>
 
-            <form action="{{ route('form.current') }}" method="post">
+            <form action="{{ route('form.next') }}" method="post">
                 {{ csrf_field() }}
+                <input type="hidden" name="init" value="1">
                 <button type="submit" class="btn btn-primary">Começar</button>
             </form>
         </div>

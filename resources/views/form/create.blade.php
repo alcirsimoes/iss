@@ -8,48 +8,51 @@
                 <div class="panel-heading">{{ $survey->name }} - {{ $sample->name }} - {{ $subject->name }}</div>
             </div>
 
-            <div class="jumbotron">
-                <p class="lead">{!! $survey->intro !!}</p>
-            </div>
-
-            <form action="{{ route('form.store', [$survey->id, $subject->id]) }}" method="post">
+            <form action="{{ route('form.next') }}" method="post">
                 {{ csrf_field() }}
-                    @foreach($questions as $question)
-                        @if($question->format != 3 && $question->father->isEmpty())
-                        <div class="panel panel-default">
-                            <div class="panel-heading"><strong>{{ $question->name }}</strong> {!! $question->statement !!}</div>
-                        @endif
+                @if($question->format != 3 && $question->father->isEmpty())
+                <div class="panel panel-default">
+                    <div class="panel-heading">{!! $question->statement !!}</div>
+                @endif
 
-                        @if($question->format == 3)
-                        <div class="panel panel-default">
-                            <div class="panel-heading"><strong>{{ $question->name }}</strong> {!! $question->statement !!}</div>
-                            @foreach($question->questions as $collumn)
-                                @if($collumn->statement)
-                                <div class="panel-heading"><strong>{{ $collumn->name }}</strong> {!! $collumn->statement !!}</div>
-                                @endif
-                            @endforeach
-                        @endif
-
-                        @if($question->format != 3 && ($question->father->isEmpty() && $question->questions->isEmpty()))
-                            @include('form.partials.simple')
-                            </div>
-                        @elseif($question->format == 3)
-                            @include('form.partials.table')
-                            </div>
+                @if($question->format == 3)
+                <div class="panel panel-default">
+                    <div class="panel-heading">{!! $question->statement !!}</div>
+                    @foreach($question->questions as $collumn)
+                        @if($collumn->statement)
+                        <div class="panel-heading">{!! $collumn->statement !!}</div>
                         @endif
                     @endforeach
+                @endif
 
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
-            </div>
+                @if($question->format != 3 && ($question->father->isEmpty() && $question->questions->isEmpty()))
+                    @include('form.partials.simple')
+                    </div>
+                @elseif($question->format == 3)
+                    @include('form.partials.table')
+                    </div>
+                @endif
+
+                <button type="submit" class="btn btn-primary">Próxima</button>
+            </form>
+            @if(isset($previous))
+            <hr>
+            <form action="{{ route('form.previous', $previous->id) }}" method="post">
+                {{ csrf_field() }}
+                <button type="submit" class="btn btn-danger">Anterior</button>
+            </form>
+            @endif
         </div>
     </div>
+</div>
 
-    @section('scripts')
-        @parent
-        <script type="text/javascript">
-            var answers = {!!$answers = json_encode($answers->toArray()) !!};
-        </script>
-    @endsection
+@section('scripts')
+    @parent
+    <script type="text/javascript">
+        @if($answer)
+        var answers = {!! json_encode($answer->toArray()) !!};
+        @endif
+    </script>
+@endsection
 
 @endsection

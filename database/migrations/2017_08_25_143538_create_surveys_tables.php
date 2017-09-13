@@ -89,23 +89,6 @@ class CreateSurveysTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('jumps', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->enum('show', [true, false]);
-
-            $table->integer('question_id')->unsigned();
-            $table->foreign('question_id')->references('id')->on('questions');
-
-            $table->integer('option_id')->unsigned();
-            $table->foreign('option_id')->references('id')->on('options');
-
-            $table->integer('to_question_id')->unsigned()->nullable();
-            $table->foreign('to_question_id')->references('id')->on('questions');
-
-            $table->timestamps();
-        });
-
         Schema::create('conditions', function (Blueprint $table) {
             $table->increments('id');
 
@@ -136,7 +119,6 @@ class CreateSurveysTables extends Migration
     public function down()
     {
         Schema::dropIfExists('conditions');
-        Schema::dropIfExists('jumps');
         Schema::dropIfExists('group_options');
         Schema::dropIfExists('groups');
         Schema::dropIfExists('option_question');

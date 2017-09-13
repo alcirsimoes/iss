@@ -3,9 +3,13 @@
         <div class="form-check">
             <label class="form-check-label">
                 @if($other)
-                <input class="form-check-input other_{{ $collumn->id }}" type="radio" name="other[{{ $collumn->id }}]" value="{{ $option->id }}">
+                <input class="form-check-input other_{{ $collumn->id }}" type="radio" name="other[{{ $collumn->id }}][]" value="1">
                 @else
-                <input class="form-check-input question_{{ $collumn->id }}" type="radio" name="question[{{ $collumn->id }}]" value="{{ $option->id }}">
+                    @if(isset($answer) && isset($checked_ids[$collumn->id]) && in_array($option->id, $checked_ids[$collumn->id]))
+                    <input class="form-check-input question_{{ $collumn->id }}" type="radio" name="question[{{ $collumn->id }}]" value="{{ $option->id }}" checked="checked">
+                    @else
+                    <input class="form-check-input question_{{ $collumn->id }}" type="radio" name="question[{{ $collumn->id }}]" value="{{ $option->id }}">
+                    @endif
                 @endif
             </label>
         </div>
@@ -31,7 +35,11 @@
                 @if($other)
                 <input class="form-check-input" type="checkbox" name="other[{{ $collumn->id }}]" value="1">
                 @else
-                <input class="form-check-input" type="checkbox" name="question[{{ $collumn->id }}][{{ $option->id }}]" value="1">
+                    @if(isset($answer) && isset($checked_ids[$collumn->id]) && in_array($option->id, $checked_ids[$collumn->id]))
+                    <input class="form-check-input" type="checkbox" name="question[{{ $collumn->id }}][{{ $option->id }}]" value="1" checked="checked">
+                    @else
+                    <input class="form-check-input" type="checkbox" name="question[{{ $collumn->id }}][{{ $option->id }}]" value="1">
+                    @endif
                 @endif
             </label>
         </div>
@@ -43,13 +51,17 @@
 
     @case(4)
         @if($other)
-        <select class="form-control question_{{ $collumn->id }}" name="question[{{ $collumn->id }}][other]">
+        <select class="form-control question_{{ $collumn->id }}" name="other[{{ $collumn->id }}]">
         @else
         <select class="form-control question_{{ $collumn->id }}" name="question[{{ $collumn->id }}][{{ $option->id }}]">
         @endif
             <option value="">Ordem...</option>
             @for($i = 1; $i <= count($question->options); $i ++)
-            <option value="{{ $i }}">{{ $i }}°</option>
+                @if(isset($text_values[$collumn->id][$option->id]) && $text_values[$collumn->id][$option->id] == $i)
+                <option value="{{ $i }}" selected="selected">{{ $i }}°</option>
+                @else
+                <option value="{{ $i }}">{{ $i }}°</option>
+                @endif
             @endfor
         </select>
 
@@ -137,7 +149,7 @@
 
     @case(5)
         @if($other)
-        <select class="form-control" name="question[{{ $collumn->id }}][other]">
+        <select class="form-control" name="other[{{ $collumn->id }}]">
         @else
             @if(isset($subCollumn))
             <select class="form-control" name="question[{{ $collumn->id }}][{{ $option->id }}][{{ $subCollumn->id }}]">
@@ -147,7 +159,13 @@
         @endif
             <option value="">Nota...</option>
             @for($i = 1; $i < 11; $i ++)
-            <option value="{{ $i }}">{{ $i }}</option>
+                @if(isset($subCollumn) && isset($text_values[$collumn->id][$option->id][$subCollumn->id]) && $text_values[$collumn->id][$option->id][$subCollumn->id] == $i)
+                <option value="{{ $i }}" selected="selected">{{ $i }}</option>
+                @elseif(isset($text_values[$collumn->id][$option->id]) && $text_values[$collumn->id][$option->id] == $i)
+                <option value="{{ $i }}" selected="selected">{{ $i }}</option>
+                @else
+                <option value="{{ $i }}">{{ $i }}</option>
+                @endif
             @endfor
         </select>
         @break

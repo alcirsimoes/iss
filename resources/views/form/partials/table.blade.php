@@ -1,16 +1,20 @@
 <div class="panel-body">
+    <input type="hidden" name="previous" value="{{ $question->order }}">
+    <input type="hidden" name="next" value="{{ $question->order +1 }}">
+
     <?php $other = false ?>
+
     <table class="table">
         <thead>
             <tr>
-                <th>Opções</th>
-                <th>{{ $question->name }}</th>
+                <th>{!! $question->options_header !!}</th>
+                <th>{!! $question->answers_header !!}</th>
 
                 @foreach($question->questions as $collumn)
                     @forelse($collumn->options as $subCollumn)
                     <th>{{ $subCollumn->statement }}</th>
                     @empty
-                    <th>{{ $collumn->name }}</th>
+                    <th>{!! $collumn->answers_header !!}</th>
                     @endforelse
                 @endforeach
             </tr>
@@ -45,7 +49,7 @@
                 <td>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="text" name="question[{{ $question->id }}][other_option]" value="" placeholder="Outra...">
+                            <input class="form-check-input" type="text" name="other[{{ $question->id }}]" value="" placeholder="Outra...">
                         </label>
                     </div>
                 </td>

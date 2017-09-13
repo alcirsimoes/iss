@@ -2,9 +2,12 @@
     @switch($question->type)
         @case(1)
             <input type="hidden" name="question[{{ $question->id }}]" value="empty">
+            <input type="hidden" name="previous" value="{{ $question->order }}">
+            <input type="hidden" name="next" value="{{ $question->order +1 }}">
+
             @if ($question->format == 1)
             <select class="form-control" name="question[{{ $question->id }}]">
-                @foreach($question->options as $option)
+                @foreach($options as $option)
                 <option value="{{ $option->id }}">{{ $option->statement }}</option>
                 @endforeach
             </select>
@@ -18,10 +21,14 @@
             @endif
 
             @if ($question->format == 2 || is_null($question->format))
-                @foreach($question->options as $key => $option)
+                @foreach($options as $key => $option)
                 <div class="form-check">
                     <label class="form-check-label">
+                        @if(isset($answer) && in_array($option->id, $checked_ids))
+                        <input class="form-check-input" type="radio" name="question[{{ $question->id }}]" value="{{ $option->id }}" checked="checked">
+                        @else
                         <input class="form-check-input" type="radio" name="question[{{ $question->id }}]" value="{{ $option->id }}">
+                        @endif
                         {{ $option->statement }}
                     </label>
                 </div>
@@ -37,11 +44,18 @@
             @break
 
         @case(2)
+            <input type="hidden" name="previous" value="{{ $question->order }}">
+            <input type="hidden" name="next" value="{{ $question->order +1 }}">
+
             @if ($question->format == 2 || is_null($question->format) || $question->other)
-                @foreach($question->options as $option)
+                @foreach($options as $option)
                 <div class="form-check">
                     <label class="form-check-label">
+                        @if(isset($answer) && in_array($option->id, $checked_ids))
+                        <input class="form-check-input" type="checkbox" name="question[{{ $question->id }}][{{ $option->id }}]" value="1" checked="checked">
+                        @else
                         <input class="form-check-input" type="checkbox" name="question[{{ $question->id }}][{{ $option->id }}]" value="1">
+                        @endif
                         {{ $option->statement }}
                     </label>
                 </div>
@@ -57,27 +71,41 @@
             @break
 
         @case(3)
-            @forelse ($question->options as $option)
+            <input type="hidden" name="previous" value="{{ $question->order }}">
+            <input type="hidden" name="next" value="{{ $question->order +1 }}">
+
+            @forelse ($options as $option)
             <div class="form-group">
                 <label for="question{{ $question->id }}">{{ $option->statement }}</label>
-                <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control" id="question{{ $question->id }}" rows="3"></textarea>
+                <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control" id="question{{ $question->id }}" rows="3">@if(isset($answer)){{ $text_values[$option->id] }}@endif</textarea>
             </div>
             @empty
                 <div class="form-group">
+                    @if(isset($answer))
+                    <textarea name="question[{{ $question->id }}]" class="form-control" rows="3">@if(isset($answer)){{ $answer->value }}@endif</textarea>
+                    @else
                     <textarea name="question[{{ $question->id }}]" class="form-control" rows="3"></textarea>
+                    @endif
                 </div>
             @endforelse
             @break
 
         @case(4)
-            @foreach($question->options as $option)
+            <input type="hidden" name="previous" value="{{ $question->order }}">
+            <input type="hidden" name="next" value="{{ $question->order +1 }}">
+
+            @foreach($options as $option)
             <div class="form-group row">
                 <label for="" class="col-sm-6 col-form-label">{{ $option->statement }}</label>
                 <div class="col-sm-3">
                     <select class="form-control question_{{ $question->id }}" name="question[{{ $question->id }}][{{ $option->id }}]">
                         <option value="">Ordem...</option>
-                        @for($i = 1; $i <= count($question->options); $i ++)
-                        <option value="{{ $i }}">{{ $i }}°</option>
+                        @for($i = 1; $i <= count($options); $i ++)
+                            @if(isset($answer) && $text_values[$option->id] == $i)
+                            <option value="{{ $i }}" selected="selected">{{ $i }}°</option>
+                            @else
+                            <option value="{{ $i }}">{{ $i }}°</option>
+                            @endif
                         @endfor
                     </select>
                 </div>
@@ -87,8 +115,8 @@
             @section('scripts')
                 @parent
                 <script type="text/javascript">
-                    var original_{{ $question->id }} = _.range({{ count($question->options)+1 }});
-                    var question_{{ $question->id }} = _.range({{ count($question->options)+1 }});
+                    var original_{{ $question->id }} = _.range({{ count($options)+1 }});
+                    var question_{{ $question->id }} = _.range({{ count($options)+1 }});
                     var previous_{{ $question->id }};
 
                     $('.question_{{ $question->id }}').on('focus', function () {
@@ -167,14 +195,21 @@
             @break
 
         @case(5)
-            @foreach($question->options as $option)
+            <input type="hidden" name="previous" value="{{ $question->order }}">
+            <input type="hidden" name="next" value="{{ $question->order +1 }}">
+
+            @foreach($options as $option)
             <div class="form-group row">
                 <label for="" class="col-sm-6 col-form-label">{{ $option->statement }}</label>
                 <div class="col-sm-3">
                     <select class="form-control" name="question[{{ $question->id }}][{{ $option->id }}]">
                         <option value="">Nota...</option>
                         @for($i = 1; $i < 11; $i ++))
-                        <option value="{{ $i }}">{{ $i }}</option>
+                            @if(isset($answer) && $text_values[$option->id] == $i)
+                            <option value="{{ $i }}" selected="selected">{{ $i }}</option>
+                            @else
+                            <option value="{{ $i }}">{{ $i }}</option>
+                            @endif
                         @endfor
                     </select>
                 </div>
