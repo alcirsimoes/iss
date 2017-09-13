@@ -434,44 +434,36 @@ class FormController extends Controller
         if (!$inputs = request('question'))
             return;
 
+
         $others = [];
+        $questions = [];
+        $unamed_other = [];
+        foreach ($inputs as $id => $input)
+            $questions [$id] = Question::findOrFail($id);
 
-        // if (count($inputs) > 1) {
-            $questions = [];
-            foreach ($inputs as $id => $input)
-                $questions [$id] = Question::findOrFail($id);
+        if ($inputs_others = request('other'))
+            foreach ($inputs_others as $k => $v)
+                if (is_numeric($k)){
+                    if (!isset($questions[$k]))
+                        $questions [$k] = Question::findOrFail($k);
+                    if (ucfirst(trim($v)))
+                        $others [$k] = Option::create(['statement'=>ucfirst(trim($v))]);
+                } else
+                    $unamed_other [] = $inputs_others[$k];
 
-            if ($inputs_others = request('other'))
-                foreach ($inputs_others as $k => $v)
-                    if (is_numeric($k)){
-                        if (!isset($questions[$k]))
-                            $questions [$k] = Question::findOrFail($k);
-                        if (ucfirst(trim($v)))
-                            $others [$k] = Option::create(['statement'=>ucfirst(trim($v))]);
-                    }
-
-            if (!empty($inputs_others['unique']))
-                foreach ($inputs_others['unique'] as $k => $v)
+        if (!empty($unamed_other))
+            foreach ($unamed_other as $key => $value)
+                foreach ($value as $k => $v) {
+                    if (!isset($questions[$k]))
+                        $questions [$k] = Question::findOrFail($k);
+                        dd($others);
                     if ($v) $questions[$k]->options()->save($others[$k]);
-
-            if (!empty($inputs_others['multiple']))
-                foreach ($inputs_others['multiple'] as $k => $v)
-                    if ($v) $questions[$k]->options()->save($others[$k]);
-
-            if (!empty($inputs_others['ordering']))
-                foreach ($inputs_others['ordering'] as $k => $v)
-                    if ($v) $questions[$k]->options()->save($others[$k]);
-
-            if (!empty($inputs_others['grade']))
-                foreach ($inputs_others['grade'] as $k => $v)
-                    if ($v) $questions[$k]->options()->save($others[$k]);
-
-        // }
+                }
 
 
-        foreach($inputs as $id => $input){
-            $question = Question::findOrFail($id);
-            // dd([$question, $input, $others]);
+        foreach($questions as $question){
+            if (isset($inputs[$question->id]))
+                $input = $inputs[$question->id];
 
             $answer = Answer::firstOrCreate([
                 'sample_id' => session('sample_id'),
@@ -494,7 +486,7 @@ class FormController extends Controller
 
     public function storeUnique(Request $request, Question $question, Answer $answer, $input, $others)
     {
-        if ($other_option = $others[$question->id][$question->id])
+        if (isset($others[$question->id]) && $other_option = $others[$question->id])
             $selectedOption = $other_option;
 
         elseif ($input && is_numeric($input))
