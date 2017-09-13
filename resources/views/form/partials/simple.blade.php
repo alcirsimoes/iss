@@ -1,9 +1,7 @@
 <div class="panel-body">
     @switch($question->type)
         @case(1)
-            <input type="hidden" name="question[{{ $question->id }}]" value="empty">
-            <input type="hidden" name="previous" value="{{ $question->order }}">
-            <input type="hidden" name="next" value="{{ $question->order +1 }}">
+            <!-- <input type="hidden" name="question[{{ $question->id }}]" value="empty"> -->
 
             @if ($question->format == 1)
             <select class="form-control" name="question[{{ $question->id }}]">
@@ -44,8 +42,6 @@
             @break
 
         @case(2)
-            <input type="hidden" name="previous" value="{{ $question->order }}">
-            <input type="hidden" name="next" value="{{ $question->order +1 }}">
 
             @if ($question->format == 2 || is_null($question->format) || $question->other)
                 @foreach($options as $option)
@@ -71,8 +67,6 @@
             @break
 
         @case(3)
-            <input type="hidden" name="previous" value="{{ $question->order }}">
-            <input type="hidden" name="next" value="{{ $question->order +1 }}">
 
             @forelse ($options as $option)
             <div class="form-group">
@@ -91,8 +85,6 @@
             @break
 
         @case(4)
-            <input type="hidden" name="previous" value="{{ $question->order }}">
-            <input type="hidden" name="next" value="{{ $question->order +1 }}">
 
             @foreach($options as $option)
             <div class="form-group row">
@@ -195,8 +187,6 @@
             @break
 
         @case(5)
-            <input type="hidden" name="previous" value="{{ $question->order }}">
-            <input type="hidden" name="next" value="{{ $question->order +1 }}">
 
             @foreach($options as $option)
             <div class="form-group row">

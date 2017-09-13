@@ -53,8 +53,6 @@ class SubjectController extends Controller
             'name' => 'required|max:255',
         ]);
 
-        // dd($request->all());
-
         $subject = Subject::create($request->all());
 
         if ($sample_id = request('sample_id')) {

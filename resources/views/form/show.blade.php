@@ -15,6 +15,7 @@
             <form action="{{ route('form.next') }}" method="post">
                 {{ csrf_field() }}
                 <input type="hidden" name="init" value="1">
+                <input type="hidden" name="next" value="0">
                 <button type="submit" class="btn btn-primary">Começar</button>
             </form>
         </div>

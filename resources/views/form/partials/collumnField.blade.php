@@ -3,7 +3,7 @@
         <div class="form-check">
             <label class="form-check-label">
                 @if($other)
-                <input class="form-check-input other_{{ $collumn->id }}" type="radio" name="other[{{ $collumn->id }}][]" value="1">
+                <input class="form-check-input other_{{ $collumn->id }}" type="radio" name="other[unique][{{ $collumn->id }}]" value="1">
                 @else
                     @if(isset($answer) && isset($checked_ids[$collumn->id]) && in_array($option->id, $checked_ids[$collumn->id]))
                     <input class="form-check-input question_{{ $collumn->id }}" type="radio" name="question[{{ $collumn->id }}]" value="{{ $option->id }}" checked="checked">
@@ -33,7 +33,7 @@
         <div class="form-check">
             <label class="form-check-label">
                 @if($other)
-                <input class="form-check-input" type="checkbox" name="other[{{ $collumn->id }}]" value="1">
+                <input class="form-check-input" type="checkbox" name="other[multiple][{{ $collumn->id }}]" value="1">
                 @else
                     @if(isset($answer) && isset($checked_ids[$collumn->id]) && in_array($option->id, $checked_ids[$collumn->id]))
                     <input class="form-check-input" type="checkbox" name="question[{{ $collumn->id }}][{{ $option->id }}]" value="1" checked="checked">
@@ -51,7 +51,7 @@
 
     @case(4)
         @if($other)
-        <select class="form-control question_{{ $collumn->id }}" name="other[{{ $collumn->id }}]">
+        <select class="form-control question_{{ $collumn->id }}" name="other[ordering][{{ $collumn->id }}]">
         @else
         <select class="form-control question_{{ $collumn->id }}" name="question[{{ $collumn->id }}][{{ $option->id }}]">
         @endif
@@ -149,7 +149,7 @@
 
     @case(5)
         @if($other)
-        <select class="form-control" name="other[{{ $collumn->id }}]">
+        <select class="form-control" name="other[grade][{{ $collumn->id }}]">
         @else
             @if(isset($subCollumn))
             <select class="form-control" name="question[{{ $collumn->id }}][{{ $option->id }}][{{ $subCollumn->id }}]">

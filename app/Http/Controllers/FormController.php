@@ -152,10 +152,10 @@ class FormController extends Controller
         $sample = session('sample');
         $subject = session('subject');
 
-        if ($last_question = $this->store($request)){
-            $previous = Question::where('order',request('previous'))->first();
-            $question = Question::where('order',request('next'))->first();
-        }
+        $this->store($request);
+
+        if (request('previous') != null) $previous = Question::where('order',request('previous'))->first();
+        if (request('next') != null) $question = Question::where('order',request('next'))->first();
 
         if(isset($question)){
             $currents = $this->current($request, $question);
@@ -431,141 +431,80 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-        $answers = [];
-        if ($inputs = request('question'))
-            foreach($inputs as $id => $input){
-                $question = Question::findOrFail($id);
-
-                switch($question->type){
-                    case 1:
-                        $answers [] = $this->storeUnique($request, $question, $input);
-                    break;
-
-                    case 2:
-                        $answers [] = $this->storeMultiple($request, $question, $input);
-                    break;
-
-                    case 3:
-                        $answers [] = $this->storeOpen($request, $question, $input);
-                    break;
-
-                    case 4:
-                        $answers [] = $this->storeOrdering($request, $question, $input);
-                    break;
-
-                    case 5:
-                        $answers [] = $this->storeGrade($request, $question, $input);
-                    break;
-
-                    default:
-                        dd($question->id . ': invalid question type.');
-                    break;
-                }
-            }
-
-        if ($others = request('other'))
-            foreach($others as $id => $input){
-                $question = Question::findOrFail($id);
-
-                switch($question->type){
-                    case 1:
-                        if ($question->other){
-                            if ($other = ucfirst(trim($input)))
-                                $question->options()->save($selectedOption = Option::create(['statement'=>$other]));
-
-                            else //if ($request->input('question.'.$id) == 'empty')
-                                return 346;
-                        }
-
-                        $answer = Answer::where([
-                            ['sample_id', session('sample_id')],
-                            ['subject_id', session('subject_id')],
-                            ['question_id', $question->id]
-                        ])->first();
-
-                        if (!$answer)
-                            $answer = Answer::create([
-                                'sample_id' => session('sample_id'),
-                                'subject_id' => session('subject_id'),
-                                'question_id' => $question->id
-                            ]);
-
-                        $answer->options()->sync([$selectedOption->id]);
-                        $answers [] = $answer;
-                    break;
-
-                    case 2:
-                        if ($other = ucfirst(trim($input))){
-                            // $selectedOption = $question->options()->orderBy('created_at', 'desc')->first();
-                            $selectedOption = $question;
-                            $question->options()->save($selectedOption = Option::create(['statement'=>$other]));
-                        }
-
-                        else //if ($request->input('question.'.$id) == 'empty')
-                            return 372;
-
-                        $answer = Answer::where([
-                            ['sample_id', session('sample_id')],
-                            ['subject_id', session('subject_id')],
-                            ['question_id', $question->id]
-                        ])->first();
-
-                        if (!$answer)
-                            $answer = Answer::create([
-                                'sample_id' => session('sample_id'),
-                                'subject_id' => session('subject_id'),
-                                'question_id' => $question->id
-                            ]);
-
-                        $answer->options()->attach($selectedOption->id);
-                        $answers [] = $answer;
-                    break;
-
-                    case 3:
-
-                    break;
-                    case 4:
-
-                    break;
-                    case 5:
-                    break;
-
-                    default:
-                        dd($question->id . ': invalid question type.');
-                    break;
-                }
-            }
-
-        return true;
-    }
-
-    public function storeUnique(Request $request, Question $question, $input)
-    {
-        if ($input && is_numeric($input))
-            $selectedOption = Option::findOrFail($input);
-
-        elseif ($question->other)
+        if (!$inputs = request('question'))
             return;
 
-        $answer = Answer::where([
-            ['sample_id', session('sample_id')],
-            ['subject_id', session('subject_id')],
-            ['question_id', $question->id]
-        ])->first();
+        $others = [];
 
-        if (!$answer)
-            $answer = Answer::create([
+        // if (count($inputs) > 1) {
+            $questions = [];
+            foreach ($inputs as $id => $input)
+                $questions [$id] = Question::findOrFail($id);
+
+            if ($inputs_others = request('other'))
+                foreach ($inputs_others as $k => $v)
+                    if (is_numeric($k)){
+                        if (!isset($questions[$k]))
+                            $questions [$k] = Question::findOrFail($k);
+                        if (ucfirst(trim($v)))
+                            $others [$k] = Option::create(['statement'=>ucfirst(trim($v))]);
+                    }
+
+            if (!empty($inputs_others['unique']))
+                foreach ($inputs_others['unique'] as $k => $v)
+                    if ($v) $questions[$k]->options()->save($others[$k]);
+
+            if (!empty($inputs_others['multiple']))
+                foreach ($inputs_others['multiple'] as $k => $v)
+                    if ($v) $questions[$k]->options()->save($others[$k]);
+
+            if (!empty($inputs_others['ordering']))
+                foreach ($inputs_others['ordering'] as $k => $v)
+                    if ($v) $questions[$k]->options()->save($others[$k]);
+
+            if (!empty($inputs_others['grade']))
+                foreach ($inputs_others['grade'] as $k => $v)
+                    if ($v) $questions[$k]->options()->save($others[$k]);
+
+        // }
+
+
+        foreach($inputs as $id => $input){
+            $question = Question::findOrFail($id);
+            // dd([$question, $input, $others]);
+
+            $answer = Answer::firstOrCreate([
                 'sample_id' => session('sample_id'),
                 'subject_id' => session('subject_id'),
                 'question_id' => $question->id,
-                'user_id' => \Auth::user()->id,
-            ]);
+            ], ['user_id' => \Auth::user()->id]);
+
+            switch($question->type){
+                case 1: $this->storeUnique($request, $question, $answer, $input, $others); break;
+                case 2: $this->storeMultiple($request, $question, $answer, $input, $others); break;
+                case 3: $this->storeOpen($request, $question, $answer, $input, $others); break;
+                case 4: $this->storeOrdering($request, $question, $answer, $input, $others); break;
+                case 5: $this->storeGrade($request, $question, $answer, $input, $others); break;
+
+                default: dd($question->id . ': invalid question type.'); break;
+            }
+        }
+
+    }
+
+    public function storeUnique(Request $request, Question $question, Answer $answer, $input, $others)
+    {
+        if ($other_option = $others[$question->id][$question->id])
+            $selectedOption = $other_option;
+
+        elseif ($input && is_numeric($input))
+            $selectedOption = Option::findOrFail($input);
 
         $answer->options()->sync([$selectedOption->id]);
         return $answer;
     }
 
-    public function storeMultiple(Request $request, Question $question, $input)
+    public function storeMultiple(Request $request, Question $question, Answer $answer, $input, $others)
     {
         $selectedOptions = [];
         foreach ($input as $key => $option){
@@ -576,133 +515,57 @@ class FormController extends Controller
                 return;
         }
 
-        $answer = Answer::where([
-            ['sample_id', session('sample_id')],
-            ['subject_id', session('subject_id')],
-            ['question_id', $question->id]
-        ])->first();
-
-        if (!$answer)
-            $answer = Answer::create([
-                'sample_id' => session('sample_id'),
-                'subject_id' => session('subject_id'),
-                'question_id' => $question->id,
-                'user_id' => \Auth::user()->id,
-            ]);
-
-        $ids = [];
-        foreach ($selectedOptions as $selectedOption)
-            $ids [] = $selectedOption->id;
-
-        $answer->options()->sync($ids);
+        $answer->options()->sync(collect($selectedOptions)->pluck('id'));
         return $answer;
     }
 
-    public function storeOpen(Request $request, Question $question, $input)
+    public function storeOpen(Request $request, Question $question, Answer $answer, $input, $others)
     {
-        $answer = Answer::where([
-            ['sample_id', session('sample_id')],
-            ['subject_id', session('subject_id')],
-            ['question_id', $question->id]
-        ])->first();
-
-        if (!$answer)
-            $answer = Answer::create([
-                'sample_id' => session('sample_id'),
-                'subject_id' => session('subject_id'),
-                'question_id' => $question->id,
-                'user_id' => \Auth::user()->id,
-            ]);
-
         if (is_array($input)){
             $answer->options()->detach();
-            foreach ($input as $key => $option){
-                DB::table('answer_option')->insert([
-                    'answer_id' => $answer->id,
-                    'option_id' => $key,
-                    'value' => $option
-                ]);
-            }
-        }
-        else {
-            if ($given = trim($input)){
-                $answer->value = $given;
-                $answer->save();
-            }
+            foreach ($input as $key => $option)
+                $answer->options()->attach([$key => ['value' => $option]]);
+
+        } elseif ($given = trim($input)) {
+            $answer->value = $given;
+            $answer->save();
         }
 
         return $answer;
     }
 
-    public function storeOrdering(Request $request, Question $question, $input)
+    public function storeOrdering(Request $request, Question $question, Answer $answer, $input, $others)
     {
-        $answer = Answer::where([
-            ['sample_id', session('sample_id')],
-            ['subject_id', session('subject_id')],
-            ['question_id', $question->id]
-        ])->first();
-
-        if (!$answer)
-            $answer = Answer::create([
-                'sample_id' => session('sample_id'),
-                'subject_id' => session('subject_id'),
-                'question_id' => $question->id,
-                'user_id' => \Auth::user()->id,
-            ]);
-
         foreach (range(1,count($input)) as $v)
             if (!in_array($v, $input))
                 return 'not valid';
 
         $answer->options()->detach();
         foreach ($input as $key => $option)
-            DB::table('answer_option')->insert([
-                'answer_id' => $answer->id,
-                'option_id' => $key,
-                'value' => $option
-            ]);
+            $answer->options()->attach([$key => ['value' => $option]]);
 
         return $answer;
     }
 
-    public function storeGrade(Request $request, Question $question, $input)
+    public function storeGrade(Request $request, Question $question, Answer $answer, $input, $others)
     {
-        $answer = Answer::where([
-            ['sample_id', session('sample_id')],
-            ['subject_id', session('subject_id')],
-            ['question_id', $question->id]
-        ])->first();
-
-        if (!$answer)
-            $answer = Answer::create([
-                'sample_id' => session('sample_id'),
-                'subject_id' => session('subject_id'),
-                'question_id' => $question->id,
-                'user_id' => \Auth::user()->id,
-            ]);
-
         $answer->options()->detach();
         DB::table('answer_option_option')
             ->where('answer_id', $answer->id)
             ->delete();
+
         foreach ($input as $key => $option){
             if (is_array($option)){
-                foreach($option as $subKey => $subOption){
+                foreach($option as $subKey => $subOption)
                     DB::table('answer_option_option')->insert([
                         'answer_id' => $answer->id,
                         'option_id' => $key,
                         'sub_option_id' => $subKey,
                         'value' => $subOption
                     ]);
-                }
-            }
-            else {
-                DB::table('answer_option')->insert([
-                    'answer_id' => $answer->id,
-                    'option_id' => $key,
-                    'value' => $option
-                ]);
-            }
+
+            } else
+                $answer->options()->attach([$key => ['value' => $option]]);
         }
 
         return $answer;

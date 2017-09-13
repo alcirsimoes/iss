@@ -19,7 +19,7 @@ class SurveysTableSeeder extends Seeder
         $survey = Survey::create([
             'name' => 'Krones Satisfação e Imagem Processos',
             'type' => 2,
-            'intro' => 'Bom dia/Boa tarde, meu nome é ___________, trabalho na H2M, empresa que desenvolve estudos de mercado. O motivo de nosso contato é porque estamos <strong>realizando um estudo sobre fornecedores de máquinas, equipamentos e soluções para o mercado PROCESSOS DE FABRICAÇÃO DE BEBIDAS.</strong> É importante que você saiba que suas informações são sigilosas e suas informações serão analisadas em conjunto com as informações dos demais entrevistados. Desde já agradecemos a sua participação.',
+            'intro' => 'Bom dia/Boa tarde, meu nome é ___________, trabalho na H2M, empresa que desenvolve estudos de mercado. O motivo de nosso contato é porque estamos <strong>realizando um estudo sobre fornecedores de máquinas, equipamentos e soluções para o mercado de PROCESSOS DE FABRICAÇÃO DE BEBIDAS.</strong> É importante que você saiba que suas informações são sigilosas e suas informações serão analisadas em conjunto com as informações dos demais entrevistados. Desde já agradecemos a sua participação.',
             'init_at' => Carbon::now()->addDays(1),
             'end_at' => Carbon::now()->addDays(30),
             'active' => true,
@@ -53,6 +53,7 @@ class SurveysTableSeeder extends Seeder
             'type' => 2,
             'format' => 2,
             'order' => 1,
+            'other' => 1,
         ]);
 
         $options_2 = [

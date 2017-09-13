@@ -33,14 +33,19 @@
                     </div>
                 @endif
 
+                <input type="hidden" name="previous" value="{{ $question->order }}">
+                <input type="hidden" name="next" value="{{ $question->order +1 }}">
+
                 <button type="submit" class="btn btn-primary">Próxima</button>
             </form>
             @if(isset($previous))
             <hr>
-            <form action="{{ route('form.previous', $previous->id) }}" method="post">
-                {{ csrf_field() }}
-                <button type="submit" class="btn btn-danger">Anterior</button>
-            </form>
+                @if(isset($previous))
+                <form action="{{ route('form.previous', $previous->id) }}" method="post">
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn btn-danger">Anterior</button>
+                </form>
+                @endif
             @endif
         </div>
     </div>
