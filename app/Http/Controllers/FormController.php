@@ -63,6 +63,8 @@ class FormController extends Controller
         $sample = session('sample');
         $subject = session('subject');
 
+        $question->load('questions');
+
         if ($request->input('init')){
             $questions = session('questions');
             $answers = Answer::whereIn('question_id', $questions->pluck('id')->toArray())->where('subject_id', $subject->id)->get();
@@ -78,14 +80,21 @@ class FormController extends Controller
                 else
                 break;
             }
-            return $question;
+            return ['question' => $question, 'questions' => $questions];
         }
 
         function jump(Survey $survey, Question $question, Sample $sample, Subject $subject) {
-            $conditions = session('conditions')->where('to_question_id', $question->id)->where('to_option_id', null);
-            if (!count($conditions))
-                return $question;
+            $questions = $question->questions->keyBy('id');
 
+            if ($question->format == 3)
+                $conditions = session('conditions')->whereIn('to_question_id', $question->questions->pluck('id'))->where('to_option_id', null);
+            else
+                $conditions = session('conditions')->where('to_question_id', $question->id)->where('to_option_id', null);
+
+            if (!count($conditions))
+                return ['question' => $question, 'questions' => $questions];
+
+            $only = [];
             foreach ($conditions as $condition) {
                 $given_answer = Answer::where('question_id', $condition->question_id)
                     ->where('sample_id', $sample->id)
@@ -96,27 +105,42 @@ class FormController extends Controller
                     if ($condition->show){
                         $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
                         if ($condition_met){
-                            $question = Question::find($condition->to_question_id);
+                            $show = Question::find($condition->to_question_id);
                             // return jump($survey, $question, $sample, $subject);
                         } else {
-                            $question = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
+                            $show = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
                             // return jump($survey, $question, $sample, $subject);
                         }
 
                     } else {
                         $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
                         if ($condition_met) {
-                            $question = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
+                            $show = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
                             // return jump($survey, $question, $sample, $subject);
                         } else {
-                            $question = Question::find($condition->to_question_id);
+                            $show = Question::find($condition->to_question_id);
                             // return jump($survey, $question, $sample, $subject);
                         }
+                    }
+
+                    if(isset($show) && $question->format == 3) {
+                        $only [] = $show->id;
+                        continue;
+                    }
+                    elseif(isset($show)){
+                        $question = $show;
+                        return ['question' => $question, 'questions' => null];
                     }
                 }
             }
 
-            return $question;
+            if (isset($only[0])){
+                foreach ($questions as $key => $value)
+                    if (!in_array($value->id,$only))
+                        $questions->forget($value->id);
+            }
+
+            return ['question' => $question, 'questions' => $questions];
         }
 
         return jump($survey, $question, $sample, $subject);
@@ -134,7 +158,10 @@ class FormController extends Controller
         }
 
         if(isset($question)){
-            $question = $this->current($request, $question);
+            $currents = $this->current($request, $question);
+            $question = $currents['question'];
+            $questions = $currents['questions'];
+            unset($currents);
 
             $answer = $question->answer()->where('subject_id',$subject->id)->first();
 
@@ -203,7 +230,10 @@ class FormController extends Controller
             $finish = Carbon::now();
             DB::table('sample_subject')
                 ->where(['sample_id' => $sample->id], ['subject_id' => $subject->id])
-                ->update(['finished_at' => $finish]);
+                ->update([
+                    'finished_at' => $finish,
+                    'user_id' => \Auth::user()->id,
+                ]);
 
             return view('form.finish', compact('finish','survey'));
         }
@@ -242,7 +272,44 @@ class FormController extends Controller
             }
         }
 
-        return view('form.create', compact('survey','sample','subject','previous','question','options','answer','checked_ids','text_values'));
+        if (count($questions)){
+            $suboptions = [];
+            foreach ($questions as $subquestion){
+                $conditions = session('conditions')->where('to_question_id', $subquestion->id);
+                $suboptions [$subquestion->id] = $subquestion->options;
+                if (count($conditions)) {
+                    $given_answers = Answer::whereIn('question_id', $conditions->pluck('question_id'))
+                    ->where('sample_id', $sample->id)
+                    ->where('subject_id', $subject->id)
+                    ->get();
+
+                    $only = [];
+                    foreach ($conditions as $condition) {
+                        $given_answer = $given_answers->where('question_id', $condition->question_id)->first();
+
+                        if (isset($given_answer)){
+                            $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
+
+                            if ($condition->show){
+                                if ($condition_met)
+                                $only [] = $condition->to_option_id;
+                            } else {
+                                if ($condition_met)
+                                $suboptions[$subquestion->id]->except($condition->to_option_id);
+                            }
+                        }
+                    }
+                    if (isset($only[0])){
+                        $suboptions[$subquestion->id] = $suboptions[$subquestion->id]->keyBy('id');
+                        foreach ($suboptions[$subquestion->id] as $key => $value)
+                            if (!in_array($value->id,$only))
+                                $suboptions[$subquestion->id]->forget($value->id);
+                    }
+                }
+            }
+        }
+
+        return view('form.create', compact('survey','sample','subject','previous','questions','question','options','suboptions','answer','checked_ids','text_values'));
     }
 
     public function previous(Question $question)
@@ -344,7 +411,7 @@ class FormController extends Controller
                     }
                 }
             }
-            
+
             if (isset($only[0])){
                 $options = $options->keyBy('id');
                 foreach ($options as $key => $value)
@@ -353,7 +420,7 @@ class FormController extends Controller
             }
         }
 
-        return view('form.create', compact('survey','sample','subject','previous','question','options','answer','checked_ids','text_values'));
+        return view('form.create', compact('survey','sample','subject','previous','questions','question','options','suboptions','answer','checked_ids','text_values'));
     }
 
     /**
@@ -490,7 +557,8 @@ class FormController extends Controller
             $answer = Answer::create([
                 'sample_id' => session('sample_id'),
                 'subject_id' => session('subject_id'),
-                'question_id' => $question->id
+                'question_id' => $question->id,
+                'user_id' => \Auth::user()->id,
             ]);
 
         $answer->options()->sync([$selectedOption->id]);
@@ -518,7 +586,8 @@ class FormController extends Controller
             $answer = Answer::create([
                 'sample_id' => session('sample_id'),
                 'subject_id' => session('subject_id'),
-                'question_id' => $question->id
+                'question_id' => $question->id,
+                'user_id' => \Auth::user()->id,
             ]);
 
         $ids = [];
@@ -542,6 +611,7 @@ class FormController extends Controller
                 'sample_id' => session('sample_id'),
                 'subject_id' => session('subject_id'),
                 'question_id' => $question->id,
+                'user_id' => \Auth::user()->id,
             ]);
 
         if (is_array($input)){
@@ -577,6 +647,7 @@ class FormController extends Controller
                 'sample_id' => session('sample_id'),
                 'subject_id' => session('subject_id'),
                 'question_id' => $question->id,
+                'user_id' => \Auth::user()->id,
             ]);
 
         foreach (range(1,count($input)) as $v)
@@ -607,6 +678,7 @@ class FormController extends Controller
                 'sample_id' => session('sample_id'),
                 'subject_id' => session('subject_id'),
                 'question_id' => $question->id,
+                'user_id' => \Auth::user()->id,
             ]);
 
         $answer->options()->detach();

@@ -53,11 +53,13 @@ class SubjectController extends Controller
             'name' => 'required|max:255',
         ]);
 
+        // dd($request->all());
+
         $subject = Subject::create($request->all());
 
         if ($sample_id = request('sample_id')) {
             $sample = Sample::findOrFail($sample_id);
-            $sample->subjects()->save($subject);
+            $sample->subjects()->save($subject, ['user_id' => \Auth::user()->id]);
 
             if (request('redirect'))
                 return redirect()->route('form.create', [$sample->surveys->first()->id, $subject->id]);

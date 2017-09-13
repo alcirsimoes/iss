@@ -10,8 +10,8 @@
                 <th>{!! $question->options_header !!}</th>
                 <th>{!! $question->answers_header !!}</th>
 
-                @foreach($question->questions as $collumn)
-                    @forelse($collumn->options as $subCollumn)
+                @foreach($questions as $collumn)
+                    @forelse($suboptions[$collumn->id] as $subCollumn)
                     <th>{{ $subCollumn->statement }}</th>
                     @empty
                     <th>{!! $collumn->answers_header !!}</th>
@@ -29,8 +29,8 @@
                     @include('form.partials.collumnField')
                 </td>
 
-                @foreach($question->questions as $collumn)
-                    @forelse($collumn->options as $subCollumn)
+                @foreach($questions as $collumn)
+                    @forelse($suboptions[$collumn->id] as $subCollumn)
                     <td>
                         @include('form.partials.collumnField')
                     </td>

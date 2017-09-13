@@ -43,6 +43,10 @@ class CreateSamplesTables extends Migration
             $table->string('city')->nullable();
             $table->string('ocupation')->nullable();
             $table->string('telephone')->nullable();
+
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -56,6 +60,9 @@ class CreateSamplesTables extends Migration
 
             $table->dateTime('finished_at')->nullable();
 
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->unique(['sample_id','subject_id']);
         });
 
@@ -68,6 +75,10 @@ class CreateSamplesTables extends Migration
             $table->integer('question_id')->unsigned();
             $table->foreign('question_id')->references('id')->on('questions');
             $table->text('value')->nullable();
+
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->timestamps();
             $table->softDeletes();
         });

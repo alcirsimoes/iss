@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
-    public $fillable = ['sample_id', 'subject_id', 'question_id', 'value'];
+    public $fillable = ['user_id', 'sample_id', 'subject_id', 'question_id', 'value'];
 
     public function survey()
     {
