@@ -97,20 +97,20 @@ class FormController extends Controller
                         $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
                         if ($condition_met){
                             $question = Question::find($condition->to_question_id);
-                            return jump($survey, $question, $sample, $subject);
+                            // return jump($survey, $question, $sample, $subject);
                         } else {
                             $question = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
-                            return jump($survey, $question, $sample, $subject);
+                            // return jump($survey, $question, $sample, $subject);
                         }
 
                     } else {
                         $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
                         if ($condition_met) {
                             $question = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
-                            return jump($survey, $question, $sample, $subject);
+                            // return jump($survey, $question, $sample, $subject);
                         } else {
                             $question = Question::find($condition->to_question_id);
-                            return jump($survey, $question, $sample, $subject);
+                            // return jump($survey, $question, $sample, $subject);
                         }
                     }
                 }
@@ -211,7 +211,6 @@ class FormController extends Controller
         $conditions = session('conditions')->where('to_question_id', $question->id);
         if (!count($conditions)) {
             $options = $question->options;
-            dd($options);
         } else {
             $options = $question->options;
             $given_answers = Answer::whereIn('question_id', $conditions->pluck('question_id'))
@@ -235,10 +234,12 @@ class FormController extends Controller
                     }
                 }
             }
-            $options = $options->keyBy('id');
-            foreach ($options as $key => $value)
-                if (!in_array($value->id,$only))
-                    $options->forget($value->id);
+            if (isset($only[0])){
+                $options = $options->keyBy('id');
+                foreach ($options as $key => $value)
+                    if (!in_array($value->id,$only))
+                        $options->forget($value->id);
+            }
         }
 
         return view('form.create', compact('survey','sample','subject','previous','question','options','answer','checked_ids','text_values'));
@@ -317,7 +318,42 @@ class FormController extends Controller
 
         }
 
-        return view('form.create', compact('survey','sample','subject','previous','question','answer','checked_ids','text_values'));
+        $conditions = session('conditions')->where('to_question_id', $question->id);
+        if (!count($conditions)) {
+            $options = $question->options;
+        } else {
+            $options = $question->options;
+            $given_answers = Answer::whereIn('question_id', $conditions->pluck('question_id'))
+                ->where('sample_id', $sample->id)
+                ->where('subject_id', $subject->id)
+                ->get();
+
+            $only = [];
+            foreach ($conditions as $condition) {
+                $given_answer = $given_answers->where('question_id', $condition->question_id)->first();
+
+                if (isset($given_answer)){
+                    $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
+
+                    if ($condition->show){
+                        if ($condition_met)
+                            $only [] = $condition->to_option_id;
+                    } else {
+                        if ($condition_met)
+                            $options->except($condition->to_option_id);
+                    }
+                }
+            }
+            
+            if (isset($only[0])){
+                $options = $options->keyBy('id');
+                foreach ($options as $key => $value)
+                    if (!in_array($value->id,$only))
+                        $options->forget($value->id);
+            }
+        }
+
+        return view('form.create', compact('survey','sample','subject','previous','question','options','answer','checked_ids','text_values'));
     }
 
     /**

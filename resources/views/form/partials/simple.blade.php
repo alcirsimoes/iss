@@ -77,7 +77,7 @@
             @forelse ($options as $option)
             <div class="form-group">
                 <label for="question{{ $question->id }}">{{ $option->statement }}</label>
-                <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control" id="question{{ $question->id }}" rows="3">@if(isset($answer)){{ $text_values[$option->id] }}@endif</textarea>
+                <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control" id="question{{ $question->id }}" rows="3">@if(isset($text_values[$option->id])){{ $text_values[$option->id] }}@endif</textarea>
             </div>
             @empty
                 <div class="form-group">
@@ -101,7 +101,7 @@
                     <select class="form-control question_{{ $question->id }}" name="question[{{ $question->id }}][{{ $option->id }}]">
                         <option value="">Ordem...</option>
                         @for($i = 1; $i <= count($options); $i ++)
-                            @if(isset($answer) && $text_values[$option->id] == $i)
+                            @if(isset($answer) && isset($text_values[$option->id]) && $text_values[$option->id] == $i)
                             <option value="{{ $i }}" selected="selected">{{ $i }}°</option>
                             @else
                             <option value="{{ $i }}">{{ $i }}°</option>
@@ -205,7 +205,7 @@
                     <select class="form-control" name="question[{{ $question->id }}][{{ $option->id }}]">
                         <option value="">Nota...</option>
                         @for($i = 1; $i < 11; $i ++))
-                            @if(isset($answer) && $text_values[$option->id] == $i)
+                            @if(isset($text_values[$option->id]) && $text_values[$option->id] == $i)
                             <option value="{{ $i }}" selected="selected">{{ $i }}</option>
                             @else
                             <option value="{{ $i }}">{{ $i }}</option>
