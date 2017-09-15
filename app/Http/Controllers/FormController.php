@@ -68,9 +68,7 @@ class FormController extends Controller
             foreach ($questions as $question){
                 $answer = $question->answer()->where('subject_id',$subject->id)->first();
                 if (isset($answer)){
-                    $checked_ids = [];
-                    if(isset($answer)) foreach($answer->options as $given)
-                        $checked_ids [] = $given->id;
+                    $checked_ids = $answer->options->pluck('id');
                     break;
 
                 } else
@@ -452,7 +450,6 @@ class FormController extends Controller
                 foreach ($value as $k => $v) {
                     if (!isset($questions[$k]))
                         $questions [$k] = Question::findOrFail($k);
-                        dd($others);
                     if ($v) $questions[$k]->options()->save($others[$k]);
                 }
 
