@@ -64,15 +64,21 @@ class FormController extends Controller
 
         if ($request->input('init')){
             $questions = session('questions');
-            $answers = Answer::whereIn('question_id', $questions->pluck('id')->toArray())->where('subject_id', $subject->id)->get();
 
             foreach ($questions as $question){
                 $answer = $question->answer()->where('subject_id',$subject->id)->first();
                 if (isset($answer)){
                     $checked_ids = $answer->options->pluck('id');
+<<<<<<< HEAD
                     break;
 
                 } else break;
+=======
+                    break;
+
+                } else
+                    break;
+>>>>>>> 4ebd4fafacee8ecc4cfc0d89e6639b6f74265acc
             }
             return ['question' => $question, 'questions' => $questions];
         }
@@ -450,7 +456,6 @@ class FormController extends Controller
                 foreach ($value as $k => $v) {
                     if (!isset($questions[$k]))
                         $questions [$k] = Question::findOrFail($k);
-                        dd($others);
                     if ($v) $questions[$k]->options()->save($others[$k]);
                 }
 
