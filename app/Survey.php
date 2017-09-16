@@ -10,7 +10,7 @@ class Survey extends Model
 
     public function samples()
     {
-        return $this->belongsToMany('App\Sample');
+        return $this->belongsToMany('App\Sample')->withPivot('active');
     }
 
     public function questions()

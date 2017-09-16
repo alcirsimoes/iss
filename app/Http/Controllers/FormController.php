@@ -37,9 +37,6 @@ class FormController extends Controller
             return redirect()->route('sample.create', ['id'=>$survey->id]);
 
         if($subject->id){
-            $questions = $survey->questions;
-            $answers = Answer::whereIn('question_id', $questions->pluck('id')->toArray())->where('subject_id', $subject->id)->get();
-
             session([
                 'survey_id' => $survey->id,
                 'sample_id' => $sample->id,
@@ -51,7 +48,7 @@ class FormController extends Controller
                 'conditions' => $survey->conditions,
             ]);
 
-            return view('form.show', compact('survey','sample','subject','questions','answers'));
+            return view('form.show', compact('survey','sample','subject'));
         }
 
         return view('form.index', compact('survey','sample'));
@@ -72,13 +69,10 @@ class FormController extends Controller
             foreach ($questions as $question){
                 $answer = $question->answer()->where('subject_id',$subject->id)->first();
                 if (isset($answer)){
-                    $checked_ids = [];
-                    if(isset($answer)) foreach($answer->options as $given)
-                    $checked_ids [] = $given->id;
+                    $checked_ids = $answer->options->pluck('id');
                     break;
-                }
-                else
-                break;
+
+                } else break;
             }
             return ['question' => $question, 'questions' => $questions];
         }
