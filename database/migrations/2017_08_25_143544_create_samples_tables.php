@@ -90,21 +90,7 @@ class CreateSamplesTables extends Migration
             $table->integer('option_id')->unsigned();
             $table->foreign('option_id')->references('id')->on('options');
 
-            $table->text('value')->nullable();
-
-            $table->unique(['answer_id','option_id']);
-
-            $table->timestamps();
-        });
-
-        Schema::create('answer_option_option', function (Blueprint $table) {
-            $table->integer('answer_id')->unsigned();
-            $table->foreign('answer_id')->references('id')->on('answers');
-
-            $table->integer('option_id')->unsigned();
-            $table->foreign('option_id')->references('id')->on('options');
-
-            $table->integer('sub_option_id')->unsigned();
+            $table->integer('sub_option_id')->unsigned()->nullable();
             $table->foreign('sub_option_id')->references('id')->on('options');
 
             $table->text('value')->nullable();
@@ -113,6 +99,7 @@ class CreateSamplesTables extends Migration
 
             $table->timestamps();
         });
+
     }
 
     /**

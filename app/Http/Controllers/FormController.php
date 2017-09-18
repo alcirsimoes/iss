@@ -105,21 +105,21 @@ class FormController extends Controller
                 if ($condition->show){
                     $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
                     if ($condition_met){
-                        $show =  session('questions')->where('id', $condition->to_question_id);
-                        return jump($survey, $show, $sample, $subject);
+                        $show =  session('questions')->where('id', $condition->to_question_id)->first();
+                        // return $this->jump($survey, $show, $sample, $subject);
                     } else {
                         $show = session('questions')->where('survey_id', $survey->id)->where('order', $order)->first();
-                        return jump($survey, $show, $sample, $subject);
+                        // return $this->jump($survey, $show, $sample, $subject);
                     }
 
                 } else {
                     $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
                     if ($condition_met) {
                         $show = session('questions')->where('survey_id', $survey->id)->where('order', $order)->first();
-                        return jump($survey, $show, $sample, $subject);
+                        // return $this->jump($survey, $show, $sample, $subject);
                     } else {
-                        $show = session('questions')->where('id', $condition->to_question_id);
-                        return jump($survey, $show, $sample, $subject);
+                        $show = session('questions')->where('id', $condition->to_question_id)->first();
+                        // return $this->jump($survey, $show, $sample, $subject);
                     }
                 }
 
@@ -151,8 +151,8 @@ class FormController extends Controller
 
         $this->store($request);
 
-        if (request('next') != null) $previous = Question::where('order',request('next')-1)->first();
-        if (request('next') != null) $question = Question::where('order',request('next'))->first();
+        if (request('next') != null) $previous = session('questions')->where('order',request('next')-1)->first();
+        if (request('next') != null) $question = session('questions')->where('order',request('next'))->first();
 
         if(isset($question)){
             $currents = $this->current($request, $question);
@@ -170,67 +170,37 @@ class FormController extends Controller
                     $checked_ids [$question->id] [] = $given->id;
 
                     if ($question->type == 3 || $question->type == 4 || $question->type == 5){
-                        $text = DB::table('answer_option')->select('value')
-                            ->where(['answer_id' => $answer->id])
-                            ->where(['option_id' => $given->id])
-                            ->first();
-                        $text_values [$question->id] [$given->id] = $text->value;
+                        $text_values [$question->id] [$given->id] = $given->pivot->value;
                     }
+
                     foreach ($question->questions as $collumn){
                         $colAnswer = $collumn->answer;
-
-                        if(isset($colAnswer)) {
-                            if ($collumn->options){
-                                $text = DB::table('answer_option_option')->select('value','sub_option_id')
-                                ->where(['answer_id' => $colAnswer->id])
-                                ->where(['option_id' => $given->id])
-                                ->get();
-                                foreach ($text as $subKey => $subCollumn){
-                                    $text_values [$collumn->id] [$given->id] [$subCollumn->sub_option_id] = $subCollumn->value;
+                        if(isset($colAnswer))
+                            if (count($collumn->options)){
+                                $text = $colAnswer->options()->where('option_id', $given->id)->get();
+                                foreach ($text as $subKey => $subCollumn) {
+                                    $text_values [$collumn->id] [$given->id] [$subCollumn->pivot->sub_option_id] = $subCollumn->pivot->value;
                                 }
-                            }
-                        }
-                    }
-                }
-
-                foreach ($question->questions as $collumn){
-                    $col_answer = $collumn->answer;
-
-                    if(isset($col_answer)) {
-                        foreach($col_answer->options as $given){
-                            $checked_ids [$collumn->id] [] = $given->id;
-
-                            if ($collumn->type == 3 || $collumn->type == 4 || $collumn->type == 5){
-                                $text = DB::table('answer_option')->select('value')
-                                ->where(['answer_id' => $col_answer->id])
-                                ->where(['option_id' => $given->id])
-                                ->first();
-                                $text_values [$collumn->id] [$given->id] = $text->value;
-                            }
-                        }
+                            } else
+                                foreach($colAnswer->options as $given) {
+                                    $checked_ids [$collumn->id] [] = $given->id;
+                                    if ($collumn->type == 3 || $collumn->type == 4 || $collumn->type == 5)
+                                        $text_values [$collumn->id] [$given->id] = $given->pivot->value;
+                                }
                     }
                 }
             }
             elseif(isset($answer) && $question->format != 3) foreach($answer->options as $given){
                 $checked_ids [] = $given->id;
-
-                if ($question->type == 3 || $question->type == 4 || $question->type == 5){
-                    $text = DB::table('answer_option')->select('value')
-                        ->where(['answer_id' => $answer->id])
-                        ->where(['option_id' => $given->id])
-                        ->first();
-                    $text_values [$given->id] = $text->value;
-                }
+                if ($question->type == 3)
+                    $text_values [$given->id] = $given->pivot->value;
+                if ($question->type == 4 || $question->type == 5)
+                    $text_values [$given->id] = $given->value;
             }
-
+            
         } else {
             $finish = Carbon::now();
-            DB::table('sample_subject')
-                ->where(['sample_id' => $sample->id], ['subject_id' => $subject->id])
-                ->update([
-                    'finished_at' => $finish,
-                    'user_id' => \Auth::user()->id,
-                ]);
+            $sample->subjects()->where('subject_id', $subject->id)->updateExistingPivot($subject->id, ['finished_at' => $finish,'user_id' => \Auth::user()->id]);
 
             return view('form.finish', compact('finish','survey'));
         }
@@ -317,38 +287,40 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$inputs = request('question'))
+        $inputs = request('question');
+        $inputs_others = request('other');
+        if (!$inputs && !$inputs_others)
             return;
-
 
         $others = [];
         $questions = [];
-        $unamed_other = [];
-        foreach ($inputs as $id => $input)
-            $questions [$id] = Question::findOrFail($id);
+        $unnamed_other = [];
+        if (!empty($inputs)) foreach ($inputs as $id => $input)
+            $questions [$id] = session('questions')->where('id', $id)->first();
 
         if ($inputs_others = request('other'))
             foreach ($inputs_others as $k => $v)
                 if (is_numeric($k)){
                     if (!isset($questions[$k]))
-                        $questions [$k] = Question::findOrFail($k);
-                    if (ucfirst(trim($v)))
+                        $questions [$k] = session('questions')->where('id', $k)->first();
+                    if (ucfirst(trim($v))){
                         $others [$k] = Option::create(['statement'=>ucfirst(trim($v))]);
+                        $questions[$k]->options()->save($others[$k]);
+                    }
                 } else
-                    $unamed_other [] = $inputs_others[$k];
+                    $unnamed_other [] = $inputs_others[$k];
 
-        if (!empty($unamed_other))
-            foreach ($unamed_other as $key => $value)
+        if (!empty($unnamed_other))
+            foreach ($unnamed_other as $key => $value)
                 foreach ($value as $k => $v) {
                     if (!isset($questions[$k]))
-                        $questions [$k] = Question::findOrFail($k);
-                    if ($v) $questions[$k]->options()->save($others[$k]);
+                        $questions [$k] = session('questions')->where('id', $k)->first();
                 }
-
 
         foreach($questions as $question){
             if (isset($inputs[$question->id]))
                 $input = $inputs[$question->id];
+            else $input = [];
 
             $answer = Answer::firstOrCreate([
                 'sample_id' => session('sample_id'),
@@ -371,26 +343,26 @@ class FormController extends Controller
 
     public function storeUnique(Request $request, Question $question, Answer $answer, $input, $others)
     {
-        if (isset($others[$question->id]) && $other_option = $others[$question->id])
-            $selectedOption = $other_option;
+        $selectedOption = null;
+        if (!empty($others)) foreach ($others as $k => $v)
+            $selectedOption = $v;
 
         elseif ($input && is_numeric($input))
             $selectedOption = Option::findOrFail($input);
 
-        $answer->options()->sync([$selectedOption->id]);
+        if ($selectedOption) $answer->options()->sync([$selectedOption->id]);
         return $answer;
     }
 
     public function storeMultiple(Request $request, Question $question, Answer $answer, $input, $others)
     {
         $selectedOptions = [];
-        foreach ($input as $key => $option){
+        foreach ($input as $key => $option)
             if ($key && is_numeric($key) && $option)
                 $selectedOptions [] = Option::findOrFail($key);
 
-            elseif ($question->other)
-                return;
-        }
+        if (!empty($others)) foreach ($others as $k => $v)
+            $selectedOptions [] = $v;
 
         $answer->options()->sync(collect($selectedOptions)->pluck('id'));
         return $answer;
@@ -427,22 +399,18 @@ class FormController extends Controller
     public function storeGrade(Request $request, Question $question, Answer $answer, $input, $others)
     {
         $answer->options()->detach();
-        DB::table('answer_option_option')
-            ->where('answer_id', $answer->id)
-            ->delete();
-
         foreach ($input as $key => $option){
-            if (is_array($option)){
+            if (is_array($option))
                 foreach($option as $subKey => $subOption)
-                    DB::table('answer_option_option')->insert([
-                        'answer_id' => $answer->id,
-                        'option_id' => $key,
-                        'sub_option_id' => $subKey,
-                        'value' => $subOption
-                    ]);
-
-            } else
+                    $answer->options()->attach([$key => ['sub_option_id' => $subKey, 'value' => $subOption]]);
+            else
                 $answer->options()->attach([$key => ['value' => $option]]);
+        }
+
+        if (!empty($others)) foreach ($others as $k => $v){
+            $other = request('other');
+            $other_grade = $other['grade'];
+            $answer->options()->attach([$v->id => ['value' => $other_grade[$question->id] ]]);
         }
 
         return $answer;

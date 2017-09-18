@@ -159,9 +159,9 @@
         @endif
             <option value="">Nota...</option>
             @for($i = 1; $i < 11; $i ++)
-                @if(isset($subCollumn) && isset($text_values[$collumn->id][$option->id][$subCollumn->id]) && $text_values[$collumn->id][$option->id][$subCollumn->id] == $i)
+                @if(!$other && isset($subCollumn) && isset($text_values[$collumn->id][$option->id][$subCollumn->id]) && $text_values[$collumn->id][$option->id][$subCollumn->id] == $i)
                 <option value="{{ $i }}" selected="selected">{{ $i }}</option>
-                @elseif(isset($text_values[$collumn->id][$option->id]) && $text_values[$collumn->id][$option->id] == $i)
+                @elseif(!$other && isset($text_values[$collumn->id][$option->id]) && $text_values[$collumn->id][$option->id] == $i)
                 <option value="{{ $i }}" selected="selected">{{ $i }}</option>
                 @else
                 <option value="{{ $i }}">{{ $i }}</option>

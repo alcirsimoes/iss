@@ -30,6 +30,6 @@ class Answer extends Model
 
     public function options()
     {
-        return $this->belongsToMany('App\Option');
+        return $this->belongsToMany('App\Option')->withPivot('sub_option_id', 'value');
     }
 }
