@@ -41,8 +41,9 @@
             @if(isset($previous))
             <hr>
                 @if(isset($previous))
-                <form action="{{ route('form.previous', $previous->id) }}" method="post">
+                <form action="{{ route('form.next') }}" method="post">
                     {{ csrf_field() }}
+                    <input type="hidden" name="next" value="{{ $previous->order }}">
                     <button type="submit" class="btn btn-danger">Anterior</button>
                 </form>
                 @endif

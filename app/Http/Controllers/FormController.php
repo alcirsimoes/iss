@@ -11,6 +11,7 @@ use App\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class FormController extends Controller
 {
@@ -69,81 +70,77 @@ class FormController extends Controller
                 $answer = $question->answer()->where('subject_id',$subject->id)->first();
                 if (isset($answer)){
                     $checked_ids = $answer->options->pluck('id');
-<<<<<<< HEAD
                     break;
 
                 } else break;
-=======
-                    break;
-
-                } else
-                    break;
->>>>>>> 4ebd4fafacee8ecc4cfc0d89e6639b6f74265acc
             }
             return ['question' => $question, 'questions' => $questions];
         }
 
-        function jump(Survey $survey, Question $question, Sample $sample, Subject $subject) {
-            $questions = $question->questions->keyBy('id');
+        return $this->jump($survey, $question, $sample, $subject);
+    }
 
-            if ($question->format == 3)
-                $conditions = session('conditions')->whereIn('to_question_id', $question->questions->pluck('id'))->where('to_option_id', null);
-            else
-                $conditions = session('conditions')->where('to_question_id', $question->id)->where('to_option_id', null);
+    private function jump(Survey $survey, Question $question, Sample $sample, Subject $subject) {
+        $questions = $question->questions->keyBy('id');
 
-            if (!count($conditions))
-                return ['question' => $question, 'questions' => $questions];
+        if ($question->format == 3)
+            $conditions = session('conditions')->whereIn('to_question_id', $question->questions->pluck('id'))->where('to_option_id', null);
+        else
+            $conditions = session('conditions')->where('to_question_id', $question->id)->where('to_option_id', null);
 
-            $only = [];
-            foreach ($conditions as $condition) {
-                $given_answer = Answer::where('question_id', $condition->question_id)
-                    ->where('sample_id', $sample->id)
-                    ->where('subject_id', $subject->id)
-                    ->first();
+        if (!count($conditions))
+            return ['question' => $question, 'questions' => $questions];
 
-                if (isset($given_answer)){
-                    if ($condition->show){
-                        $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
-                        if ($condition_met){
-                            $show = Question::find($condition->to_question_id);
-                            // return jump($survey, $question, $sample, $subject);
-                        } else {
-                            $show = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
-                            // return jump($survey, $question, $sample, $subject);
-                        }
+        $only = [];
+        foreach ($conditions as $condition) {
+            $given_answer = Answer::where('question_id', $condition->question_id)
+                ->where('sample_id', $sample->id)
+                ->where('subject_id', $subject->id)
+                ->first();
 
+            if (isset($given_answer)){
+                if (Route::currentRouteName() == 'form.previous') $order = $question->order -1;
+                else $order = $question->order +1;
+
+                if ($condition->show){
+                    $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
+                    if ($condition_met){
+                        $show =  session('questions')->where('id', $condition->to_question_id);
+                        return jump($survey, $show, $sample, $subject);
                     } else {
-                        $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
-                        if ($condition_met) {
-                            $show = Question::where('survey_id', $survey->id)->where('order', $question->order +1)->first();
-                            // return jump($survey, $question, $sample, $subject);
-                        } else {
-                            $show = Question::find($condition->to_question_id);
-                            // return jump($survey, $question, $sample, $subject);
-                        }
+                        $show = session('questions')->where('survey_id', $survey->id)->where('order', $order)->first();
+                        return jump($survey, $show, $sample, $subject);
                     }
 
-                    if(isset($show) && $question->format == 3) {
-                        $only [] = $show->id;
-                        continue;
-                    }
-                    elseif(isset($show)){
-                        $question = $show;
-                        return ['question' => $question, 'questions' => null];
+                } else {
+                    $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
+                    if ($condition_met) {
+                        $show = session('questions')->where('survey_id', $survey->id)->where('order', $order)->first();
+                        return jump($survey, $show, $sample, $subject);
+                    } else {
+                        $show = session('questions')->where('id', $condition->to_question_id);
+                        return jump($survey, $show, $sample, $subject);
                     }
                 }
-            }
 
-            if (isset($only[0])){
-                foreach ($questions as $key => $value)
-                    if (!in_array($value->id,$only))
-                        $questions->forget($value->id);
+                if(isset($show) && $question->format == 3) {
+                    $only [] = $show->id;
+                    continue;
+                }
+                elseif(isset($show)){
+                    $question = $show;
+                    return ['question' => $question, 'questions' => null];
+                }
             }
-
-            return ['question' => $question, 'questions' => $questions];
         }
 
-        return jump($survey, $question, $sample, $subject);
+        if (isset($only[0])){
+            foreach ($questions as $key => $value)
+                if (!in_array($value->id,$only))
+                    $questions->forget($value->id);
+        }
+
+        return ['question' => $question, 'questions' => $questions];
     }
 
     public function next(Request $request)
@@ -154,7 +151,7 @@ class FormController extends Controller
 
         $this->store($request);
 
-        if (request('previous') != null) $previous = Question::where('order',request('previous'))->first();
+        if (request('next') != null) $previous = Question::where('order',request('next')-1)->first();
         if (request('next') != null) $question = Question::where('order',request('next'))->first();
 
         if(isset($question)){
@@ -306,117 +303,6 @@ class FormController extends Controller
                                 $suboptions[$subquestion->id]->forget($value->id);
                     }
                 }
-            }
-        }
-
-        return view('form.create', compact('survey','sample','subject','previous','questions','question','options','suboptions','answer','checked_ids','text_values'));
-    }
-
-    public function previous(Question $question)
-    {
-        $survey = session('survey');
-        $sample = session('sample');
-        $subject = session('subject');
-
-        $previous = Question::where('order',$question->order -1)->first();
-
-        if(isset($question)){
-            $answer = $question->answer;
-            $checked_ids = [];
-            $text_values = [];
-
-            if (isset($answer) && $question->format == "3"){
-                foreach($answer->options as $given){
-                    $checked_ids [$question->id] [] = $given->id;
-
-                    if ($question->type == 3 || $question->type == 4 || $question->type == 5){
-                        $text = DB::table('answer_option')->select('value')
-                            ->where(['answer_id' => $answer->id])
-                            ->where(['option_id' => $given->id])
-                            ->first();
-                        $text_values [$question->id] [$given->id] = $text->value;
-                    }
-                    foreach ($question->questions as $collumn){
-                        $colAnswer = $collumn->answer;
-
-                        if(isset($colAnswer)) {
-                            if ($collumn->options){
-                                $text = DB::table('answer_option_option')->select('value','sub_option_id')
-                                ->where(['answer_id' => $colAnswer->id])
-                                ->where(['option_id' => $given->id])
-                                ->get();
-                                foreach ($text as $subKey => $subCollumn){
-                                    $text_values [$collumn->id] [$given->id] [$subCollumn->sub_option_id] = $subCollumn->value;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                foreach ($question->questions as $collumn){
-                    $col_answer = $collumn->answer;
-
-                    if(isset($col_answer)) {
-                        foreach($col_answer->options as $given){
-                            $checked_ids [$collumn->id] [] = $given->id;
-
-                            if ($collumn->type == 3 || $collumn->type == 4 || $collumn->type == 5){
-                                $text = DB::table('answer_option')->select('value')
-                                ->where(['answer_id' => $col_answer->id])
-                                ->where(['option_id' => $given->id])
-                                ->first();
-                                $text_values [$collumn->id] [$given->id] = $text->value;
-                            }
-                        }
-                    }
-                }
-            }
-            elseif(isset($answer) && $question->format != 3) foreach($answer->options as $given){
-                $checked_ids [] = $given->id;
-
-                if ($question->type == 3 || $question->type == 4 || $question->type == 5){
-                    $text = DB::table('answer_option')->select('value')
-                        ->where(['answer_id' => $answer->id])
-                        ->where(['option_id' => $given->id])
-                        ->first();
-                    $text_values [$given->id] = $text->value;
-                }
-            }
-
-        }
-
-        $conditions = session('conditions')->where('to_question_id', $question->id);
-        if (!count($conditions)) {
-            $options = $question->options;
-        } else {
-            $options = $question->options;
-            $given_answers = Answer::whereIn('question_id', $conditions->pluck('question_id'))
-                ->where('sample_id', $sample->id)
-                ->where('subject_id', $subject->id)
-                ->get();
-
-            $only = [];
-            foreach ($conditions as $condition) {
-                $given_answer = $given_answers->where('question_id', $condition->question_id)->first();
-
-                if (isset($given_answer)){
-                    $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
-
-                    if ($condition->show){
-                        if ($condition_met)
-                            $only [] = $condition->to_option_id;
-                    } else {
-                        if ($condition_met)
-                            $options->except($condition->to_option_id);
-                    }
-                }
-            }
-
-            if (isset($only[0])){
-                $options = $options->keyBy('id');
-                foreach ($options as $key => $value)
-                    if (!in_array($value->id,$only))
-                        $options->forget($value->id);
             }
         }
 

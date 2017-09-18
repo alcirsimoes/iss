@@ -37,7 +37,7 @@ Route::get('form/{survey}/{subject?}', 'FormController@index')->name('form.index
 
 Route::post('form/current', 'FormController@current')->name('form.current');
 Route::post('form/next', 'FormController@next')->name('form.next');
-Route::post('form/previous/{question}', 'FormController@previous')->name('form.previous');
+Route::post('form/previous', 'FormController@next')->name('form.previous');
 
 Route::get('form/{survey}/{subject}', 'FormController@index')->name('form.create');
 Route::post('form/{survey}/{subject}', 'FormController@store')->name('form.store');
