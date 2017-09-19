@@ -35,10 +35,11 @@ class SubjectController extends Controller
      */
     public function create()
     {
+        $subject = new Subject;
         $sample = new Sample;
         if (request('id')) $sample = Sample::find(request('id'));
 
-        return view('subject.create')->with(compact('sample'));
+        return view('subject.create')->with(compact('sample', 'subject'));
     }
 
     /**
@@ -85,7 +86,9 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        //
+        $sample = new Sample;
+
+        return view('subject.create')->with(compact('sample', 'subject'));
     }
 
     /**
@@ -104,7 +107,7 @@ class SubjectController extends Controller
         $subject = $subject->fill($request->input());
         $subject->saveOrFail();
 
-        return $subject;
+        return redirect()->route('home');
     }
 
     /**
