@@ -149,10 +149,15 @@ class FormController extends Controller
         $sample = session('sample');
         $subject = session('subject');
 
-        $this->store($request);
-
         if (request('next') != null) $previous = session('questions')->where('order',request('next')-1)->first();
         if (request('next') != null) $question = session('questions')->where('order',request('next'))->first();
+
+        if (Route::currentRouteName() == 'form.next' && !$this->store($request)){
+            $previous = session('questions')->where('order',request('next')-2)->first();
+            $question = session('questions')->where('order',request('next')-1)->first();
+            $request->session()->flash('errors', ['Por favor, responda a pergunta para prosseguir']);
+        } else
+            $request->session()->forget('errors');
 
         if(isset($question)){
             $currents = $this->current($request, $question);
@@ -197,7 +202,7 @@ class FormController extends Controller
                 if ($question->type == 4 || $question->type == 5)
                     $text_values [$given->id] = $given->value;
             }
-            
+
         } else {
             $finish = Carbon::now();
             $sample->subjects()->where('subject_id', $subject->id)->updateExistingPivot($subject->id, ['finished_at' => $finish,'user_id' => \Auth::user()->id]);
@@ -288,16 +293,35 @@ class FormController extends Controller
     public function store(Request $request)
     {
         $inputs = request('question');
-        $inputs_others = request('other');
-        if (!$inputs && !$inputs_others)
-            return;
+        $refuseds = request('refused');
+        $dontknows = request('dontknow');
+
+        $errors = [];
+        if (!empty($inputs)) foreach ($inputs as $k => $v){
+            if (is_null($v)){
+                $request->session()->push('errors', 'Por favor, preencha todos os campos para prosseguir');
+                $errors [] = 'Por favor, preencha todos os campos para prosseguir'; break;
+            }
+            if (is_array($v)) foreach ($v as $kk => $vv){
+                if (is_null($vv)){
+                    $request->session()->push('errors', 'Por favor, preencha todos os campos para prosseguir');
+                    $errors [] = 'Por favor, preencha todos os campos para prosseguir'; break;
+                }
+                if (is_array($vv)) foreach ($vv as $kkk => $vvv){
+                    if (is_null($vvv)){
+                        $request->session()->push('errors', 'Por favor, preencha todos os campos para prosseguir');
+                        $errors [] = 'Por favor, preencha todos os campos para prosseguir'; break;
+                    }
+                }
+            }
+        }
+
+        if (!empty($errors))
+            return false;
 
         $others = [];
         $questions = [];
         $unnamed_other = [];
-        if (!empty($inputs)) foreach ($inputs as $id => $input)
-            $questions [$id] = session('questions')->where('id', $id)->first();
-
         if ($inputs_others = request('other'))
             foreach ($inputs_others as $k => $v)
                 if (is_numeric($k)){
@@ -309,6 +333,18 @@ class FormController extends Controller
                     }
                 } else
                     $unnamed_other [] = $inputs_others[$k];
+
+        if (!$inputs && empty($others) && !$refuseds && !$dontknows && !request('init'))
+            return false;
+
+        if (!empty($inputs)) foreach ($inputs as $id => $input)
+            $questions [$id] = session('questions')->where('id', $id)->first();
+
+        if (!empty($refuseds)) foreach ($refuseds as $id => $input)
+            $questions [$id] = session('questions')->where('id', $id)->first();
+
+        if (!empty($dontknows)) foreach ($dontknows as $id => $input)
+            $questions [$id] = session('questions')->where('id', $id)->first();
 
         if (!empty($unnamed_other))
             foreach ($unnamed_other as $key => $value)
@@ -322,11 +358,18 @@ class FormController extends Controller
                 $input = $inputs[$question->id];
             else $input = [];
 
+            $refused = isset($refuseds[$question->id]) ? $refuseds[$question->id] : false;
+            $dontknow = isset($dontknows[$question->id]) ? $dontknows[$question->id] : false;
+
             $answer = Answer::firstOrCreate([
                 'sample_id' => session('sample_id'),
                 'subject_id' => session('subject_id'),
                 'question_id' => $question->id,
             ], ['user_id' => \Auth::user()->id]);
+
+            $answer->refused = $refused;
+            $answer->dontknow = $dontknow;
+            $answer->save();
 
             switch($question->type){
                 case 1: $this->storeUnique($request, $question, $answer, $input, $others); break;
@@ -339,6 +382,7 @@ class FormController extends Controller
             }
         }
 
+        return true;
     }
 
     public function storeUnique(Request $request, Question $question, Answer $answer, $input, $others)

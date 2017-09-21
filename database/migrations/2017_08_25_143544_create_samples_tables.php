@@ -76,6 +76,9 @@ class CreateSamplesTables extends Migration
             $table->foreign('question_id')->references('id')->on('questions');
             $table->text('value')->nullable();
 
+            $table->boolean('refused')->default(false);
+            $table->boolean('dontknow')->default(false);
+
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 
