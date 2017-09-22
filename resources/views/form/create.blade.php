@@ -116,20 +116,21 @@
             }
         }
 
-        $('.question_3').click(function(){ativar_q9()});
-        $('.question_4').click(function(){ativar_q9()});
-        $('.question_5').click(function(){ativar_q9()});
-        $('.question_6').click(function(){ativar_q9()});
-        $('.question_7').click(function(){ativar_q9()});
-
         for (i = 5; i < 11; i++){
             $('.question_9.option_'+i).prop('disabled', true);
         }
         for (i = 11; i < 100; i++){
             $('.question_9.option_'+i).remove();
         }
-
         $('.other_9').remove();
+
+        $('.question_3').click(function(){ativar_q9()});
+        $('.question_4').click(function(){ativar_q9()});
+        $('.question_5').click(function(){ativar_q9()});
+        $('.question_6').click(function(){ativar_q9()});
+        $('.question_7').click(function(){ativar_q9()});
+
+        ativar_q9();
     </script>
 @endsection
 

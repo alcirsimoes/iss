@@ -8,9 +8,9 @@ class Question extends Model
 {
     protected $fillable = ['survey_id', 'name', 'statement', 'type', 'format', 'answers_header', 'options_header', 'order', 'other','none','unknow'];
 
-    public function answer()
+    public function answers()
     {
-        return $this->hasOne('App\Answer');
+        return $this->hasMany('App\Answer');
     }
 
     public function questions()

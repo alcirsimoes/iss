@@ -67,7 +67,7 @@ class FormController extends Controller
             $questions = session('questions');
 
             foreach ($questions as $question){
-                $answer = $question->answer()->where('subject_id',$subject->id)->first();
+                $answer = $question->answers()->where(['sample_id'=>$sample->id,'subject_id'=>$subject->id])->first();
                 if (isset($answer)){
                     $checked_ids = $answer->options->pluck('id');
                     break;
@@ -165,7 +165,7 @@ class FormController extends Controller
             $questions = $currents['questions'];
             unset($currents);
 
-            $answer = $question->answer()->where('subject_id',$subject->id)->first();
+            $answer = $question->answers()->where(['sample_id'=>$sample->id,'subject_id'=>$subject->id])->first();
 
             $checked_ids = [];
             $text_values = [];
@@ -179,7 +179,7 @@ class FormController extends Controller
                     }
 
                     foreach ($question->questions as $collumn){
-                        $colAnswer = $collumn->answer;
+                        $colAnswer = Answer::where(['subject_id'=>$subject->id, 'sample_id'=>$sample->id,'question_id'=>$collumn->id])->first();
                         if(isset($colAnswer))
                             if (count($collumn->options)){
                                 $text = $colAnswer->options()->where('option_id', $given->id)->get();
@@ -200,7 +200,7 @@ class FormController extends Controller
                 if ($question->type == 3)
                     $text_values [$given->id] = $given->pivot->value;
                 if ($question->type == 4 || $question->type == 5)
-                    $text_values [$given->id] = $given->value;
+                    $text_values [$given->id] = $given->pivot->value;
             }
 
         } else {
