@@ -4,7 +4,7 @@
             <!-- <input type="hidden" name="question[{{ $question->id }}]" value="empty"> -->
 
             @if ($question->format == 1)
-            <select class="form-control" name="question[{{ $question->id }}]">
+            <select class="form-control question_{{ $question->id }}" name="question[{{ $question->id }}]">
                 @foreach($options as $option)
                 <option value="{{ $option->id }}">{{ $option->statement }}</option>
                 @endforeach
@@ -12,7 +12,7 @@
                 @if ($question->other)
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="text" name="other[{{ $question->id }}]" placeholder="Outra...">
+                        <input class="form-check-input other_{{ $question->id }}" type="text" name="other[{{ $question->id }}]" placeholder="Outra...">
                     </label>
                 </div>
                 @endif
@@ -23,9 +23,9 @@
                 <div class="form-check">
                     <label class="form-check-label">
                         @if(isset($answer) && in_array($option->id, $checked_ids))
-                        <input class="form-check-input" type="radio" name="question[{{ $question->id }}]" value="{{ $option->id }}" checked="checked">
+                        <input class="form-check-input question_{{ $question->id }}" type="radio" name="question[{{ $question->id }}]" value="{{ $option->id }}" checked="checked">
                         @else
-                        <input class="form-check-input" type="radio" name="question[{{ $question->id }}]" value="{{ $option->id }}">
+                        <input class="form-check-input question_{{ $question->id }}" type="radio" name="question[{{ $question->id }}]" value="{{ $option->id }}">
                         @endif
                         {{ $option->statement }}
                     </label>
@@ -34,7 +34,7 @@
                 @if ($question->other)
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="text" name="other[{{ $question->id }}]" placeholder="Outra...">
+                        <input class="form-check-input other_{{ $question->id }}" type="text" name="other[{{ $question->id }}]" placeholder="Outra...">
                     </label>
                 </div>
                 @endif
@@ -48,9 +48,9 @@
                 <div class="form-check">
                     <label class="form-check-label">
                         @if(isset($answer) && in_array($option->id, $checked_ids))
-                        <input class="form-check-input" type="checkbox" name="question[{{ $question->id }}][{{ $option->id }}]" value="1" checked="checked">
+                        <input class="form-check-input question_{{ $question->id }}" type="checkbox" name="question[{{ $question->id }}][{{ $option->id }}]" value="1" checked="checked">
                         @else
-                        <input class="form-check-input" type="checkbox" name="question[{{ $question->id }}][{{ $option->id }}]" value="1">
+                        <input class="form-check-input question_{{ $question->id }}" type="checkbox" name="question[{{ $question->id }}][{{ $option->id }}]" value="1">
                         @endif
                         {{ $option->statement }}
                     </label>
@@ -59,7 +59,7 @@
                 @if ($question->other)
                 <div class="form-group">
                     <label class="form-label">
-                        <input class="form-control" type="text" name="other[{{ $question->id }}]" placeholder="Outra...">
+                        <input class="form-control other_{{ $question->id }}" type="text" name="other[{{ $question->id }}]" placeholder="Outra...">
                     </label>
                 </div>
                 @endif
@@ -70,15 +70,15 @@
 
             @forelse ($options as $option)
             <div class="form-group">
-                <label for="question{{ $question->id }}">{{ $option->statement }}</label>
-                <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control" id="question{{ $question->id }}" rows="3">@if(isset($text_values[$option->id])){{ $text_values[$option->id] }}@endif</textarea>
+                <label for="question_{{ $question->id }}">{{ $option->statement }}</label>
+                <textarea name="question[{{ $question->id }}][{{ $option->id }}]" class="form-control question_{{ $question->id }}" id="question_{{ $question->id }}" rows="3">@if(isset($text_values[$option->id])){{ $text_values[$option->id] }}@endif</textarea>
             </div>
             @empty
                 <div class="form-group">
                     @if(isset($answer))
-                    <textarea name="question[{{ $question->id }}]" class="form-control" rows="3">@if(isset($answer)){{ $answer->value }}@endif</textarea>
+                    <textarea name="question[{{ $question->id }}]" class="form-control question_{{ $question->id }}" rows="3">@if(isset($answer)){{ $answer->value }}@endif</textarea>
                     @else
-                    <textarea name="question[{{ $question->id }}]" class="form-control" rows="3"></textarea>
+                    <textarea name="question[{{ $question->id }}]" class="form-control question_{{ $question->id }}" rows="3"></textarea>
                     @endif
                 </div>
             @endforelse
@@ -192,7 +192,7 @@
             <div class="form-group row">
                 <label for="" class="col-sm-6 col-form-label">{{ $option->statement }}</label>
                 <div class="col-sm-3">
-                    <select class="form-control" name="question[{{ $question->id }}][{{ $option->id }}]">
+                    <select class="form-control question_{{ $question->id }}" name="question[{{ $question->id }}][{{ $option->id }}]">
                         <option value="">Nota...</option>
                         @for($i = 1; $i < 11; $i ++))
                             @if(isset($text_values[$option->id]) && $text_values[$option->id] == $i)

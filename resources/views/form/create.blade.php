@@ -82,15 +82,54 @@
 @section('scripts')
     @parent
     <script type="text/javascript">
-        var conditions = {!! json_encode(session('conditions')) !!};
+        @if(false)var conditions = {!! json_encode(session('conditions')) !!};@endif
 
-        for (c in conditions){
-            $('.refused_'+conditions[c].id).click(function () {
-                // alert('91');
+        function ativar_q9(){
+            var array = [];
+
+            if ($('.question_3:checked').val()) array.push(Number($('.question_3:checked').val()));
+
+            $(".question_4:checked").each(function() {
+                array.push(Number($(this).val()));
             });
-            console.log(JSON.stringify(conditions[c].created_at));
-            break;
+
+            $(".question_5:checked").each(function() {
+                array.push(Number($(this).val()));
+            });
+
+            $(".question_6:checked").each(function() {
+                array.push(Number($(this).val()));
+            });
+
+            $(".question_7:checked").each(function() {
+                array.push(Number($(this).val()));
+            });
+
+            array = $.unique(array);
+
+            for (i = 5; i < 11; i++){
+                if ($.inArray(i, array) == -1){
+                    $('.question_9.option_'+i).prop('disabled', true);
+                } else {
+                    $('.question_9.option_'+i).prop('disabled', false);
+                }
+            }
         }
+
+        $('.question_3').click(function(){ativar_q9()});
+        $('.question_4').click(function(){ativar_q9()});
+        $('.question_5').click(function(){ativar_q9()});
+        $('.question_6').click(function(){ativar_q9()});
+        $('.question_7').click(function(){ativar_q9()});
+
+        for (i = 5; i < 11; i++){
+            $('.question_9.option_'+i).prop('disabled', true);
+        }
+        for (i = 11; i < 100; i++){
+            $('.question_9.option_'+i).remove();
+        }
+
+        $('.other_9').remove();
     </script>
 @endsection
 
