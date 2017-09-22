@@ -97,7 +97,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return $user->delete();
+        $user->delete();
+        return back();
     }
 
     public function setAdmin(User $user)
