@@ -41,3 +41,7 @@ Route::post('form/previous', 'FormController@next')->name('form.previous');
 
 Route::get('form/{survey}/{subject}', 'FormController@index')->name('form.create');
 Route::post('form/{survey}/{subject}', 'FormController@store')->name('form.store');
+
+Route::get('monitoring/{survey}', 'ReportController@index')->name('report.index');
+Route::get('monitoring/{survey}/{sample}', 'ReportController@list')->name('report.list');
+Route::get('monitoring/{survey}/{sample}/{subject}', 'ReportController@view')->name('report.view');

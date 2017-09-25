@@ -23,9 +23,9 @@ class Answer extends Model
         return $this->hasOne('App\Subject');
     }
 
-    public function questions()
+    public function question()
     {
-        return $this->hasOne('App\Question');
+        return $this->belongsTo('App\Question');
     }
 
     public function options()
