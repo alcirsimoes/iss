@@ -84,6 +84,7 @@
     <script type="text/javascript">
         @if(false)var conditions = {!! json_encode(session('conditions')) !!};@endif
 
+@if($survey->id == 2)
         function ativar_q9(){
             var array = [];
 
@@ -131,6 +132,57 @@
         $('.question_7').click(function(){ativar_q9()});
 
         ativar_q9();
+@endif
+
+@if($survey->id == 1 && $question->id == 6)
+        function ativar_q12(){
+            var array = [];
+
+            if ($('.question_6:checked').val()) array.push(Number($('.question_6:checked').val()));
+
+            $(".question_7:checked").each(function() {
+                array.push(Number($(this).val()));
+            });
+
+            $(".question_8:checked").each(function() {
+                array.push(Number($(this).val()));
+            });
+
+            $(".question_9:checked").each(function() {
+                array.push(Number($(this).val()));
+            });
+
+            $(".question_10:checked").each(function() {
+                array.push(Number($(this).val()));
+            });
+
+            array = $.unique(array);
+
+            for (i = 18; i < 23; i++){
+                if ($.inArray(i, array) == -1){
+                    $('.question_12.option_'+i).prop('disabled', true);
+                } else {
+                    $('.question_12.option_'+i).prop('disabled', false);
+                }
+            }
+        }
+
+        for (i = 18; i < 23; i++){
+            $('.question_12.option_'+i).prop('disabled', true);
+        }
+        for (i = 23; i < 100; i++){
+            $('.question_12.option_'+i).remove();
+        }
+        $('.other_12').remove();
+
+        $('.question_6').click(function(){ativar_q12()});
+        $('.question_7').click(function(){ativar_q12()});
+        $('.question_8').click(function(){ativar_q12()});
+        $('.question_9').click(function(){ativar_q12()});
+        $('.question_10').click(function(){ativar_q12()});
+
+        ativar_q12();
+@endif
     </script>
 @endsection
 
