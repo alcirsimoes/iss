@@ -8,7 +8,9 @@
         <thead>
             <tr>
                 <th>{!! $question->options_header !!}</th>
+                @if(!$hide)
                 <th>{!! $question->answers_header !!}</th>
+                @endif
 
                 @foreach($questions as $collumn)
                     @forelse($suboptions[$collumn->id] as $subCollumn)
@@ -24,10 +26,12 @@
             @foreach($question->options as $option)
             <tr>
                 <td>{{ $option->statement }}</td>
+                @if(!$hide)
                 <td>
                     <?php $collumn = $question ?>
                     @include('form.partials.collumnField')
                 </td>
+                @endif
 
                 @foreach($questions as $collumn)
                     @forelse($suboptions[$collumn->id] as $subCollumn)

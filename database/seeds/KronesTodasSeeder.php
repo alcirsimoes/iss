@@ -140,7 +140,7 @@ class KronesTodasSeeder extends Seeder
         ];
         $question_4->options()->saveMany($options_4);
 
-        $question_5 = Question::create([
+        /*$question_5 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'R5',
             'statement' => '<strong>R5)</strong> Tipo: <strong class="text-danger">(ANOTAR DA LISTAGEM)(RU)</strong>',
@@ -155,7 +155,7 @@ class KronesTodasSeeder extends Seeder
                 'value' => 1,
             ]),
         ];
-        $question_5->options()->saveMany($options_5);
+        $question_5->options()->saveMany($options_5);*/
 
 
         $collumns = [];
@@ -967,7 +967,7 @@ class KronesTodasSeeder extends Seeder
         ]);
         $options_42 = [
             Option::create([
-                'statement' => '&nbsp',
+                'statement' => '&nbsp;',
                 'value' => 1,
             ]),
         ];
@@ -1000,7 +1000,7 @@ class KronesTodasSeeder extends Seeder
             'survey_id' => $survey->id,
             'name' => 'P20',
             'answers_header' => 'P20 <strong>(RU)</strong>',
-            'statement' => '<strong>P19)</strong> <strong class="text-danger">(SE NÃO)</strong> Porque?',
+            'statement' => '<strong>P20)</strong> <strong class="text-danger">(SE NÃO)</strong> Porque?',
             'type' => 1,
             'format' => 2,
             'order' => 24,
@@ -1210,14 +1210,14 @@ class KronesTodasSeeder extends Seeder
         ]);
 
         $condition_22 = Condition::create([
-            'question_id' => $question_41->id,
+            'question_id' => $question_1->id,
             'option_id' => $options_1[0]->id,
             'to_question_id' => $question_43->id,
             'show' => true,
         ]);
 
         $condition_23 = Condition::create([
-            'question_id' => $question_41->id,
+            'question_id' => $question_43->id,
             'option_id' => $options_43[1]->id,
             'to_question_id' => $question_44->id,
             'show' => true,

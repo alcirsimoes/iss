@@ -82,14 +82,16 @@ class FormController extends Controller
 
     private function jump(Survey $survey, Question $question, Sample $sample, Subject $subject) {
         $questions = $question->questions->keyBy('id');
+        $whereIn = $question->questions->pluck('id');
+        $whereIn [] = $question->id;
 
         if ($question->format == 3)
-            $conditions = session('conditions')->whereIn('to_question_id', $question->questions->pluck('id'))->where('to_option_id', null);
+            $conditions = session('conditions')->whereIn('to_question_id', $whereIn)->where('to_option_id', null);
         else
             $conditions = session('conditions')->where('to_question_id', $question->id)->where('to_option_id', null);
 
         if (!count($conditions))
-            return ['question' => $question, 'questions' => $questions];
+            return ['question' => $question, 'questions' => $questions, 'hide' => false];
 
         $only = [];
         foreach ($conditions as $condition) {
@@ -106,20 +108,16 @@ class FormController extends Controller
                     $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
                     if ($condition_met){
                         $show =  session('questions')->where('id', $condition->to_question_id)->first();
-                        // return $this->jump($survey, $show, $sample, $subject);
                     } else {
                         $show = session('questions')->where('survey_id', $survey->id)->where('order', $order)->first();
-                        // return $this->jump($survey, $show, $sample, $subject);
                     }
 
                 } else {
                     $condition_met = $given_answer->options()->where('id', $condition->option_id)->first();
                     if ($condition_met) {
                         $show = session('questions')->where('survey_id', $survey->id)->where('order', $order)->first();
-                        // return $this->jump($survey, $show, $sample, $subject);
                     } else {
                         $show = session('questions')->where('id', $condition->to_question_id)->first();
-                        // return $this->jump($survey, $show, $sample, $subject);
                     }
                 }
 
@@ -128,19 +126,23 @@ class FormController extends Controller
                     continue;
                 }
                 elseif(isset($show)){
-                    $question = $show;
-                    return ['question' => $question, 'questions' => null];
+                    if ($question == $show){
+                        return ['question' => $question, 'questions' => null, 'hide' => false];
+                    } else
+                        return $this->jump($survey, $show, $sample, $subject);
                 }
             }
         }
 
         if (isset($only[0])){
+            $hide = !in_array($question->id,$only) ? true : false;
+
             foreach ($questions as $key => $value)
                 if (!in_array($value->id,$only))
                     $questions->forget($value->id);
         }
 
-        return ['question' => $question, 'questions' => $questions];
+        return ['question' => $question, 'questions' => $questions, 'hide' => $hide];
     }
 
     public function next(Request $request)
@@ -163,6 +165,7 @@ class FormController extends Controller
             $currents = $this->current($request, $question);
             $question = $currents['question'];
             $questions = $currents['questions'];
+            $hide = $currents['hide'];
             unset($currents);
 
             $answer = $question->answers()->where(['sample_id'=>$sample->id,'subject_id'=>$subject->id])->first();
@@ -281,7 +284,7 @@ class FormController extends Controller
             }
         }
 
-        return view('form.create', compact('survey','sample','subject','previous','questions','question','options','suboptions','answer','checked_ids','text_values'));
+        return view('form.create', compact('survey','sample','subject','previous','questions','question','hide','options','suboptions','answer','checked_ids','text_values'));
     }
 
     /**
@@ -298,12 +301,12 @@ class FormController extends Controller
 
         $errors = [];
         if (!empty($inputs)) foreach ($inputs as $k => $v){
-            if (is_null($v)){
+            if (is_null($v) && !isset($refuseds[$k]) && !isset($dontknows[$k])){
                 $request->session()->push('errors', 'Por favor, preencha todos os campos para prosseguir');
                 $errors [] = 'Por favor, preencha todos os campos para prosseguir'; break;
             }
             if (is_array($v)) foreach ($v as $kk => $vv){
-                if (is_null($vv)){
+                if (is_null($vv) && !isset($refuseds[$k]) && !isset($dontknows[$k])){
                     $request->session()->push('errors', 'Por favor, preencha todos os campos para prosseguir');
                     $errors [] = 'Por favor, preencha todos os campos para prosseguir'; break;
                 }
