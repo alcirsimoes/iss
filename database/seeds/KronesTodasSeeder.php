@@ -140,13 +140,13 @@ class KronesTodasSeeder extends Seeder
         ];
         $question_4->options()->saveMany($options_4);
 
-        /*$question_5 = Question::create([
+        $question_5 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'R5',
             'statement' => '<strong>R5)</strong> Tipo: <strong class="text-danger">(ANOTAR DA LISTAGEM)(RU)</strong>',
             'type' => 1,
             'format' => 2,
-            'order' => 4,
+            'order' => 99,
             'other' => 1,
         ]);
         $options_5 = [
@@ -155,7 +155,7 @@ class KronesTodasSeeder extends Seeder
                 'value' => 1,
             ]),
         ];
-        $question_5->options()->saveMany($options_5);*/
+        $question_5->options()->saveMany($options_5);
 
 
         $collumns = [];
@@ -167,7 +167,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P1)</strong> Inicialmente gostaríamos de saber quais <strong>fornecedores de máquinas, equipamentos e soluções para o mercado de <span class="text-danger">(ler o segmento de acordo com a R4)</span></strong> você conhece, mesmo que só de ouvir falar? <strong class="text-danger">(NÃO LEIA O NOME DAS EMPRESAS - ANOTE A 1ª MENÇÃO EM SEPARADO)</strong>',
             'type' => 1,
             'format' => 3,
-            'order' => 5,
+            'order' => 4,
             'other' => true,
             'none' => true,
             'unknow' => true,
@@ -304,7 +304,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P6)</strong> Diga uma palavra que resuma para você quando eu digo... <strong class="text-danger">(ESPONTÂNEO - FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 3,
             'format' => null,
-            'order' => 6,
+            'order' => 5,
         ]);
         $options_13 = array_slice($options_6, 0, 5, true);
         $question_13->options()->saveMany($options_13);
@@ -319,7 +319,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 7,
+            'order' => 6,
         ]);
 
         $options_14 = [
@@ -372,7 +372,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 8,
+            'order' => 7,
         ]);
 
         $options_16 = [
@@ -425,7 +425,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 9,
+            'order' => 8,
         ]);
 
         $options_18 = [
@@ -478,7 +478,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 10,
+            'order' => 9,
         ]);
 
         $options_20 = [
@@ -531,7 +531,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 11,
+            'order' => 10,
         ]);
 
         $options_22 = [
@@ -580,7 +580,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 12,
+            'order' => 11,
         ]);
 
         $options_24 = [
@@ -629,7 +629,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 13,
+            'order' => 12,
         ]);
 
         $options_26 = [
@@ -674,7 +674,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
             'type' => 4,
             'format' => 3,
-            'order' => 14,
+            'order' => 13,
         ]);
 
         $options_28 = [
@@ -717,7 +717,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P10)</strong> Agora que já avaliamos os atributos dentro dos fatores, gostaria que você me dissesse o quanto cada fator é importante no momento de decidir trabalhar com um <strong>fornecedor de máquinas, equipamentos e soluções para o seu mercado.</strong> Assim, qual desses fatores é mais importante em 1° lugar? E em 2°? E em 3°? E assim por diante. <strong class="text-danger">(FAÇA PERGUNTA ATÉ O 8º LUGAR)</strong>',
             'type' => 4,
             'format' => 2,
-            'order' => 15,
+            'order' => 14,
         ]);
 
         $options_30 = [
@@ -766,7 +766,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P11)</strong> As empresas em geral buscam ter uma boa imagem, serem respeitadas e admiradas. A seguir vou ler uma série de fatores que são considerados relevantes para este objetivo. Gostaríamos que você colocasse estes fatores em ordem de importância, do 1º ao 4º lugar.',
             'type' => 4,
             'format' => 3,
-            'order' => 16,
+            'order' => 15,
         ]);
 
         $options_31 = [
@@ -810,7 +810,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P13)</strong> <strong class="text-danger">(AVALIAR AS EMPRESAS QUE TRABALHAM – CITADAS NA P3)</strong> Utilizando a escala de 1 a 10, na qual 1 significa <strong>“Certamente Não recomendaria”</strong> e 10 significa <strong class="text-danger">“Certamente Recomendaria”</strong>, o quanto você <strong>recomendaria a...? (FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => 2,
-            'order' => 17,
+            'order' => 16,
         ]);
         $options_33 = array_slice($options_6, 0, 5, true);
         $question_33->options()->saveMany($options_33);
@@ -824,7 +824,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P14)</strong> <strong class="text-danger">(AVALIAR AS EMPRESAS QUE TRABALHAM – CITADAS NA P3)</strong> Utilizando esta mesma escala de 1 a 10, o quanto você <strong>pretende ampliar os negócios com a... ?</strong> <strong class="text-danger">(FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 5,
             'format' => 2,
-            'order' => 18,
+            'order' => 17,
         ]);
         $options_34 = array_slice($options_6, 0, 5, true);
         $question_34->options()->saveMany($options_34);
@@ -839,7 +839,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P15)</strong> Falando sobre custo/benefício, como você classificaria os produtos e serviços da Krones, e da ...? <strong class="text-danger">(LEIA TODAS AS ALTERNATIVAS E TODAS AS EMPRESAS) (FAZER RODÍZIO DAS MARCAS)</strong>',
             'type' => 1,
             'format' => 3,
-            'order' => 19,
+            'order' => 18,
         ]);
         $options_35 = [
             Option::create([
@@ -910,7 +910,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P16)</strong> <strong class="text-danger">(SOMENTE PARA NÃO CLIENTES)</strong> Esta pesquisa foi encomendada pela Krones. Você aceita receber uma visita ou um contato da Krones?',
             'type' => 1,
             'format' => 2,
-            'order' => 20,
+            'order' => 19,
         ]);
         $options_40 = [
             Option::create([
@@ -932,7 +932,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P17)</strong> <strong class="text-danger">(SOMENTE PARA CLIENTES)</strong> Na reposição de peças, quanto em percentual você utiliza de peças originais da Krones?',
             'type' => 1,
             'format' => 2,
-            'order' => 21,
+            'order' => 20,
         ]);
         $options_41 = [
             Option::create([
@@ -963,7 +963,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P17a)</strong> <strong class="text-danger">(SOMENTE SE SIM NA PERGUNTA ANTERIOR)</strong> Gostaria que novamente utilizando a escala de um a 10 você dissesse o quanto você está satisfeito com as peças e kits originais da Krones.',
             'type' => 5,
             'format' => 2,
-            'order' => 22,
+            'order' => 21,
         ]);
         $options_42 = [
             Option::create([
@@ -981,7 +981,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P18)</strong> <strong class="text-danger">(SOMENTE PARA CLIENTES)</strong> Você utiliza ou já utilizou as válvulas EVOGUARD DA KRONES?',
             'type' => 1,
             'format' => 2,
-            'order' => 23,
+            'order' => 22,
         ]);
         $options_43 = [
             Option::create([
@@ -1003,7 +1003,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P20)</strong> <strong class="text-danger">(SE NÃO)</strong> Porque?',
             'type' => 1,
             'format' => 2,
-            'order' => 24,
+            'order' => 23,
             'other' => 1,
         ]);
         $options_44 = [
@@ -1033,7 +1033,7 @@ class KronesTodasSeeder extends Seeder
             'statement' => '<strong>P21)</strong> Esta pesquisa foi encomendada pela Krones do Brasil, para finalizar que mensagem você mandaria à diretoria da Krones?',
             'type' => 3,
             'format' => null,
-            'order' => 25,
+            'order' => 24,
         ]);
 
 

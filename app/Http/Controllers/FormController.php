@@ -74,7 +74,7 @@ class FormController extends Controller
 
                 } else break;
             }
-            return ['question' => $question, 'questions' => $questions];
+            return ['question' => $question, 'questions' => $questions, 'hide' => false];
         }
 
         return $this->jump($survey, $question, $sample, $subject);
@@ -131,6 +131,12 @@ class FormController extends Controller
                     } else
                         return $this->jump($survey, $show, $sample, $subject);
                 }
+
+            } else {
+                if (Route::currentRouteName() == 'form.previous') $order = $question->order -1;
+                else $order = $question->order +1;
+                $show = session('questions')->where('survey_id', $survey->id)->where('order', $order)->first();
+                return $this->jump($survey, $show, $sample, $subject);
             }
         }
 
@@ -142,6 +148,7 @@ class FormController extends Controller
                     $questions->forget($value->id);
         }
 
+        $hide = isset($hide) ? $hide: false;
         return ['question' => $question, 'questions' => $questions, 'hide' => $hide];
     }
 
@@ -165,7 +172,7 @@ class FormController extends Controller
             $currents = $this->current($request, $question);
             $question = $currents['question'];
             $questions = $currents['questions'];
-            $hide = $currents['hide'];
+            $hide = $currents['hide'] ? true : false;
             unset($currents);
 
             $answer = $question->answers()->where(['sample_id'=>$sample->id,'subject_id'=>$subject->id])->first();
