@@ -6,8 +6,10 @@ use App\User;
 use App\UserAdmin;
 use App\UserInterviewer;
 use App\UserSupervisor;
+use App\Mail\UserCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -43,10 +45,15 @@ class UserController extends Controller
         $valid = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
         ]);
 
-        return User::create($valid);
+        $pass = substr(md5(rand(0,1000)), 0, 6);
+        $valid ['password'] = bcrypt($pass);
+        $user = User::create($valid);
+
+        Mail::to($user)->send(new UserCreated($user, $pass));
+
+        return redirect()->route('user.index');
     }
 
     /**
@@ -82,7 +89,7 @@ class UserController extends Controller
     {
         $valid = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users,'. $user->id,
         ]);
 
         $user->fill($valid);
