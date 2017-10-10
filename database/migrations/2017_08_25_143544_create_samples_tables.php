@@ -22,14 +22,12 @@ class CreateSamplesTables extends Migration
 
         Schema::create('sample_survey', function (Blueprint $table) {
             $table->integer('sample_id')->unsigned();
-            $table->foreign('sample_id')->references('id')->on('answers');
+            $table->foreign('sample_id')->references('id')->on('samples');
 
             $table->integer('survey_id')->unsigned();
             $table->foreign('survey_id')->references('id')->on('surveys');
 
             $table->boolean('active')->default(true);
-
-            $table->unique(['sample_id','survey_id']);
 
             $table->timestamps();
         });
@@ -53,7 +51,7 @@ class CreateSamplesTables extends Migration
 
         Schema::create('sample_subject', function (Blueprint $table) {
             $table->integer('sample_id')->unsigned();
-            $table->foreign('sample_id')->references('id')->on('answers');
+            $table->foreign('sample_id')->references('id')->on('samples');
 
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects');
