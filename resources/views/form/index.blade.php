@@ -22,15 +22,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($sample->subjects->where('user_id', Auth::user()->id) as $subject)
-                            <tr>
-                                <!-- <td>{{ $subject->id }}</td> -->
-                                <td><a href="{{ route('subject.edit', [$subject->id]) }}">{{ $subject->name }}</a></td>
-                                <td>{{ $subject->company }}</td>
-                                <td>{{ $subject->telephone }}</td>
-                                <td><a href="{{ route('form.create', [$sample->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
-                            </tr>
-                            @endforeach
+                            @if (Auth::user()->isSupervisor)
+                                @forelse ($sample->subjects as $subject)
+                                    <tr>
+                                        <!-- <td>{{ $subject->id }}</td> -->
+                                        <td><a href="{{ route('subject.edit', [$subject->id]) }}">{{ $subject->name }}</a></td>
+                                        <td>{{ $subject->company }}</td>
+                                        <td>{{ $subject->telephone }}</td>
+                                        <td><a href="{{ route('form.create', [$sample->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
+                                    </tr>
+                                @empty
+                                @endforelse
+                            @else
+                                @forelse($sample->subjects->where('user_id', Auth::user()->id) as $subject)
+                                <tr>
+                                    <!-- <td>{{ $subject->id }}</td> -->
+                                    <td><a href="{{ route('subject.edit', [$subject->id]) }}">{{ $subject->name }}</a></td>
+                                    <td>{{ $subject->company }}</td>
+                                    <td>{{ $subject->telephone }}</td>
+                                    <td><a href="{{ route('form.create', [$sample->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
+                                </tr>
+                                @empty
+                                @endforelse
+                            @endif
+
                         </tbody>
                     </table>
                 </div>
