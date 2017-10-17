@@ -22,7 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (Auth::user()->isSupervisor)
+                            @if (Auth::user()->isSupervisor || Auth::user()->isAdmin)
                                 @forelse ($sample->subjects as $subject)
                                     <tr>
                                         <!-- <td>{{ $subject->id }}</td> -->

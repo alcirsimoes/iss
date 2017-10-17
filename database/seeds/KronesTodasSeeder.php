@@ -1064,7 +1064,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_3 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_15->id,
                 'to_option_id' => $options_15[$key]->id,
@@ -1072,7 +1072,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_4 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_17->id,
                 'to_option_id' => $options_17[$key]->id,
@@ -1080,7 +1080,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_5 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_19->id,
                 'to_option_id' => $options_19[$key]->id,
@@ -1088,7 +1088,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_6 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_21->id,
                 'to_option_id' => $options_21[$key]->id,
@@ -1096,7 +1096,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_7 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_23->id,
                 'to_option_id' => $options_23[$key]->id,
@@ -1104,7 +1104,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_8 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_25->id,
                 'to_option_id' => $options_25[$key]->id,
@@ -1112,7 +1112,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_9 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_27->id,
                 'to_option_id' => $options_27[$key]->id,
@@ -1120,7 +1120,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_10 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_29->id,
                 'to_option_id' => $options_29[$key]->id,
@@ -1128,7 +1128,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_11 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_32->id,
                 'to_option_id' => $options_32[$key]->id,
@@ -1136,7 +1136,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_12 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_33->id,
                 'to_option_id' => $options_33[$key]->id,
@@ -1144,7 +1144,7 @@ class KronesTodasSeeder extends Seeder
             ]);
 
             $condition_13 [] = Condition::create([
-                'question_id' => $question_7->id,
+                'question_id' => $question_9->id,
                 'option_id' => $condition->id,
                 'to_question_id' => $question_34->id,
                 'to_option_id' => $options_34[$key]->id,

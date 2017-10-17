@@ -161,12 +161,15 @@ class FormController extends Controller
         if (request('next') != null) $previous = session('questions')->where('order',request('next')-1)->first();
         if (request('next') != null) $question = session('questions')->where('order',request('next'))->first();
 
-        if (Route::currentRouteName() == 'form.next' && !$this->store($request)){
-            $previous = session('questions')->where('order',request('next')-2)->first();
-            $question = session('questions')->where('order',request('next')-1)->first();
-            $request->session()->flash('errors', ['Por favor, responda a pergunta para prosseguir']);
-        } else
-            $request->session()->forget('errors');
+        // if (Route::currentRouteName() == 'form.next' && !$this->store($request)){
+        //     $previous = session('questions')->where('order',request('next')-2)->first();
+        //     $question = session('questions')->where('order',request('next')-1)->first();
+        //     $request->session()->flash('errors', ['Por favor, responda a pergunta para prosseguir']);
+        // } else
+        //     $request->session()->forget('errors');
+        if(!$this->store($request))
+            $request->session()->flash('errors', ['Por favor, preencha a pergunta anterior antes de prosseguir']);
+        else $request->session()->forget('errors');
 
         if(isset($question)){
             $currents = $this->current($request, $question);
