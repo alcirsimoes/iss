@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(KronesTodasSeeder::class);
         $this->call(KronesProcessosSeeder::class);
+        $this->call(KronesInternoSeeder::class);
     }
 }
