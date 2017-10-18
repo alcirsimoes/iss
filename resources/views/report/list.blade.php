@@ -13,6 +13,7 @@
                             <tr>
                                 <th>id</th>
                                 <th>nome</th>
+                                <th>email</th>
                                 <th>empresa</th>
                                 <th>telefone</th>
                                 <th>Visualizar respostas</th>
@@ -23,6 +24,7 @@
                             <tr>
                                 <td>{{ $subject->id }}</td>
                                 <td>{{ $subject->name }}</td>
+                                <td>{{ $subject->email }}</td>
                                 <td>{{ $subject->company }}</td>
                                 <td>{{ $subject->telephone }}</td>
                                 <td><a href="{{ route('report.view', [$survey->id, $sample->id, $subject->id]) }}" class="btn btn-default">Visualizar</a></td>

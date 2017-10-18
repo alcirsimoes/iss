@@ -4,6 +4,8 @@ use App\Survey;
 use App\Option;
 use App\Question;
 use App\Condition;
+use App\Sample;
+use App\Subject;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
@@ -532,6 +534,185 @@ class KronesInternoSeeder extends Seeder
             ]),
         ];
         $question_20->options()->saveMany($options_20);
+
+
+        $sample = Sample::create(['name' => 'Krones Interno']);
+
+        $subjects = [];
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Silvio Rotta',
+            'email' => 'silvio.rotta@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Diretor Comercial',
+            'telephone' => '11 4075-9630 / 11 8245-2385',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Nelson Ferreira',
+            'email' => 'nelson.ferreira@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Gerente Comercial',
+            'telephone' => '11 4075-9566 / 11 8218-8883',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Renato Brandão',
+            'email' => 'renato.brandao@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Gerente RH / TI / Controladoria',
+            'telephone' => '11 4075-9572 / 11 8244-4972',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Sandro Cubo',
+            'email' => 'sandro.cubo@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Gerente Service',
+            'telephone' => '11 4075-9579 / 11 8253-7774',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Ayrton Irokawa',
+            'email' => 'ayrton.irokawa@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Gerente Comercial',
+            'telephone' => '11 4075-9588 / 11 8245-9791',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Christoph Lanfer',
+            'email' => 'christoph.lanfer@krones.com',
+            'company' => 'Krones AG',
+            'ocupation' => 'Diretor Vendas - Krones AG',
+            'telephone' => '+49 9401 70 2748',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Jakob Anton Wolf',
+            'email' => 'jakob.wolf@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Diretor Industrial',
+            'telephone' => '11 4075-9725/ 11 8242-9888',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Jens Hoyer',
+            'email' => 'jens.hoyer@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Presidente',
+            'telephone' => '11 4075-9501',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Ricardo Capellari',
+            'email' => 'ricardo.capellari@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Supervisor de Vendas - Kits',
+            'telephone' => '11 4075-9693 / 11 8224-3716',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Sandro Tadeu',
+            'email' => 'sandro.tadeu@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Supervisor Layout',
+            'telephone' => '11 4075-9583 / 11 8571-4903',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Thiago Sugiura',
+            'email' => 'thiago.sugiura@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Coordenador Marketing',
+            'telephone' => '11 4075-9504 / 11 8178-0848',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Sandro Pereira',
+            'email' => 'sandro.pereira@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Gerente Industrial',
+            'telephone' => '11 4075-9527',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Alexandrim Gatti',
+            'email' => 'alexandrim.gatti@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Gerente Financeiro',
+            'telephone' => '11 4075-9612 / 011-8244-4986',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Lars Junge',
+            'email' => 'lars.junge@krones.com',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Gerente Service',
+            'telephone' => '11 4075-9612 / 011-8244-4986',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Rodrigo Picheco',
+            'email' => 'rodrigo.picheco@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Supervisor de Peças',
+            'telephone' => '11 4075-9522 / 011-8218-5211',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Claudia Orsolon',
+            'email' => 'claudia-braga.orsolon@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Gerente de Logística',
+            'telephone' => '11 4075-9673 / 11 98264-9133',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Maxwell Pereira',
+            'email' => 'maxwell.pereira@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Supervisor de Vendas',
+            'telephone' => '11 4075-9631 / 11 98244-4947',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Adriano Nazutto',
+            'email' => 'adriano.nazutto@krones.com.br',
+            'company' => 'Krones do Brasil',
+            'ocupation' => 'Supervisor de Vendas',
+            'telephone' => '11 4075-9633 / 11 98355-2001',
+        ]);
+
+        $subjects [] = Subject::create([
+            'user_id' => 1,
+            'name' => 'Helio Portela',
+            'email' => 'helio.portela@krones.com',
+            'company' => 'Krones AG',
+            'ocupation' => 'Diretor LCS - Krones AG',
+            'telephone' => '+49 151 11317458',
+        ]);
+
+        $sample->subjects()->saveMany($subjects);
+
 
 
 

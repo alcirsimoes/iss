@@ -33,6 +33,8 @@ Route::resource('sample', 'SampleController');
 Route::resource('subject', 'SubjectController');
 Route::resource('question', 'QuestionController');
 
+Route::get('f/{token?}', 'FormController@login')->name('form.login');
+
 Route::get('form/{survey}/{subject?}', 'FormController@index')->name('form.index');
 
 Route::post('form/current', 'FormController@current')->name('form.current');

@@ -25,11 +25,25 @@ class FormController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function login(Request $request, $token)
+    {
+        $data = json_decode(base64_decode($token), true);
+
+        $survey = Survey::findOrFail($data['survey_id']);
+        $sample = Sample::findOrFail($data['sample_id']);
+        $subject = Subject::findOrFail($data['subject_id']);
+
+        session([
+            'survey' => $survey,
+            'sample' => $sample,
+            'subject' => $subject,
+            'questions' => $survey->questions,
+            'conditions' => $survey->conditions,
+        ]);
+
+        return view('direct.index', compact('survey', 'sample', 'subject'));
+    }
+
     public function index(Request $request, Survey $survey, Subject $subject)
     {
         $sample = $survey->samples->first();
