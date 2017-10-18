@@ -8,10 +8,12 @@ use App\Option;
 use App\Sample;
 use App\Subject;
 use App\Answer;
+use App\Mail\SurveyInvite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 class DirectController extends Controller
 {
@@ -36,6 +38,6 @@ class DirectController extends Controller
 
     public function email(Request $request, Survey $survey, Subject $subject)
     {
-        # code...
+        Mail::to($subject->email)->send(new SurveyInvite($survey, $subject));
     }
 }
