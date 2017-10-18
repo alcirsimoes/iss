@@ -34,6 +34,7 @@
 
                         <tbody>
                             @forelse($surveys as $survey)
+                                @if($survey->type == 1 && Auth::user()->isAdmin)
                             <tr>
                                 <td>{{ $survey->name }}</td>
                                 <td>
@@ -43,6 +44,17 @@
                                     @endif
                                 </td>
                             </tr>
+                                @elseif($survey->type == 2)
+                            <tr>
+                                <td>{{ $survey->name }}</td>
+                                <td>
+                                    <a href="{{ route('form.index', $survey->id) }}" class="btn btn-default">Entrevistar</a>
+                                    @if(Auth::user()->isAdmin || Auth::user()->isSupervisor)
+                                    <a href="{{ route('report.index', $survey->id) }}" class="btn btn-default">Acompanhar</a>
+                                    @endif
+                                </td>
+                            </tr>
+                                @endif
                             @empty
                             @endforelse
                         </tbody>
