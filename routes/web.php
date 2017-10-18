@@ -33,7 +33,8 @@ Route::resource('sample', 'SampleController');
 Route::resource('subject', 'SubjectController');
 Route::resource('question', 'QuestionController');
 
-Route::get('f/{token?}', 'FormController@login')->name('form.login');
+Route::get('email/{survey}/{subject}', 'DirectController@email')->name('direct.email');
+Route::get('f/{token?}', 'DirectController@login')->name('direct.login');
 
 Route::get('form/{survey}/{subject?}', 'FormController@index')->name('form.index');
 
