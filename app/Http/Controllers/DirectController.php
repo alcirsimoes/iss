@@ -204,7 +204,7 @@ class DirectController extends Controller
 
         } else {
             $finish = Carbon::now();
-            $sample->subjects()->where('subject_id', $subject->id)->updateExistingPivot($subject->id, ['finished_at' => $finish,'user_id' => \Auth::user()->id]);
+            $sample->subjects()->where('subject_id', $subject->id)->updateExistingPivot($subject->id, ['finished_at' => $finish,'user_id' => 1]);
 
             return view('direct.finish', compact('finish','survey'));
         }
@@ -361,10 +361,10 @@ class DirectController extends Controller
             $dontknow = isset($dontknows[$question->id]) ? $dontknows[$question->id] : false;
 
             $answer = Answer::firstOrCreate([
-                'sample_id' => session('sample_id'),
-                'subject_id' => session('subject_id'),
+                'sample_id' => session('sample')->id,
+                'subject_id' => session('subject')->id,
                 'question_id' => $question->id,
-            ], ['user_id' => \Auth::user()->id]);
+            ], ['user_id' => 1]);
 
             $answer->refused = $refused;
             $answer->dontknow = $dontknow;
