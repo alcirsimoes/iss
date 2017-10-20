@@ -35,7 +35,7 @@ class CreateSamplesTables extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email')->nullable();
+            // $table->string('email')->nullable();
             $table->string('company')->nullable();
             $table->string('address')->nullable();
             $table->string('state')->nullable();

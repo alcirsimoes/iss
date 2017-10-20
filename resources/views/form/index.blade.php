@@ -29,7 +29,17 @@
                                         <td><a href="{{ route('subject.edit', [$subject->id]) }}">{{ $subject->name }}</a></td>
                                         <td>{{ $subject->company }}</td>
                                         <td>{{ $subject->telephone }}</td>
-                                        <td><a href="{{ route('form.create', [$sample->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
+                                        @if($survey->type != 1)
+                                        <td><a href="{{ route('form.create', [$survey->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
+                                        @endif
+                                        @if($survey->type == 1)
+                                        <?php $token = base64_encode(json_encode([
+                                            'survey_id' => $survey->id,
+                                            'sample_id' => $sample->id,
+                                            'subject_id' => $subject->id,
+                                            ])) ?>
+                                        <td><a href="{{ route('direct.login', $token) }}" class="btn btn-default">Questionário</a></td>
+                                        @endif
                                     </tr>
                                 @empty
                                 @endforelse
@@ -40,7 +50,9 @@
                                     <td><a href="{{ route('subject.edit', [$subject->id]) }}">{{ $subject->name }}</a></td>
                                     <td>{{ $subject->company }}</td>
                                     <td>{{ $subject->telephone }}</td>
-                                    <td><a href="{{ route('form.create', [$sample->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
+                                    @if($survey->type != 1)
+                                    <td><a href="{{ route('form.create', [$survey->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
+                                    @endif
                                 </tr>
                                 @empty
                                 @endforelse

@@ -34,7 +34,7 @@ class KronesInternoSeeder extends Seeder
             'name' => 'P8',
             'options_header' => 'VENDAS DE MÁQUINAS E EQUIPAMENTOS',
             'answers_header' => 'Import. Atributos',
-            'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
+            'statement' => '<strong>P8)</strong> Inicialmente vamos colocar em ordem de importância determinados critérios que são fundamentais na escolha de um fornecedor. Portanto <strong>classifique os atributos</strong> na tabela em ordem de importância dentro de cada grupo, em 1° lugar, 2°, 3° e assim por diante.',
             'type' => 4,
             'format' => 3,
             'order' => 0,
@@ -71,8 +71,8 @@ class KronesInternoSeeder extends Seeder
         $collumns [] = $question_2 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'P9',
-            'answers_header' => 'P9',
-            'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong class="text-danger">(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P9 Desempenho',
+            'statement' => '<strong>P9)</strong> Em seguida faça uma avaliação do nível de satisfação com a Krones, considerando o desempenho da empresa em cada atributo. Portanto, <strong>dê notas entre 1 e 10</strong>, onde quanto mais próximo de 10 melhor é a posição da empresa e quanto mais próximo de 1 pior é a posição.',
             'type' => 5,
             'format' => null,
         ]);
@@ -84,7 +84,7 @@ class KronesInternoSeeder extends Seeder
             'name' => 'P8',
             'options_header' => 'VENDAS DE PEÇAS DE REPOSIÇÃO',
             'answers_header' => 'Import. Atributos',
-            'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
+            'statement' => '<strong>P8)</strong> Inicialmente vamos colocar em ordem de importância determinados critérios que são fundamentais na escolha de um fornecedor. Portanto <strong>classifique os atributos</strong> na tabela em ordem de importância dentro de cada grupo, em 1° lugar, 2°, 3° e assim por diante.',
             'type' => 4,
             'format' => 3,
             'order' => 1,
@@ -121,8 +121,8 @@ class KronesInternoSeeder extends Seeder
         $collumns [] = $question_4 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'P9',
-            'answers_header' => 'P9',
-            'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong class="text-danger">(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P9 Desempenho',
+            'statement' => '<strong>P9)</strong> Em seguida faça uma avaliação do nível de satisfação com a Krones, considerando o desempenho da empresa em cada atributo. Portanto, <strong>dê notas entre 1 e 10</strong>, onde quanto mais próximo de 10 melhor é a posição da empresa e quanto mais próximo de 1 pior é a posição.',
             'type' => 5,
             'format' => null,
         ]);
@@ -135,7 +135,7 @@ class KronesInternoSeeder extends Seeder
             'name' => 'P8',
             'options_header' => 'ASSISTÊNCIA TÉCNICA',
             'answers_header' => 'Import. Atributos',
-            'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
+            'statement' => '<strong>P8)</strong> Inicialmente vamos colocar em ordem de importância determinados critérios que são fundamentais na escolha de um fornecedor. Portanto <strong>classifique os atributos</strong> na tabela em ordem de importância dentro de cada grupo, em 1° lugar, 2°, 3° e assim por diante.',
             'type' => 4,
             'format' => 3,
             'order' => 2,
@@ -172,8 +172,8 @@ class KronesInternoSeeder extends Seeder
         $collumns [] = $question_6 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'P9',
-            'answers_header' => 'P9',
-            'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong class="text-danger">(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P9 Desempenho',
+            'statement' => '<strong>P9)</strong> Em seguida faça uma avaliação do nível de satisfação com a Krones, considerando o desempenho da empresa em cada atributo. Portanto, <strong>dê notas entre 1 e 10</strong>, onde quanto mais próximo de 10 melhor é a posição da empresa e quanto mais próximo de 1 pior é a posição.',
             'type' => 5,
             'format' => null,
         ]);
@@ -186,7 +186,7 @@ class KronesInternoSeeder extends Seeder
             'name' => 'P8',
             'options_header' => 'TREINAMENTO TÉCNICO',
             'answers_header' => 'Import. Atributos',
-            'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
+            'statement' => '<strong>P8)</strong> Inicialmente vamos colocar em ordem de importância determinados critérios que são fundamentais na escolha de um fornecedor. Portanto <strong>classifique os atributos</strong> na tabela em ordem de importância dentro de cada grupo, em 1° lugar, 2°, 3° e assim por diante.',
             'type' => 4,
             'format' => 3,
             'order' => 3,
@@ -223,8 +223,8 @@ class KronesInternoSeeder extends Seeder
         $collumns [] = $question_8 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'P9',
-            'answers_header' => 'P9',
-            'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong class="text-danger">(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P9 Desempenho',
+            'statement' => '<strong>P9)</strong> Em seguida faça uma avaliação do nível de satisfação com a Krones, considerando o desempenho da empresa em cada atributo. Portanto, <strong>dê notas entre 1 e 10</strong>, onde quanto mais próximo de 10 melhor é a posição da empresa e quanto mais próximo de 1 pior é a posição.',
             'type' => 5,
             'format' => null,
         ]);
@@ -237,7 +237,7 @@ class KronesInternoSeeder extends Seeder
             'name' => 'P8',
             'options_header' => 'POLÍTICA COMERCIAL',
             'answers_header' => 'Import. Atributos',
-            'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
+            'statement' => '<strong>P8)</strong> Inicialmente vamos colocar em ordem de importância determinados critérios que são fundamentais na escolha de um fornecedor. Portanto <strong>classifique os atributos</strong> na tabela em ordem de importância dentro de cada grupo, em 1° lugar, 2°, 3° e assim por diante.',
             'type' => 4,
             'format' => 3,
             'order' => 4,
@@ -270,8 +270,8 @@ class KronesInternoSeeder extends Seeder
         $collumns [] = $question_10 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'P9',
-            'answers_header' => 'P9',
-            'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong class="text-danger">(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P9 Desempenho',
+            'statement' => '<strong>P9)</strong> Em seguida faça uma avaliação do nível de satisfação com a Krones, considerando o desempenho da empresa em cada atributo. Portanto, <strong>dê notas entre 1 e 10</strong>, onde quanto mais próximo de 10 melhor é a posição da empresa e quanto mais próximo de 1 pior é a posição.',
             'type' => 5,
             'format' => null,
         ]);
@@ -284,7 +284,7 @@ class KronesInternoSeeder extends Seeder
             'name' => 'P8',
             'options_header' => 'PRODUTO',
             'answers_header' => 'Import. Atributos',
-            'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
+            'statement' => '<strong>P8)</strong> Inicialmente vamos colocar em ordem de importância determinados critérios que são fundamentais na escolha de um fornecedor. Portanto <strong>classifique os atributos</strong> na tabela em ordem de importância dentro de cada grupo, em 1° lugar, 2°, 3° e assim por diante.',
             'type' => 4,
             'format' => 3,
             'order' => 5,
@@ -317,8 +317,8 @@ class KronesInternoSeeder extends Seeder
         $collumns [] = $question_12 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'P9',
-            'answers_header' => 'P9',
-            'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong class="text-danger">(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P9 Desempenho',
+            'statement' => '<strong>P9)</strong> Em seguida faça uma avaliação do nível de satisfação com a Krones, considerando o desempenho da empresa em cada atributo. Portanto, <strong>dê notas entre 1 e 10</strong>, onde quanto mais próximo de 10 melhor é a posição da empresa e quanto mais próximo de 1 pior é a posição.',
             'type' => 5,
             'format' => null,
         ]);
@@ -331,7 +331,7 @@ class KronesInternoSeeder extends Seeder
             'name' => 'P8',
             'options_header' => 'INSTALAÇÃO E START UP',
             'answers_header' => 'Import. Atributos',
-            'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
+            'statement' => '<strong>P8)</strong> Inicialmente vamos colocar em ordem de importância determinados critérios que são fundamentais na escolha de um fornecedor. Portanto <strong>classifique os atributos</strong> na tabela em ordem de importância dentro de cada grupo, em 1° lugar, 2°, 3° e assim por diante.',
             'type' => 4,
             'format' => 3,
             'order' => 6,
@@ -360,8 +360,8 @@ class KronesInternoSeeder extends Seeder
         $collumns [] = $question_14 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'P9',
-            'answers_header' => 'P9',
-            'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong class="text-danger">(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P9 Desempenho',
+            'statement' => '<strong>P9)</strong> Em seguida faça uma avaliação do nível de satisfação com a Krones, considerando o desempenho da empresa em cada atributo. Portanto, <strong>dê notas entre 1 e 10</strong>, onde quanto mais próximo de 10 melhor é a posição da empresa e quanto mais próximo de 1 pior é a posição.',
             'type' => 5,
             'format' => null,
         ]);
@@ -374,7 +374,7 @@ class KronesInternoSeeder extends Seeder
             'name' => 'P8',
             'options_header' => 'SUPORTE TÉCNICO TELEFÔNICO',
             'answers_header' => 'Import. Atributos',
-            'statement' => '<strong>P8)</strong> Na relação de um fornecedor e seus clientes, existem alguns fatores e atributos que são importantes na escolha deste fornecedor. Primeiro vamos classificar os atributos em ordem de importância dentro de cada fator. Assim, na escolha de um fornecedor qual atributo você acha mais importante em 1º lugar? Em 2º em 3° e assim por diante <strong class="text-danger">(LER OS ATRIBUTOS DE CADA FATOR E ORDENAR DENTRO DE CADA FATOR)</strong>',
+            'statement' => '<strong>P8)</strong> Inicialmente vamos colocar em ordem de importância determinados critérios que são fundamentais na escolha de um fornecedor. Portanto <strong>classifique os atributos</strong> na tabela em ordem de importância dentro de cada grupo, em 1° lugar, 2°, 3° e assim por diante.',
             'type' => 4,
             'format' => 3,
             'order' => 7,
@@ -403,8 +403,8 @@ class KronesInternoSeeder extends Seeder
         $collumns [] = $question_16 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'P9',
-            'answers_header' => 'P9',
-            'statement' => '<strong>P9)</strong> Agora vamos avaliar a sua satisfação com alguns fornecedores que você trabalha em relação a cada um destes Atributos que acabou de ordenar. Para isso vamos utilizar uma escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS SATISFEITO</strong> você está, e quanto mais próximo do 10, <strong>MAIS SATISFEITO</strong> você está com o fornecedor. Sendo assim o quanto você está satisfeito com a.... <strong class="text-danger">(SOMENTE AVALIA AS EMPRESAS CITADAS NA P3 – FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P9 Desempenho',
+            'statement' => '<strong>P9)</strong> Em seguida faça uma avaliação do nível de satisfação com a Krones, considerando o desempenho da empresa em cada atributo. Portanto, <strong>dê notas entre 1 e 10</strong>, onde quanto mais próximo de 10 melhor é a posição da empresa e quanto mais próximo de 1 pior é a posição.',
             'type' => 5,
             'format' => null,
         ]);
@@ -415,7 +415,7 @@ class KronesInternoSeeder extends Seeder
             'survey_id' => $survey->id,
             'name' => 'P10',
             'answers_header' => 'P10 (RU) Ordem Importância',
-            'statement' => '<strong>P10)</strong> Agora que já avaliamos os atributos dentro dos fatores, gostaria que você me dissesse o quanto cada fator é importante no momento de decidir trabalhar com um <strong>fornecedor de máquinas, equipamentos e soluções para o seu mercado.</strong> Assim, qual desses fatores é mais importante em 1° lugar? E em 2°? E em 3°? E assim por diante. <strong class="text-danger">(FAÇA PERGUNTA ATÉ O 8º LUGAR)</strong>',
+            'statement' => '<strong>P10)</strong> Agora que já avaliamos os atributos dentro dos fatores, gostaria que você apontasse o quanto cada fator é importante no momento de decidir trabalhar com um fornecedor, portanto, coloque esses fatores em ordem de importância, preenchendo 1°, 2°, 3°, até o 8° lugar.',
             'type' => 4,
             'format' => 2,
             'order' => 8,
@@ -464,7 +464,7 @@ class KronesInternoSeeder extends Seeder
             'name' => 'P11',
             'options_header' => 'FATORES DE IMAGEM',
             'answers_header' => 'P11 Ordem Importância',
-            'statement' => '<strong>P11)</strong> As empresas em geral buscam ter uma boa imagem, serem respeitadas e admiradas. A seguir vou ler uma série de fatores que são considerados relevantes para este objetivo. Gostaríamos que você colocasse estes fatores em ordem de importância, do 1º ao 4º lugar.',
+            'statement' => '<strong>P11)</strong> As empresas em geral buscam ter uma boa imagem, ser respeitadas e admiradas. A seguir teremos uma série de fatores que são considerados relevantes para este objetivo. Gostaríamos que você colocasse estes fatores em ordem de importância, do 1º ao 4º lugar.',
             'type' => 4,
             'format' => 3,
             'order' => 9,
@@ -493,8 +493,8 @@ class KronesInternoSeeder extends Seeder
         $collumns [] = $question_19 = Question::create([
             'survey_id' => $survey->id,
             'name' => 'P12',
-            'answers_header' => 'P12',
-            'statement' => '<strong>P12)</strong> Agora, vamos avaliar a imagem das mesmas empresas avaliadas na satisfação em relação a cada um destes Fatores, mesmo que não tenha trabalhado com a empresa. Para isso vamos utilizar novamente a escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS o fornecedor está em linha com sua expectativa</strong> em relação ao fator, e quanto mais próximo do 10, <strong>MAIS o fornecedor está em linha com sua expectativa.</strong> Pensando na Krones, qual nota você dá para ela em relação ao fator... E para a...? <strong class="text-danger">(AVALIAR TODAS AS EMPRESAS ) (FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P12 Desempenho',
+            'statement' => '<strong>P12)</strong> Agora, vamos avaliar o desempenho da Krones em relação a cada um destes fatores. Para isso vamos utilizar novamente a escala de 1 a 10, onde quanto mais próximo do 1 <strong>MENOS</strong> a Krones está em linha com as expectativa dos clientes em relação ao fator, e quanto mais próximo do 10, <strong>MAIS</strong> a Krones está em linha com as expectativas dos clientes.',
             'type' => 5,
             'format' => null,
         ]);
@@ -505,8 +505,8 @@ class KronesInternoSeeder extends Seeder
             'survey_id' => $survey->id,
             'name' => 'P15',
             'options_header' => '',
-            'answers_header' => 'Krones',
-            'statement' => '<strong>P15)</strong> Falando sobre custo/benefício, como você classificaria os produtos e serviços da Krones, e da ...? <strong class="text-danger">(LEIA TODAS AS ALTERNATIVAS E TODAS AS EMPRESAS) (FAZER RODÍZIO DAS MARCAS)</strong>',
+            'answers_header' => 'P15',
+            'statement' => '<strong>P15)</strong> Falando sobre custo/benefício, como você classificaria os produtos e serviços da Krones? Marque a sua escolha na tabela abaixo.',
             'type' => 1,
             'format' => 3,
             'order' => 10,
@@ -539,7 +539,6 @@ class KronesInternoSeeder extends Seeder
         $sample = Sample::create(['name' => 'Krones Interno']);
 
         $subjects = [];
-
         $subjects [] = Subject::create([
             'user_id' => 1,
             'name' => 'Silvio Rotta',
@@ -711,7 +710,9 @@ class KronesInternoSeeder extends Seeder
             'telephone' => '+49 151 11317458',
         ]);
 
-        $sample->subjects()->saveMany($subjects);
+        $survey->samples()->save($sample, ['active' => true]);
+        foreach($subjects as $subject) $sample->subjects()->save($subject, ['user_id' => 1]);
+
 
 
 

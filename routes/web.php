@@ -35,6 +35,9 @@ Route::resource('question', 'QuestionController');
 
 Route::get('email/{survey}/{subject}', 'DirectController@email')->name('direct.email');
 Route::get('f/{token?}', 'DirectController@login')->name('direct.login');
+Route::post('f/current', 'DirectController@current')->name('direct.current');
+Route::post('f/next', 'DirectController@next')->name('direct.next');
+Route::post('f/previous', 'DirectController@next')->name('direct.previous');
 
 Route::get('form/{survey}/{subject?}', 'FormController@index')->name('form.index');
 
