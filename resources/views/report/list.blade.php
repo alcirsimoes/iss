@@ -29,7 +29,7 @@
                                 <td>{{ $subject->company }}</td>
                                 <td>{{ $subject->telephone }}</td>
                                 <td><a href="{{ route('report.view', [$survey->id, $sample->id, $subject->id]) }}" class="btn btn-default">Visualizar</a></td>
-                                <td><a href="{{ route('report.view', [$survey->id, $sample->id, $subject->id]) }}" class="btn btn-primary">Enviar</a></td>
+                                <td><a href="{{ route('direct.email', [$survey->id, $sample->id, $subject->id]) }}" class="btn btn-primary">Enviar</a></td>
                             </tr>
                             @empty
                             @endforelse

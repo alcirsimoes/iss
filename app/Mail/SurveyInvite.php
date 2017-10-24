@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Survey;
+use App\Sample;
 use App\Subject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -13,17 +14,23 @@ class SurveyInvite extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $survey, $subject;
+    public $survey, $sample, $sujeito, $token;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Survey $survey, Subject $subject)
+    public function __construct(Survey $survey, Sample $sample, Subject $subject)
     {
         $this->survey = $survey;
-        $this->subject = $subject;
+        $this->sample = $sample;
+        $this->sujeito = $subject;
+        $this->token = base64_encode(json_encode([
+            'survey_id'=>$survey->id,
+            'sample_id'=>$sample->id,
+            'subject_id'=>$subject->id,
+        ]));
     }
 
     /**
@@ -33,6 +40,8 @@ class SurveyInvite extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.survey.invite');
+        return $this->subject('Convite')
+        ->bcc('alcirsimoes@gmail.com')
+        ->markdown('emails.survey.invite');
     }
 }

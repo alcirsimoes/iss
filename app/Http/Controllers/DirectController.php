@@ -36,9 +36,10 @@ class DirectController extends Controller
         return view('direct.index', compact('survey', 'sample', 'subject'));
     }
 
-    public function email(Request $request, Survey $survey, Subject $subject)
+    public function email(Request $request, Survey $survey, Sample $sample, Subject $subject)
     {
-        Mail::to($subject->email)->send(new SurveyInvite($survey, $subject));
+        Mail::to($subject->email)->send(new SurveyInvite($survey, $sample, $subject));
+        return back();
     }
 
     private function current(Request $request, Question $question)

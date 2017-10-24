@@ -112,75 +112,89 @@
                     var previous_{{ $question->id }};
 
                     $('.question_{{ $question->id }}').on('focus', function () {
-                        previous_{{ $question->id }} = this.value;
+                        // previous_{{ $question->id }} = this.value;
                     }).change(function() {
                         var option = $(this).children();
                         var val = $(this).val();
                         var selected, temp;
 
-                        getCurrentOptions({{ $question->id }});
-                        temp = question_{{ $question->id }}.slice();
-
-                        makeOptions({{ $question->id }});
-                        $(this).children().remove();
-
-                        if (val && !_.some(temp, val)) {
-                            temp.push(Number(val));
-                            temp.sort();
-                        }
-
-                        for(n in temp){
-                            selected = null;
-                            if (val == temp[n]) var selected = " selected='selected'";
-                            if (temp[n] == 0)
-                                $(this).append("<option value=''"+selected+">Ordem...</option>")
-                            else
-                                $(this).append("<option value='"+temp[n]+"'"+selected+">"+temp[n]+"°</option>")
-                        }
-
+                        $(".question_"+{{$question->id}}).each(function() {
+                            if ($(this).val() == val) $(this).val([]);
+                        });
+                        
+                        $(this).val(val);
                     });
 
-                    function makeOptions(id){
-                        $(".question_"+id).each(function() {
-                            var option = $(this).children();
-                            var val = $(this).val();
-                            var selected;
-                            var temp = window['question_'+id].slice();
-
-                            $(option).remove();
-
-                            if (val && !_.some(temp, val)) {
-                                temp.push(Number(val));
-                                temp.sort();
-                            }
-
-                            for(n in temp){
-                                selected = null;
-                                if (val == temp[n]) var selected = " selected='selected'";
-                                if (temp[n] == 0)
-                                    $(this).append("<option value=''"+selected+">Ordem...</option>")
-                                else
-                                    $(this).append("<option value='"+temp[n]+"'"+selected+">"+temp[n]+"°</option>")
-                            }
-                        });
-                    }
-
-                    function getCurrentOptions(id){
-                        var array = [];
-                        var variable = window['original_'+id].slice();
-                        var original = window['original_'+id];
-
-                        $(".question_"+id).each(function() {
-                            array.push(Number($(this).val()));
-                        });
-
-                        for(n in array){
-                            if (array[n]) variable = variable.filter(function(item) {
-                                return item != array[n];
-                            })
-                        }
-                        window['question_'+id] = variable;
-                    }
+                    // $('.question_{{ $question->id }}').on('focus', function () {
+                    //     previous_{{ $question->id }} = this.value;
+                    // }).change(function() {
+                    //     var option = $(this).children();
+                    //     var val = $(this).val();
+                    //     var selected, temp;
+                    //
+                    //     getCurrentOptions({{ $question->id }});
+                    //     temp = question_{{ $question->id }}.slice();
+                    //
+                    //     makeOptions({{ $question->id }});
+                    //     $(this).children().remove();
+                    //
+                    //     if (val && !_.some(temp, val)) {
+                    //         temp.push(Number(val));
+                    //         temp.sort();
+                    //     }
+                    //
+                    //     for(n in temp){
+                    //         selected = null;
+                    //         if (val == temp[n]) var selected = " selected='selected'";
+                    //         if (temp[n] == 0)
+                    //             $(this).append("<option value=''"+selected+">Ordem...</option>")
+                    //         else
+                    //             $(this).append("<option value='"+temp[n]+"'"+selected+">"+temp[n]+"°</option>")
+                    //     }
+                    //
+                    // });
+                    //
+                    // function makeOptions(id){
+                    //     $(".question_"+id).each(function() {
+                    //         var option = $(this).children();
+                    //         var val = $(this).val();
+                    //         var selected;
+                    //         var temp = window['question_'+id].slice();
+                    //
+                    //         $(option).remove();
+                    //
+                    //         if (val && !_.some(temp, val)) {
+                    //             temp.push(Number(val));
+                    //             temp.sort();
+                    //         }
+                    //
+                    //         for(n in temp){
+                    //             selected = null;
+                    //             if (val == temp[n]) var selected = " selected='selected'";
+                    //             if (temp[n] == 0)
+                    //                 $(this).append("<option value=''"+selected+">Ordem...</option>")
+                    //             else
+                    //                 $(this).append("<option value='"+temp[n]+"'"+selected+">"+temp[n]+"°</option>")
+                    //         }
+                    //     });
+                    // }
+                    //
+                    // function getCurrentOptions(id){
+                    //     var array = [];
+                    //     var variable = window['original_'+id].slice();
+                    //     var original = window['original_'+id];
+                    //
+                    //     $(".question_"+id).each(function() {
+                    //         array.push(Number($(this).val()));
+                    //     });
+                    //
+                    //     for(n in array){
+                    //         if (array[n]) variable = variable.filter(function(item) {
+                    //             return item != array[n];
+                    //         })
+                    //     }
+                    //     window['question_'+id] = variable;
+                    // }
                 </script>
             @endsection
 

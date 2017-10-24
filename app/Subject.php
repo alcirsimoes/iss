@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
-    protected $fillable = ['user_id','name','company','address','state','city','ocupation','telephone'];
+    protected $fillable = ['user_id','name','email','company','address','state','city','ocupation','telephone'];
 
     public function samples()
     {

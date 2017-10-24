@@ -1,10 +1,10 @@
 @component('mail::message')
 # Convite
 
-Prezado {{ $subject->name }},
+Prezado {{ $sujeito->name }},
 Recentemente a Krones decidiu realizar uma pesquisa de Satisfação de Cliente e Imagem da Krones. Essa iniciativa irá auxiliar a identificar como a Krones e seus principais concorrentes são avaliados no mercado. Gostaríamos, no entanto, de poder comparar a visão do mercado com a visão interna, ou seja, como os colaboradores enxergam e avaliam a atuação da empresa.
 
-Por favor, responda o questionário utilizando o link: {{ $survey->name }}
+Por favor, responda o questionário utilizando o link: [Clique aqui]({{ route('direct.login', $token) }}) 
 
 Em caso de dúvida entre em contato conosco através do e-mail: w.horstmann@h2mbrasil.com
 
@@ -12,7 +12,7 @@ Em caso de dúvida entre em contato conosco através do e-mail: w.horstmann@h2mb
 
 Sua participação é fundamental para o sucesso da pesquisa!
 
-@component('mail::button', ['url' => ''])
+@component('mail::button', ['url' => route('direct.login', $token)])
 Responder
 @endcomponent
 

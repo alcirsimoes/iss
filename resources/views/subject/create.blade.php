@@ -21,6 +21,11 @@
                     <small id="nameHelp" class="form-text text-muted">Insert a unique name to the subject.</small>
                 </div>
                 <div class="form-group">
+                    <label for="InputName">Email: </label>
+                    <input type="email" name="email" class="form-control" id="inputName" aria-describedby="emailHelp" placeholder="Enter subject email" value="{{ $subject->email }}">
+                    <small id="nameHelp" class="form-text text-muted">Insert a unique email to the subject.</small>
+                </div>
+                <div class="form-group">
                     <label for="">Empresa: </label>
                     <input type="text" name="company" class="form-control" id="" aria-describedby="nameHelp" placeholder="Enter subject company" value="{{ $subject->company }}">
                     <small id="nameHelp" class="form-text text-muted">Empresa do respondente.</small>

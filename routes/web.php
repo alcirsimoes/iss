@@ -33,7 +33,7 @@ Route::resource('sample', 'SampleController');
 Route::resource('subject', 'SubjectController');
 Route::resource('question', 'QuestionController');
 
-Route::get('email/{survey}/{subject}', 'DirectController@email')->name('direct.email');
+Route::get('email/{survey}/{sample}/{subject}', 'DirectController@email')->name('direct.email');
 Route::get('f/{token?}', 'DirectController@login')->name('direct.login');
 Route::post('f/current', 'DirectController@current')->name('direct.current');
 Route::post('f/next', 'DirectController@next')->name('direct.next');
