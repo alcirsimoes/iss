@@ -15,7 +15,7 @@ class Sample extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany('App\Subject');
+        return $this->belongsToMany('App\Subject')->withPivot('finished_at');
     }
 
     public function entries()

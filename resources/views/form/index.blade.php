@@ -14,10 +14,12 @@
                     <table class="table table-condensed">
                         <thead>
                             <tr>
-                                <!-- <th>id</th> -->
+                                <th>id</th>
                                 <th>nome</th>
                                 <th>empresa</th>
                                 <th>telefone</th>
+                                <th>Finalizada</th>
+                                <th>Duração</th>
                                 <th>Iniciar Pesquisa</th>
                             </tr>
                         </thead>
@@ -25,10 +27,18 @@
                             @if (Auth::user()->isSupervisor || Auth::user()->isAdmin)
                                 @forelse ($sample->subjects as $subject)
                                     <tr>
-                                        <!-- <td>{{ $subject->id }}</td> -->
+                                        <?php $c = $subject->answers->first() ?>
+                                        <?php if ($c) $c = $c->created_at ?>
+                                        <td>{{ $subject->id }}</td>
                                         <td><a href="{{ route('subject.edit', [$subject->id]) }}">{{ $subject->name }}</a></td>
                                         <td>{{ $subject->company }}</td>
                                         <td>{{ $subject->telephone }}</td>
+                                        <td>{{ $subject->pivot->finished_at }}</td>
+                                        <td>
+                                            @if($subject->pivot->finished_at)
+                                            {{ $c->diffInMinutes(Carbon\Carbon::parse($subject->pivot->finished_at)) }} min
+                                            @endif
+                                        </td>
                                         @if($survey->type != 1)
                                         <td><a href="{{ route('form.create', [$survey->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
                                         @endif
@@ -46,10 +56,18 @@
                             @else
                                 @forelse($sample->subjects->where('user_id', Auth::user()->id) as $subject)
                                 <tr>
-                                    <!-- <td>{{ $subject->id }}</td> -->
+                                    <?php $c = $subject->answers->first() ?>
+                                    <?php if ($c) $c = $c->created_at ?>
+                                    <td>{{ $subject->id }}</td>
                                     <td><a href="{{ route('subject.edit', [$subject->id]) }}">{{ $subject->name }}</a></td>
                                     <td>{{ $subject->company }}</td>
                                     <td>{{ $subject->telephone }}</td>
+                                    <td>{{ $subject->pivot->finished_at }}</td>
+                                    <td>
+                                        @if($subject->pivot->finished_at)
+                                        {{ $c->diffInMinutes(Carbon\Carbon::parse($subject->pivot->finished_at)) }} min
+                                        @endif
+                                    </td>
                                     @if($survey->type != 1)
                                     <td><a href="{{ route('form.create', [$survey->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
                                     @endif
