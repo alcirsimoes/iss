@@ -120,7 +120,7 @@
         for (i = 106; i < 112; i++){
             $('.question_54.option_'+i).prop('disabled', true);
         }
-        for (i = 112; i < 200; i++){
+        for (i = 112; i < 9000; i++){
             $('.question_54.option_'+i).remove();
         }
         $('.other_54').remove();
@@ -170,7 +170,7 @@
         for (i = 18; i < 23; i++){
             $('.question_12.option_'+i).prop('disabled', true);
         }
-        for (i = 23; i < 100; i++){
+        for (i = 23; i < 9000; i++){
             $('.question_12.option_'+i).remove();
         }
         $('.other_12').remove();

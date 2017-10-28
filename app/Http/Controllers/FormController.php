@@ -178,17 +178,18 @@ class FormController extends Controller
             $checked_ids = [];
             $text_values = [];
 
-            if (isset($answer) && $question->format == "3"){
-                foreach($answer->options as $given){
+            if ($question->format == 3){
+                if ($answer) foreach($answer->options as $given){
                     $checked_ids [$question->id] [] = $given->id;
 
                     if ($question->type == 3 || $question->type == 4 || $question->type == 5){
                         $text_values [$question->id] [$given->id] = $given->pivot->value;
                     }
-
+                }
+                foreach($question->options as $given){
                     foreach ($question->questions as $collumn){
                         $colAnswer = Answer::where(['subject_id'=>$subject->id, 'sample_id'=>$sample->id,'question_id'=>$collumn->id])->first();
-                        if(isset($colAnswer))
+                        if($colAnswer)
                             if (count($collumn->options)){
                                 $text = $colAnswer->options()->where('option_id', $given->id)->get();
                                 foreach ($text as $subKey => $subCollumn) {
@@ -324,8 +325,8 @@ class FormController extends Controller
             }
         }
 
-        if (!empty($errors))
-            return false;
+        // if (!empty($errors))
+        //     return false;
 
         $others = [];
         $questions = [];
@@ -342,8 +343,9 @@ class FormController extends Controller
                 } else
                     $unnamed_other [] = $inputs_others[$k];
 
-        if (!$inputs && empty($others) && !$refuseds && !$dontknows && !request('init'))
-            return false;
+        // if (!$inputs && empty($others) && !$refuseds && !$dontknows && !request('init'))
+        //     return false;
+
 
         if (!empty($inputs)) foreach ($inputs as $id => $input)
             $questions [$id] = session('questions')->where('id', $id)->first();
@@ -360,6 +362,7 @@ class FormController extends Controller
                     if (!isset($questions[$k]))
                         $questions [$k] = session('questions')->where('id', $k)->first();
                 }
+
 
         foreach($questions as $question){
             if (isset($inputs[$question->id]))

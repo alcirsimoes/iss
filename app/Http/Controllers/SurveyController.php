@@ -67,14 +67,14 @@ class SurveyController extends Controller
     {
         $questions = $survey->questions;
 
-        foreach ($questions as $key => $question) {
-            if ($question->order)
-                continue;
-            else {
-                $question->order = $key;
-                $question->save();
-            }
-        }
+        // foreach ($questions as $key => $question) {
+        //     if ($question->order)
+        //         continue;
+        //     else {
+        //         $question->order = $key;
+        //         $question->save();
+        //     }
+        // }
 
         return view('survey.show')->with(compact('survey','questions'));
     }
