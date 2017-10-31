@@ -27,9 +27,10 @@
 
                                 <tbody>
                                     @forelse($answer->options as $option)
+                                    <?php $subOption = App\Option::find($option->pivot->sub_option_id); ?>
                                     <tr>
                                         <td>{{ $option->statement }}</td>
-                                        <td>{{ $option->value }}</td>
+                                        <td>@if($subOption){{ $subOption->statement }}@endif</td>
                                         <td>{{ $option->pivot->value }}</td>
                                     </tr>
                                     @empty
@@ -40,10 +41,6 @@
                             @endif
                         </div>
                     </div>
-
-
-
-
                     @empty
                     <h3>Questionário sem nenhuma resposta.</h3>
                     @endforelse

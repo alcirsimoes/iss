@@ -5,7 +5,7 @@
                 @if($other)
                 <input class="form-check-input other_{{ $collumn->id }}" type="radio" name="other[unique][{{ $collumn->id }}]" value="1">
                 @else
-                    @if(isset($answer) && isset($checked_ids[$collumn->id]) && in_array($option->id, $checked_ids[$collumn->id]))
+                    @if(isset($checked_ids[$collumn->id]) && in_array($option->id, $checked_ids[$collumn->id]))
                     <input class="form-check-input question_{{ $collumn->id }}" type="radio" name="question[{{ $collumn->id }}]" value="{{ $option->id }}" checked="checked">
                     @else
                     <input class="form-check-input question_{{ $collumn->id }}" type="radio" name="question[{{ $collumn->id }}]" value="{{ $option->id }}">
@@ -35,7 +35,7 @@
                 @if($other)
                 <input class="form-check-input question_{{ $collumn->id }}" type="checkbox" name="other[multiple][{{ $collumn->id }}]" value="1">
                 @else
-                    @if(isset($answer) && isset($checked_ids[$collumn->id]) && in_array($option->id, $checked_ids[$collumn->id]))
+                    @if(isset($checked_ids[$collumn->id]) && in_array($option->id, $checked_ids[$collumn->id]))
                     <input class="form-check-input question_{{ $collumn->id }}" type="checkbox" name="question[{{ $collumn->id }}][{{ $option->id }}]" value="{{ $option->id }}" checked="checked">
                     @else
                     <input class="form-check-input question_{{ $collumn->id }}" type="checkbox" name="question[{{ $collumn->id }}][{{ $option->id }}]" value="{{ $option->id }}">
@@ -99,7 +99,7 @@
                             $(this).append("<option value='"+temp[n]+"'"+selected+">"+temp[n]+"°</option>")
                     }
 
-                });
+                }).change();
 
                 function makeOptions(id){
                     $(".question_"+id).each(function() {
@@ -158,6 +158,15 @@
             @endif
         @endif
             <option value="">Nota...</option>
+            
+            @if(!$other && isset($subCollumn) && isset($text_values[$collumn->id][$option->id][$subCollumn->id]) && $text_values[$collumn->id][$option->id][$subCollumn->id] == 'n/a')
+            <option value="n/a" selected="selected">n/a</option>
+            @elseif(!$other && isset($text_values[$collumn->id][$option->id]) && $text_values[$collumn->id][$option->id] == 'n/a')
+            <option value="n/a" selected="selected">n/a</option>
+            @else
+            <option value="n/a">n/a</option>
+            @endif
+
             @for($i = 1; $i < 11; $i ++)
                 @if(!$other && isset($subCollumn) && isset($text_values[$collumn->id][$option->id][$subCollumn->id]) && $text_values[$collumn->id][$option->id][$subCollumn->id] == $i)
                 <option value="{{ $i }}" selected="selected">{{ $i }}</option>

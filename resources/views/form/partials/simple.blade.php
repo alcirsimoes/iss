@@ -194,6 +194,11 @@
                 <div class="col-sm-3">
                     <select class="form-control question_{{ $question->id }}" name="question[{{ $question->id }}][{{ $option->id }}]">
                         <option value="">Nota...</option>
+                        @if(isset($text_values[$option->id]) && $text_values[$option->id] == 'n/a')
+                        <option value="n/a" selected="selected">n/a</option>
+                        @else
+                        <option value="n/a">n/a</option>
+                        @endif
                         @for($i = 1; $i < 11; $i ++))
                             @if(isset($text_values[$option->id]) && $text_values[$option->id] == $i)
                             <option value="{{ $i }}" selected="selected">{{ $i }}</option>

@@ -440,9 +440,9 @@ class FormController extends Controller
 
     public function storeOrdering(Request $request, Question $question, Answer $answer, $input, $others)
     {
-        foreach (range(1,count($input)) as $v)
-            if (!in_array($v, $input))
-                return 'not valid';
+        // foreach (range(1,count($input)) as $v)
+        //     if (!in_array($v, $input))
+        //         return 'not valid';
 
         $answer->options()->detach();
         foreach ($input as $key => $option)

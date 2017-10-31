@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Answer;
 use App\Survey;
+use App\Question;
 use App\Sample;
 use App\Subject;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class ReportController extends Controller
 
     public function view(Survey $survey, Sample $sample, Subject $subject)
     {
-        $answers = Answer::where(['sample_id'=>$sample->id, 'subject_id'=>$subject->id])->get();
+        $answers = Answer::where(['sample_id'=>$sample->id, 'subject_id'=>$subject->id])->orderBy('question_id')->get();
 
         return view('report.view', compact('survey', 'sample', 'subject', 'answers'));
     }
