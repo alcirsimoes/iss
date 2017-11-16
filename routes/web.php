@@ -51,9 +51,10 @@ Route::post('form/{survey}/{subject}', 'FormController@store')->name('form.store
 Route::get('monitoring/{survey}', 'ReportController@index')->name('report.index');
 Route::get('monitoring/{survey}/{sample}', 'ReportController@list')->name('report.list');
 Route::get('monitoring/{survey}/{sample}/{subject}', 'ReportController@view')->name('report.view');
+Route::get('report/{survey}/{sample}', 'ReportController@report')->name('report.report');
 
 Route::get('teste', function () {
-    if (Auth::check()){
+    /*if (Auth::check()){
         $ids = [
             1 => 0,
             2 => 1,
@@ -113,22 +114,26 @@ Route::get('teste', function () {
         }
 
         return $questions;
-    }
+    }*/
 
-    // if (Auth::check()){
-    //     $survey = App\Survey::find(1);
-    //     $sample = $survey->samples()->first();
-    //     $subjects = $sample->subjects->filter(function ($item) {
-    //         if ($item->pivot->finished_at) return $item;
-    //     });
-    //
-    //     $array = [];
-    //     if ($subjects) foreach ($subjects as $subject){
-    //         $answer = $subject->answers->where('question_id', 4)->first();
-    //         if ($answer) foreach ($answer->options as $option) $array [$option->statement] [] = $subject->id;
-    //     }
-    //     return $array;
-    // }
+    if (Auth::check()){
+        $survey = App\Survey::find(1);
+        $sample = $survey->samples()->first();
+        $subjects = $sample->subjects->filter(function ($item) {
+            if ($item->pivot->finished_at) return $item;
+        });
+
+        $array = [];
+        if ($subjects) foreach ($subjects as $subject){
+            $answer = $subject->answers->where('question_id', 4)->first();
+            if ($answer) foreach ($answer->options as $option) $array [$option->statement] [] = $subject->id;
+        }
+
+        $count = [];
+        foreach ($array as $key => $value) $count[$key] = count($value);
+
+        return [$array, $count];
+    }
 
     return view('auth.login');
 });

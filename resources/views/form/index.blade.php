@@ -69,7 +69,7 @@
                                         @endif
                                     </td>
                                     @if($survey->type != 1)
-                                    <td><a href="{{ route('form.create', [$survey->id, $subject->id]) }}" class="btn btn-default">Responder </a></td>
+                                    <td></td>
                                     @endif
                                 </tr>
                                 @empty

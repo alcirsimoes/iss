@@ -21,6 +21,7 @@
                                 <td>{{ $sample->name }}</td>
                                 <td>
                                     <a href="{{ route('report.list', [$survey->id, $sample->id]) }}" class="btn btn-default">Visualizar</a>
+                                    <a href="{{ route('report.report', [$survey->id, $sample->id]) }}" class="btn btn-default">Processar</a>
                                 </td>
                             </tr>
                             @empty
