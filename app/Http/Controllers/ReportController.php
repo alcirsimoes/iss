@@ -41,25 +41,35 @@ class ReportController extends Controller
 
     public function report(Survey $survey, Sample $sample)
     {
+        ini_set('memory_limit','512M');
+
         $questions = $survey->questions;
-        $answers = Answer::with('options','subject')->where('sample_id', $sample->id)->get();
-        $answers->filter(function($item){
-            return is_null($item->subject->deleted_at);
+        $answers = Answer::with('options')->where('sample_id', $sample->id)->get();
+        $answers = $answers->filter(function($item){
+            return !is_null($item->subject);
         });
+
+        $tipo = 5;
 
         $processamento = [];
         foreach($questions as $question){
-            if ($question->type == 1){
+        if ($question->type == 1 /*&& $tipo == 1*/){
                 $answer = $answers->where('question_id', $question->id);
 
                 $respostas = [];
-                foreach($question->options as $option){
-                    $filtered = Answer::withCount(['options' => function ($query) use($option) {
-                        $query->where('id', $option->id);}])->where('question_id', $question->id)->get();
-                    $respostas [$option->statement] = $filtered->sum('options_count');
+                // foreach($question->options as $option)
+                //     $respostas [$option->statement] = 0;
+
+                foreach ($answer as $resposta){
+                    $opcao = $resposta->options->first();
+                    if ($opcao){
+                        if (isset($respostas [$opcao->statement]))
+                            $respostas [$opcao->statement] += 1;
+                        else $respostas [$opcao->statement] = 1;
+                    }
                 }
                 $respostas ['Recusou'] = $answer->whereNotIn('refused', [0])->count();
-                $respostas ['Não sabe'] = $answer->whereNotIn('dontknow', [0])->count();
+                $respostas ['Não Sabe'] = $answer->whereNotIn('dontknow', [0])->count();
                 $respostas ['Total'] = $answer->count();
 
                 $porcentagens = [];
@@ -71,17 +81,23 @@ class ReportController extends Controller
                 $processamento [$question->id] = ['respostas' => $respostas, 'porcentagens' => $porcentagens];
             }
 
-            if ($question->type == 2){
+        if ($question->type == 2 /*&& $tipo == 2*/){
                 $answer = $answers->where('question_id', $question->id);
 
                 $respostas = [];
-                foreach($question->options as $option){
-                    $filtered = Answer::withCount(['options' => function ($query) use($option) {
-                        $query->where('id', $option->id);}])->where('question_id', $question->id)->get();
-                    $respostas [$option->statement] = $filtered->sum('options_count');
+                // foreach($question->options as $option)
+                //     $respostas [$option->statement] = 0;
+
+                foreach ($answer as $resposta){
+                    foreach ($resposta->options as $opcao)
+                        if ($opcao){
+                            if (isset($respostas [$opcao->statement]))
+                                $respostas [$opcao->statement] += 1;
+                            else $respostas [$opcao->statement] = 1;
+                        }
                 }
                 $respostas ['Recusou'] = $answer->whereNotIn('refused', [0])->count();
-                $respostas ['Não sabe'] = $answer->whereNotIn('dontknow', [0])->count();
+                $respostas ['Não Sabe'] = $answer->whereNotIn('dontknow', [0])->count();
                 $respostas ['Total'] = $answer->count();
 
                 $porcentagens = [];
@@ -93,7 +109,7 @@ class ReportController extends Controller
                 $processamento [$question->id] = ['respostas' => $respostas, 'porcentagens' => $porcentagens];
             }
 
-            if ($question->type == 3){
+        if ($question->type == 3 /*&& $tipo == 3*/){
                 $answer = $answers->where('question_id', $question->id);
 
                 $respostas = [];
@@ -109,13 +125,13 @@ class ReportController extends Controller
                     $respostas = $answer->pluck('value');
                 }
                 $respostas ['Recusou'] = $answer->whereNotIn('refused', [0])->count();
-                $respostas ['Não sabe'] = $answer->whereNotIn('dontknow', [0])->count();
+                $respostas ['Não Sabe'] = $answer->whereNotIn('dontknow', [0])->count();
                 $respostas ['Total'] = $answer->count();
 
                 $processamento [$question->id] = $respostas;
             }
 
-            if ($question->type == 4){
+        if ($question->type == 4 /*&& $tipo == 4*/){
                 $answer = $answers->where('question_id', $question->id);
 
                 $respostas = [];
@@ -128,7 +144,7 @@ class ReportController extends Controller
                     }
                 }
                 $respostas ['Recusou'] = $answer->whereNotIn('refused', [0])->count();
-                $respostas ['Não sabe'] = $answer->whereNotIn('dontknow', [0])->count();
+                $respostas ['Não Sabe'] = $answer->whereNotIn('dontknow', [0])->count();
                 $respostas ['Total'] = $answer->count();
 
                 $excluir = [];
@@ -154,18 +170,24 @@ class ReportController extends Controller
                 $processamento [$question->id] = $respostas;
             }
 
-            if ($question->type == 5){
+        if ($question->type == 5 /*&& $tipo == 5*/){
+                $options = $question->options;
                 $answer = $answers->where('question_id', $question->id);
 
                 $respostas = [];
                 foreach ($answer as $resposta) {
                     foreach ($resposta->options as $opcao){
-                        if (is_numeric($opcao->pivot->value) && $opcao->pivot->value != 1)
-                        $respostas [$opcao->statement]['resposta'][] = $opcao->pivot->value;
+                        if (is_numeric($opcao->pivot->value) && $opcao->pivot->value != 1){
+                            if ($opcao->pivot->sub_option_id){
+                                $subopcao = $options->where('id', $opcao->pivot->sub_option_id)->first();
+                                $respostas [$opcao->statement][$subopcao->statement]['resposta'][] = $opcao->pivot->value;
+                            } else
+                                $respostas [$opcao->statement]['resposta'][] = $opcao->pivot->value;
+                        }
                     }
                 }
                 $respostas ['Recusou'] = $answer->whereNotIn('refused', [0])->count();
-                $respostas ['Não sabe'] = $answer->whereNotIn('dontknow', [0])->count();
+                $respostas ['Não Sabe'] = $answer->whereNotIn('dontknow', [0])->count();
                 $respostas ['Total'] = $answer->count();
 
                 foreach ($respostas as $k => $v){
@@ -174,15 +196,24 @@ class ReportController extends Controller
                         if (count($v['resposta']) > 0)
                             $respostas[$k]['media'] = array_sum($v['resposta']) / count($v['resposta']);
                     }
+                    if ($options) foreach($options as $suboption){
+                        if (isset($v[$suboption->statement]['resposta'])){
+                            $respostas[$k][$suboption->statement]['contagem'] = count($v[$suboption->statement]['resposta']);
+
+                            if (count($v[$suboption->statement]['resposta']) > 0)
+                                $respostas[$k][$suboption->statement]['media'] = array_sum($v[$suboption->statement]['resposta']) / count($v[$suboption->statement]['resposta']);
+                        }
+                    }
                 }
 
-                return $processamento [$question->id] = $respostas;
+                $processamento [$question->id] = $respostas;
             }
         }
 
-        return $processamento;
+        // return $processamento;
+        // return $questions;
 
-        return view('report.report', compact('survey', 'questions', 'sample', 'answers'));
+        return view('report.report', compact('survey', 'questions', 'sample', 'processamento'));
     }
 
 }
